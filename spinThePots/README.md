@@ -1,5 +1,7 @@
 ## Spin the Pots (Hughes and Ensor, 2005)
 
+[spinThePots](https://roscoelai.github.io/demos/spinThePots/)
+
 ```
 The Spin the Pots task was developed to assess working memory and inhibition 
 in young children. The child was shown eight distinct "pots" which are set up 
@@ -24,7 +26,7 @@ TODO:
 - [x] 'Repel' sticker if pot is already occupied
 - [x] Remove sticker from pot when clicked ( allow changing mind )
 - [x] Make stickers disappear ( after _all_ stickers placed, for now )
-    - Or make then disappear immediately after 'snapping'
+- [ ] Or make then disappear immediately after 'snapping'
     - Remove sticker will become redundant ( and impossible )
 - [ ] Transition between placement and spin is... rather weird
 - [x] Draw a 'spin' button after all stickers placed in pots
@@ -45,6 +47,3 @@ TODO:
 - [ ] Rethink what to record
 - [ ] Declutter output CSV
 - [ ] Test robustness ( try to break the thing )
-
-
-
