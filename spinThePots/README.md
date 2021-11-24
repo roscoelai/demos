@@ -1,6 +1,6 @@
 ## Spin the Pots (Hughes and Ensor, 2005)
 
-[spinThePots](https://roscoelai.github.io/demos/spinThePots/)
+Try out the current version: [spinThePots](https://roscoelai.github.io/demos/spinThePots/)
 
 ```
 The Spin the Pots task was developed to assess working memory and inhibition 
@@ -43,7 +43,7 @@ TODO:
 - [x] Record if choices were correct/incorrect in order
 - [x] Test JS (online) version
 - [ ] Record which pots contained which stickers
-- [ ] Calculate score
+- [x] Calculate score
 - [ ] Rethink what to record
 - [ ] Declutter output CSV
 - [ ] Test robustness ( try to break the thing )
