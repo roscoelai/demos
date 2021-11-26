@@ -32,6 +32,7 @@ TODO:
 - [x] Draw a 'spin' button after all stickers placed in pots
 - [x] Spin animation for pots
 - [x] Draw image of some turntable that revolves with the pots
+- [x] Make rotation speed follow a quadratic curve
 - [ ] Draw 'cover' or 'lid' for turntable ( that can also show rotation )
 - [x] On clicking correct pot, reveal sticker at side
 - [x] On clicking correct pot, reveal sticker at pot, then move to side
@@ -42,8 +43,9 @@ TODO:
 - [x] Record which pots were clicked on in order
 - [x] Record if choices were correct/incorrect in order
 - [x] Test JS (online) version
-- [ ] Record which pots contained which stickers
+- [.] Record which pots contained which stickers
 - [x] Calculate score
 - [ ] Rethink what to record
 - [ ] Declutter output CSV
 - [ ] Test robustness ( try to break the thing )
+

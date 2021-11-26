@@ -51,24 +51,24 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/pot4.png', 'path': 'imgs/pot4.png'},
-    {'name': 'imgs/spin-btn.png', 'path': 'imgs/spin-btn.png'},
-    {'name': 'imgs/pot7.png', 'path': 'imgs/pot7.png'},
-    {'name': 'imgs/sticker1.png', 'path': 'imgs/sticker1.png'},
-    {'name': 'imgs/pot8.png', 'path': 'imgs/pot8.png'},
-    {'name': 'imgs/sticker4.png', 'path': 'imgs/sticker4.png'},
-    {'name': 'imgs/sticker6.png', 'path': 'imgs/sticker6.png'},
-    {'name': 'imgs/sticker2.png', 'path': 'imgs/sticker2.png'},
-    {'name': 'imgs/sticker3.png', 'path': 'imgs/sticker3.png'},
-    {'name': 'imgs/end-btn.png', 'path': 'imgs/end-btn.png'},
-    {'name': 'imgs/pot5.png', 'path': 'imgs/pot5.png'},
-    {'name': 'imgs/sticker5.png', 'path': 'imgs/sticker5.png'},
-    {'name': 'imgs/pot2.png', 'path': 'imgs/pot2.png'},
-    {'name': 'imgs/pot6.png', 'path': 'imgs/pot6.png'},
-    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
     {'name': 'imgs/pot3.png', 'path': 'imgs/pot3.png'},
+    {'name': 'imgs/spin-btn.png', 'path': 'imgs/spin-btn.png'},
+    {'name': 'imgs/sticker1.png', 'path': 'imgs/sticker1.png'},
+    {'name': 'imgs/sticker6.png', 'path': 'imgs/sticker6.png'},
+    {'name': 'imgs/pot6.png', 'path': 'imgs/pot6.png'},
+    {'name': 'imgs/pot7.png', 'path': 'imgs/pot7.png'},
+    {'name': 'imgs/pot1.png', 'path': 'imgs/pot1.png'},
+    {'name': 'imgs/pot4.png', 'path': 'imgs/pot4.png'},
+    {'name': 'imgs/sticker3.png', 'path': 'imgs/sticker3.png'},
+    {'name': 'imgs/sticker5.png', 'path': 'imgs/sticker5.png'},
+    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
     {'name': 'imgs/turntable.png', 'path': 'imgs/turntable.png'},
-    {'name': 'imgs/pot1.png', 'path': 'imgs/pot1.png'}
+    {'name': 'imgs/pot2.png', 'path': 'imgs/pot2.png'},
+    {'name': 'imgs/pot5.png', 'path': 'imgs/pot5.png'},
+    {'name': 'imgs/end-btn.png', 'path': 'imgs/end-btn.png'},
+    {'name': 'imgs/pot8.png', 'path': 'imgs/pot8.png'},
+    {'name': 'imgs/sticker2.png', 'path': 'imgs/sticker2.png'},
+    {'name': 'imgs/sticker4.png', 'path': 'imgs/sticker4.png'}
   ]
 });
 
@@ -99,9 +99,15 @@ async function updateInfo() {
 var placeClock;
 var DIST_FROM_CENTER;
 var ONE_DEG;
+var TURNTABLE_SIZE;
+var POT_SIZE;
+var STICKER_SIZE;
+var STICKER_X0;
+var STICKER_Y0;
 var theta;
 var x360;
 var y360;
+var idxs;
 var turntable;
 var pots;
 var objs;
@@ -117,9 +123,8 @@ var spin_timer;
 var trialClock;
 var trial_mouse;
 var trial_disp;
-var end_button;
 var trial_end;
-var key_resp;
+var end_button;
 var globalClock;
 var routineTimer;
 async function experimentInit() {
@@ -127,6 +132,11 @@ async function experimentInit() {
   placeClock = new util.Clock();
   DIST_FROM_CENTER = 0.25;
   ONE_DEG = (pi / 180);
+  TURNTABLE_SIZE = 0.65;
+  POT_SIZE = 0.1;
+  STICKER_SIZE = 0.05;
+  STICKER_X0 = 0.5;
+  STICKER_Y0 = 0.25;
   theta = 0;
   x360 = [];
   y360 = [];
@@ -136,14 +146,19 @@ async function experimentInit() {
       x360.push((DIST_FROM_CENTER * Math.sin(theta)));
       y360.push((DIST_FROM_CENTER * Math.cos(theta)));
   }
-  turntable = new visual.ImageStim({"win": psychoJS.window, "name": "turntable", "image": "imgs/turntable.png", "pos": [0, 0], "size": 0.65, "opacity": 0.7});
+  idxs = [];
+  for (var i, _pj_c = 0, _pj_a = util.range(0, 360, 45), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+      i = _pj_a[_pj_c];
+      idxs.push(i);
+  }
+  turntable = new visual.ImageStim({"win": psychoJS.window, "name": "turntable", "image": "imgs/turntable.png", "pos": [0, 0], "size": TURNTABLE_SIZE, "opacity": 0.7});
   turntable.autoDraw = true;
   pots = [];
   objs = [];
   contents = [];
   for (var i, _pj_c = 0, _pj_a = util.range(8), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
       i = _pj_a[_pj_c];
-      pots.push(new visual.ImageStim({"win": psychoJS.window, "name": `pot${(i + 1)}`, "image": `imgs/pot${(i + 1)}.png`, "pos": [x360[(i * 45)], y360[(i * 45)]], "size": 0.1, "opacity": 1.0}));
+      pots.push(new visual.ImageStim({"win": psychoJS.window, "name": `pot${(i + 1)}`, "image": `imgs/pot${(i + 1)}.png`, "pos": [x360[idxs[i]], y360[idxs[i]]], "size": POT_SIZE}));
       objs.push(null);
       contents.push(null);
   }
@@ -156,9 +171,9 @@ async function experimentInit() {
   coord = null;
   for (var i, _pj_c = 0, _pj_a = util.range(6), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
       i = _pj_a[_pj_c];
-      coord = [0.5, (0.25 - (0.1 * i))];
+      coord = [STICKER_X0, (STICKER_Y0 - (0.1 * i))];
       sticker_coords.push(coord);
-      stickers.push(new visual.ImageStim({"win": psychoJS.window, "name": `sticker${(i + 1)}`, "image": `imgs/sticker${(i + 1)}.png`, "pos": coord, "size": 0.05, "opacity": 1.0}));
+      stickers.push(new visual.ImageStim({"win": psychoJS.window, "name": `sticker${(i + 1)}`, "image": `imgs/sticker${(i + 1)}.png`, "pos": coord, "size": STICKER_SIZE}));
   }
   for (var sticker, _pj_c = 0, _pj_a = stickers, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
       sticker = _pj_a[_pj_c];
@@ -219,6 +234,10 @@ async function experimentInit() {
     depth: -2.0 
   });
   
+  trial_end = new core.Mouse({
+    win: psychoJS.window,
+  });
+  trial_end.mouseClock = new util.Clock();
   end_button = new visual.ImageStim({
     win : psychoJS.window,
     name : 'end_button', units : undefined, 
@@ -226,14 +245,8 @@ async function experimentInit() {
     ori : 0.0, pos : [0, (- 0.4)], size : [0, 0],
     color : new util.Color([1, 1, 1]), opacity : undefined,
     flipHoriz : false, flipVert : false,
-    texRes : 128.0, interpolate : true, depth : -3.0 
+    texRes : 128.0, interpolate : true, depth : -4.0 
   });
-  trial_end = new core.Mouse({
-    win: psychoJS.window,
-  });
-  trial_end.mouseClock = new util.Clock();
-  key_resp = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
-  
   // Create some handy timers
   globalClock = new util.Clock();  // to track the time since experiment started
   routineTimer = new util.CountdownTimer();  // to track time remaining of each (non-slip) routine
@@ -487,9 +500,8 @@ function placeRoutineEnd() {
 }
 
 
-var SPIN_SPEED;
-var pot;
-var idx;
+var SPIN_DUR;
+var SPEED_MULTIPLER;
 var spinComponents;
 function spinRoutineBegin(snapshot) {
   return async function () {
@@ -500,11 +512,9 @@ function spinRoutineBegin(snapshot) {
     spinClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    routineTimer.add(4.000000);
     // update component parameters for each repeat
-    SPIN_SPEED = 8;
-    pot = null;
-    idx = 0;
+    SPIN_DUR = 4;
+    SPEED_MULTIPLER = 3;
     
     // keep track of which components have finished
     spinComponents = [];
@@ -528,14 +538,13 @@ function spinRoutineEachFrame() {
     t = spinClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    shift = Number.parseInt((frameN * SPIN_SPEED));
+    shift = Number.parseInt(((SPEED_MULTIPLER * t) * (SPIN_DUR - t)));
     for (var i, _pj_c = 0, _pj_a = util.range(8), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
         i = _pj_a[_pj_c];
-        pot = pots[i];
-        idx = (((i * 45) + shift) % 360);
-        pot.pos = [x360[idx], y360[idx]];
+        idxs[i] = ((idxs[i] + shift) % 360);
+        pots[i].pos = [x360[idxs[i]], y360[idxs[i]]];
     }
-    turntable.ori = (360 - (shift % 360));
+    turntable.ori = ((turntable.ori - shift) % 360);
     
     
     // *spin_timer* updates
@@ -547,7 +556,7 @@ function spinRoutineEachFrame() {
       spin_timer.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + 4 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + SPIN_DUR - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (spin_timer.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       spin_timer.setAutoDraw(false);
     }
@@ -569,7 +578,7 @@ function spinRoutineEachFrame() {
     });
     
     // refresh the screen if continuing
-    if (continueRoutine && routineTimer.getTime() > 0) {
+    if (continueRoutine) {
       return Scheduler.Event.FLIP_REPEAT;
     } else {
       return Scheduler.Event.NEXT;
@@ -586,6 +595,9 @@ function spinRoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     });
+    // the Routine "spin" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset();
+    
     return Scheduler.Event.NEXT;
   };
 }
@@ -597,13 +609,13 @@ var END_BUTTON_SIZE;
 var score;
 var clicks_left;
 var stickers_found;
+var contents_copy;
 var pot_choices;
 var sticker_choices;
 var outcome;
 var buttons;
 var blanks;
 var starts;
-var _key_resp_allKeys;
 var trialComponents;
 function trialRoutineBegin(snapshot) {
   return async function () {
@@ -621,6 +633,7 @@ function trialRoutineBegin(snapshot) {
     score = 16;
     clicks_left = 16;
     stickers_found = 0;
+    contents_copy = contents.slice(0);
     pot_choices = [];
     sticker_choices = [];
     outcome = [];
@@ -646,16 +659,12 @@ function trialRoutineBegin(snapshot) {
     // setup some python lists for storing info about the trial_end
     trial_end.clicked_name = [];
     gotValidClick = false; // until a click is received
-    key_resp.keys = undefined;
-    key_resp.rt = undefined;
-    _key_resp_allKeys = [];
     // keep track of which components have finished
     trialComponents = [];
     trialComponents.push(trial_mouse);
     trialComponents.push(trial_disp);
-    trialComponents.push(end_button);
     trialComponents.push(trial_end);
-    trialComponents.push(key_resp);
+    trialComponents.push(end_button);
     
     trialComponents.forEach( function(thisComponent) {
       if ('status' in thisComponent)
@@ -776,16 +785,6 @@ function trialRoutineEachFrame() {
       trial_disp.setAutoDraw(true);
     }
 
-    
-    // *end_button* updates
-    if ((END_TRIAL) && end_button.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      end_button.tStart = t;  // (not accounting for frame time here)
-      end_button.frameNStart = frameN;  // exact frame index
-      
-      end_button.setAutoDraw(true);
-    }
-
     // *trial_end* updates
     if ((END_TRIAL) && trial_end.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
@@ -816,29 +815,15 @@ function trialRoutineEachFrame() {
       }
     }
     
-    // *key_resp* updates
-    if (t >= 0.0 && key_resp.status === PsychoJS.Status.NOT_STARTED) {
+    // *end_button* updates
+    if ((END_TRIAL) && end_button.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      key_resp.tStart = t;  // (not accounting for frame time here)
-      key_resp.frameNStart = frameN;  // exact frame index
+      end_button.tStart = t;  // (not accounting for frame time here)
+      end_button.frameNStart = frameN;  // exact frame index
       
-      // keyboard checking is just starting
-      psychoJS.window.callOnFlip(function() { key_resp.clock.reset(); });  // t=0 on next screen flip
-      psychoJS.window.callOnFlip(function() { key_resp.start(); }); // start on screen flip
-      psychoJS.window.callOnFlip(function() { key_resp.clearEvents(); });
+      end_button.setAutoDraw(true);
     }
 
-    if (key_resp.status === PsychoJS.Status.STARTED) {
-      let theseKeys = key_resp.getKeys({keyList: ['y', 'n', 'left', 'right', 'space'], waitRelease: false});
-      _key_resp_allKeys = _key_resp_allKeys.concat(theseKeys);
-      if (_key_resp_allKeys.length > 0) {
-        key_resp.keys = _key_resp_allKeys[_key_resp_allKeys.length - 1].name;  // just the last key pressed
-        key_resp.rt = _key_resp_allKeys[_key_resp_allKeys.length - 1].rt;
-        // a response ends the routine
-        continueRoutine = false;
-      }
-    }
-    
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
       return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
@@ -874,6 +859,7 @@ function trialRoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     });
+    psychoJS.experiment.addData("contents", contents_copy);
     psychoJS.experiment.addData("pot_choices", pot_choices);
     psychoJS.experiment.addData("sticker_choices", sticker_choices);
     psychoJS.experiment.addData("outcome", outcome);
@@ -889,13 +875,6 @@ function trialRoutineEnd() {
     psychoJS.experiment.addData('trial_mouse.clicked_name', trial_mouse.clicked_name);
     
     // store data for psychoJS.experiment (ExperimentHandler)
-    psychoJS.experiment.addData('key_resp.keys', key_resp.keys);
-    if (typeof key_resp.keys !== 'undefined') {  // we had a response
-        psychoJS.experiment.addData('key_resp.rt', key_resp.rt);
-        routineTimer.reset();
-        }
-    
-    key_resp.stop();
     // the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
