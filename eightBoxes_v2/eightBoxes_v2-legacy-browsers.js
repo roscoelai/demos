@@ -940,9 +940,7 @@ function part2RoutineEachFrame() {
     
             if ((fruits_left > 0)) {
         time_since_start = t;
-        if ((! first_click)) {
-            time_since_first_click = (t - first_click_time);
-        }
+        time_since_first_click = (first_click ? 0 : (t - first_click_time));
     }
     debug2.text = `time_since_start = ${pad(Number.parseFloat(time_since_start).toPrecision(3), 1)}
     time_since_first_click = ${pad(Number.parseFloat(time_since_first_click).toPrecision(3), 1)}
