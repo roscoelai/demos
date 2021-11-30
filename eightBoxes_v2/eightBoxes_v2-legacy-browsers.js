@@ -49,15 +49,15 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/banana.png', 'path': 'imgs/banana.png'},
-    {'name': 'conditions.csv', 'path': 'conditions.csv'},
     {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
-    {'name': 'imgs/grapes.png', 'path': 'imgs/grapes.png'},
-    {'name': 'imgs/apple.png', 'path': 'imgs/apple.png'},
-    {'name': 'imgs/watermelon.png', 'path': 'imgs/watermelon.png'},
     {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'conditions.csv', 'path': 'conditions.csv'},
+    {'name': 'imgs/banana.png', 'path': 'imgs/banana.png'},
     {'name': 'imgs/box.png', 'path': 'imgs/box.png'},
+    {'name': 'imgs/apple.png', 'path': 'imgs/apple.png'},
     {'name': 'imgs/orange.png', 'path': 'imgs/orange.png'},
+    {'name': 'imgs/watermelon.png', 'path': 'imgs/watermelon.png'},
+    {'name': 'imgs/grapes.png', 'path': 'imgs/grapes.png'},
     {'name': 'imgs/strawberry.png', 'path': 'imgs/strawberry.png'}
   ]
 });
@@ -87,16 +87,13 @@ async function updateInfo() {
 
 
 var instClock;
-var inst_text;
+var inst_text_2;
 var inst_cont;
 var inst_mouse;
-var part1Clock;
+var part0Clock;
 var DEBUG;
-var OBJ_DURATION;
-var SHOW_TIMER;
 var N_BOXES;
 var RANDOMIZE;
-var BOX_HALF_WIDTH;
 var UNIT;
 var OBJ_POS;
 var BLANK_DURATION;
@@ -105,20 +102,21 @@ var obj_width;
 var BOX_SIZE;
 var OBJ_SIZE;
 var BLANK_SIZE;
-var box_xs;
-var box_ys;
+var NCOL;
+var X0;
+var Y0;
+var x;
+var y;
 var BOX_POS;
 var idxs8;
 var boxes;
-var highlighter;
 var FRUIT_POS;
 var IMG_PATHS;
 var objs6;
-var CONT_BUTTON_SIZE;
-var cont_button;
+var text0;
+var part1Clock;
 var text1;
 var mouse1;
-var debugTimer;
 var part2Clock;
 var text2;
 var mouse2;
@@ -129,10 +127,10 @@ var routineTimer;
 async function experimentInit() {
   // Initialize components for Routine "inst"
   instClock = new util.Clock();
-  inst_text = new visual.TextStim({
+  inst_text_2 = new visual.TextStim({
     win: psychoJS.window,
-    name: 'inst_text',
-    text: 'Instructions:\n\nThere will be 8 boxes on the screen. Some will contain a fruit, some will be empty (contain a red "X"). At the start of each trial, the positions of all the fruits will be revealed for a short period of time before being hidden.\n\nYou may then click/tap on any of the boxes to show its contents. The contents will be visible for some time, during which you may not click/tap on that box again, but you may click/tap on other boxes. Selecting a box with a fruit will remove the fruit from the box, making it empty.\n\nFind all the fruits as fast as you can while avoiding the empty boxes. The fruits will appear at the top of the screen as you find them. Once all are found, drag each fruit back into their original boxes to complete the trial.\n\nThere will be 1 practice trial, followed by 6 trials.\n\nWhenever you are ready, click/tap on \'continue\' and the next trial will begin immediately (same applies for the following trials).',
+    name: 'inst_text_2',
+    text: "Instructions:\n\nThere will be 8 boxes on the screen. Some will contain a fruit, some will be empty.\n\nAt the start of each trial, the positions of all the fruits will be revealed for a short period of time. The fruits will then appear above the boxes.\n\nYou may then click and drag each fruit back into their original boxes to complete the trial.\n\nThere will be 1 practice trial, followed by 6 trials.\n\nWhenever you are ready, click/tap on 'continue' and the next trial will begin.",
     font: 'Open Sans',
     units: 'height', 
     pos: [0, 0], height: 0.025,  wrapWidth: 0.98, ori: 0.0,
@@ -153,49 +151,37 @@ async function experimentInit() {
     win: psychoJS.window,
   });
   inst_mouse.mouseClock = new util.Clock();
-  // Initialize components for Routine "part1"
-  part1Clock = new util.Clock();
+  // Initialize components for Routine "part0"
+  part0Clock = new util.Clock();
   DEBUG = true;
-  if (DEBUG) {
-      OBJ_DURATION = 1.0;
-      SHOW_TIMER = true;
-  } else {
-      OBJ_DURATION = 3.0;
-      SHOW_TIMER = false;
-  }
   N_BOXES = 8;
   RANDOMIZE = false;
-  BOX_HALF_WIDTH = 0.1;
   UNIT = 0.1;
   if ((! RANDOMIZE)) {
       OBJ_POS = {"Practice trial": [0, 6], "Trial 1": [5, 3], "Trial 2": [0, 3, 6], "Trial 3": [1, 4, 6, 7], "Trial 4": [0, 2, 5, 6], "Trial 5": [0, 1, 2, 5, 7], "Trial 6": [0, 2, 3, 4, 5, 6]};
   }
   BLANK_DURATION = OBJ_DURATION;
-  box_width = (BOX_HALF_WIDTH * 2);
-  obj_width = (box_width * 0.8);
+  box_width = (UNIT * 2.0);
+  obj_width = (UNIT * 1.6);
   BOX_SIZE = [box_width, box_width];
   OBJ_SIZE = [obj_width, obj_width];
   BLANK_SIZE = OBJ_SIZE;
-  box_xs = [];
-  box_ys = [];
-  for (var i, _pj_c = 0, _pj_a = util.range(N_BOXES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-      i = _pj_a[_pj_c];
-      box_xs.push(((((i % 4) * 2) - 3) * UNIT));
-      box_ys.push(((0 - (Number.parseInt((i / 4)) * 2)) * UNIT));
-  }
+  NCOL = 4;
+  X0 = (- 3);
+  Y0 = 0;
+  x = 0;
+  y = 0;
   BOX_POS = [];
-  for (var i, _pj_c = 0, _pj_a = util.range(N_BOXES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-      i = _pj_a[_pj_c];
-      BOX_POS.push([box_xs[i], box_ys[i]]);
-  }
   idxs8 = [];
   boxes = [];
   for (var i, _pj_c = 0, _pj_a = util.range(N_BOXES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
       i = _pj_a[_pj_c];
+      x = ((X0 + ((i % NCOL) * 2)) * UNIT);
+      y = ((Y0 - (Number.parseInt((i / NCOL)) * 2)) * UNIT);
+      BOX_POS.push([x, y]);
       idxs8.push(i);
       boxes.push(new visual.ImageStim({"win": psychoJS.window, "name": `box${(i + 1)}`, "image": "imgs/box.png", "pos": BOX_POS[i], "size": BOX_SIZE, "opacity": 0.5}));
   }
-  highlighter = new visual.ImageStim({"win": psychoJS.window, "name": "highlighter", "image": "imgs/box.png", "pos": BOX_POS[i], "size": BOX_SIZE, "opacity": 0.5});
   FRUIT_POS = [];
   for (var i, _pj_c = 0, _pj_a = util.range(6), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
       i = _pj_a[_pj_c];
@@ -207,13 +193,24 @@ async function experimentInit() {
       i = _pj_a[_pj_c];
       objs6.push(new visual.ImageStim({"win": psychoJS.window, "name": `obj${(i + 1)}`, "image": IMG_PATHS[i], "pos": [0, 0], "size": OBJ_SIZE, "opacity": 1.0}));
   }
-  CONT_BUTTON_SIZE = [0.32, 0.112];
-  cont_button = new visual.ImageStim({"win": psychoJS.window, "name": "cont_button", "image": "imgs/continue.png", "pos": [0, (- 0.4)], "size": [0, 0]});
   
+  text0 = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'text0',
+    text: '',
+    font: 'Open Sans',
+    units: undefined, 
+    pos: [0, 0.4], height: 0.05,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -1.0 
+  });
+  
+  // Initialize components for Routine "part1"
+  part1Clock = new util.Clock();
   text1 = new visual.TextStim({
     win: psychoJS.window,
     name: 'text1',
-    text: '',
+    text: 'Find the fruits',
     font: 'Open Sans',
     units: 'height', 
     pos: [0, 0.4], height: 0.05,  wrapWidth: undefined, ori: 0.0,
@@ -225,17 +222,6 @@ async function experimentInit() {
     win: psychoJS.window,
   });
   mouse1.mouseClock = new util.Clock();
-  debugTimer = new visual.TextStim({
-    win: psychoJS.window,
-    name: 'debugTimer',
-    text: '',
-    font: 'Open Sans',
-    units: undefined, 
-    pos: [0.45, (- 0.45)], height: 0.01,  wrapWidth: undefined, ori: 0.0,
-    color: new util.Color('white'),  opacity: 0.2,
-    depth: -3.0 
-  });
-  
   // Initialize components for Routine "part2"
   part2Clock = new util.Clock();
   text2 = new visual.TextStim({
@@ -301,7 +287,7 @@ function instRoutineBegin(snapshot) {
     gotValidClick = false; // until a click is received
     // keep track of which components have finished
     instComponents = [];
-    instComponents.push(inst_text);
+    instComponents.push(inst_text_2);
     instComponents.push(inst_cont);
     instComponents.push(inst_mouse);
     
@@ -324,13 +310,13 @@ function instRoutineEachFrame() {
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
     
-    // *inst_text* updates
-    if (t >= 0.0 && inst_text.status === PsychoJS.Status.NOT_STARTED) {
+    // *inst_text_2* updates
+    if (t >= 0.0 && inst_text_2.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      inst_text.tStart = t;  // (not accounting for frame time here)
-      inst_text.frameNStart = frameN;  // exact frame index
+      inst_text_2.tStart = t;  // (not accounting for frame time here)
+      inst_text_2.frameNStart = frameN;  // exact frame index
       
-      inst_text.setAutoDraw(true);
+      inst_text_2.setAutoDraw(true);
     }
 
     
@@ -438,6 +424,9 @@ function trialsLoopBegin(trialsLoopScheduler, snapshot) {
       const snapshot = trials.getSnapshot();
     
       trialsLoopScheduler.add(importConditions(snapshot));
+      trialsLoopScheduler.add(part0RoutineBegin(snapshot));
+      trialsLoopScheduler.add(part0RoutineEachFrame());
+      trialsLoopScheduler.add(part0RoutineEnd());
       trialsLoopScheduler.add(part1RoutineBegin(snapshot));
       trialsLoopScheduler.add(part1RoutineEachFrame());
       trialsLoopScheduler.add(part1RoutineEnd());
@@ -459,37 +448,26 @@ async function trialsLoopEnd() {
 }
 
 
+var initial_reveal;
 var objs;
 var visible;
 var visible_t;
 var n_omissions;
 var n_commissions;
 var idxs;
-var idx;
 var correct_boxes;
-var clicked_boxes;
-var click_times;
-var initial_reveal;
-var first_click;
-var update_time_elapsed;
-var obj_count;
-var task_time_start;
-var task_time_elapsed;
-var found_count;
-var found_fruits;
-var part1Components;
-function part1RoutineBegin(snapshot) {
+var part0Components;
+function part0RoutineBegin(snapshot) {
   return async function () {
     TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
     
-    //------Prepare to start Routine 'part1'-------
+    //------Prepare to start Routine 'part0'-------
     t = 0;
-    part1Clock.reset(); // clock
+    part0Clock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    cont_button.setSize([0, 0], {"log": false});
-    cont_button.setAutoDraw(false, {"log": false});
+    initial_reveal = true;
     objs = [];
     visible = [];
     visible_t = [];
@@ -511,14 +489,12 @@ function part1RoutineBegin(snapshot) {
     } else {
         idxs = OBJ_POS[trial_name];
     }
-    idx = null;
     correct_boxes = [];
     for (var i, _pj_c = 0, _pj_a = util.range(n_fruits), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
         i = _pj_a[_pj_c];
-        idx = idxs[i];
-        objs[idx] = objs6[i];
-        objs[idx].setPos(BOX_POS[idx], {"log": false});
-        correct_boxes.push(`box${(idx + 1)}`);
+        objs[idxs[i]] = objs6[i];
+        objs[idxs[i]].pos = BOX_POS[idxs[i]];
+        correct_boxes.push(`box${(idxs[i] + 1)}`);
     }
     correct_boxes.sort();
     for (var i, _pj_c = 0, _pj_a = util.range(N_BOXES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
@@ -527,9 +503,167 @@ function part1RoutineBegin(snapshot) {
             objs[i] = new visual.ImageStim({"win": psychoJS.window, "name": `blank${(i + 1)}`, "image": "imgs/empty-box.png", "pos": BOX_POS[i], "size": BLANK_SIZE});
         }
     }
+    
+    text0.setText(trial_name);
+    // keep track of which components have finished
+    part0Components = [];
+    part0Components.push(text0);
+    
+    part0Components.forEach( function(thisComponent) {
+      if ('status' in thisComponent)
+        thisComponent.status = PsychoJS.Status.NOT_STARTED;
+       });
+    return Scheduler.Event.NEXT;
+  }
+}
+
+
+var _pj;
+function part0RoutineEachFrame() {
+  return async function () {
+    //------Loop for each frame of Routine 'part0'-------
+    // get current time
+    t = part0Clock.getTime();
+    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
+    // update/draw components on each frame
+    var _pj;
+    function _pj_snippets(container) {
+        function in_es6(left, right) {
+            if (((right instanceof Array) || ((typeof right) === "string"))) {
+                return (right.indexOf(left) > (- 1));
+            } else {
+                if (((right instanceof Map) || (right instanceof Set) || (right instanceof WeakMap) || (right instanceof WeakSet))) {
+                    return right.has(left);
+                } else {
+                    return (left in right);
+                }
+            }
+        }
+        container["in_es6"] = in_es6;
+        return container;
+    }
+    _pj = {};
+    _pj_snippets(_pj);
+    if (initial_reveal) {
+        for (var obj, _pj_c = 0, _pj_a = objs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+            obj = _pj_a[_pj_c];
+            if (_pj.in_es6("obj", obj.name)) {
+                obj.draw();
+            }
+        }
+        if ((t > reveal_seconds)) {
+            for (var obj, _pj_c = 0, _pj_a = objs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+                obj = _pj_a[_pj_c];
+                obj.setAutoDraw(false, {"log": false});
+            }
+            initial_reveal = false;
+        }
+    } else {
+        continueRoutine = false;
+    }
+    
+    
+    // *text0* updates
+    if (t >= 0.0 && text0.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      text0.tStart = t;  // (not accounting for frame time here)
+      text0.frameNStart = frameN;  // exact frame index
+      
+      text0.setAutoDraw(true);
+    }
+
+    // check for quit (typically the Esc key)
+    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
+      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
+    }
+    
+    // check if the Routine should terminate
+    if (!continueRoutine) {  // a component has requested a forced-end of Routine
+      return Scheduler.Event.NEXT;
+    }
+    
+    continueRoutine = false;  // reverts to True if at least one component still running
+    part0Components.forEach( function(thisComponent) {
+      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
+        continueRoutine = true;
+      }
+    });
+    
+    // refresh the screen if continuing
+    if (continueRoutine) {
+      return Scheduler.Event.FLIP_REPEAT;
+    } else {
+      return Scheduler.Event.NEXT;
+    }
+  };
+}
+
+
+function part0RoutineEnd() {
+  return async function () {
+    //------Ending Routine 'part0'-------
+    part0Components.forEach( function(thisComponent) {
+      if (typeof thisComponent.setAutoDraw === 'function') {
+        thisComponent.setAutoDraw(false);
+      }
+    });
+    // the Routine "part0" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset();
+    
+    return Scheduler.Event.NEXT;
+  };
+}
+
+
+var OBJ_DURATION;
+var SKIP_PART_1;
+var clicked_boxes;
+var click_times;
+var first_click;
+var update_time_elapsed;
+var obj_count;
+var task_time_start;
+var task_time_elapsed;
+var found_count;
+var found_fruits;
+var highlighter;
+var part1Components;
+function part1RoutineBegin(snapshot) {
+  return async function () {
+    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
+    
+    //------Prepare to start Routine 'part1'-------
+    t = 0;
+    part1Clock.reset(); // clock
+    frameN = -1;
+    continueRoutine = true; // until we're told otherwise
+    // update component parameters for each repeat
+    var _pj;
+    function _pj_snippets(container) {
+        function in_es6(left, right) {
+            if (((right instanceof Array) || ((typeof right) === "string"))) {
+                return (right.indexOf(left) > (- 1));
+            } else {
+                if (((right instanceof Map) || (right instanceof Set) || (right instanceof WeakMap) || (right instanceof WeakSet))) {
+                    return right.has(left);
+                } else {
+                    return (left in right);
+                }
+            }
+        }
+        container["in_es6"] = in_es6;
+        return container;
+    }
+    _pj = {};
+    _pj_snippets(_pj);
+    if (DEBUG) {
+        OBJ_DURATION = 1.0;
+    } else {
+        OBJ_DURATION = 3.0;
+    }
+    SKIP_PART_1 = true;
     clicked_boxes = [];
     click_times = [];
-    initial_reveal = true;
     first_click = true;
     update_time_elapsed = false;
     obj_count = 0;
@@ -537,17 +671,27 @@ function part1RoutineBegin(snapshot) {
     task_time_elapsed = 0.0;
     found_count = 0;
     found_fruits = [];
+    if (SKIP_PART_1) {
+        for (var obj, _pj_c = 0, _pj_a = objs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+            obj = _pj_a[_pj_c];
+            if ((! _pj.in_es6("blank", obj.name))) {
+                found_fruits.push(obj);
+                found_fruits.slice((- 1))[0].pos = FRUIT_POS[found_count];
+                found_fruits.slice((- 1))[0].autoDraw = true;
+                found_count += 1;
+            }
+        }
+        continueRoutine = false;
+    }
+    highlighter = new visual.ImageStim({"win": psychoJS.window, "name": "highlighter", "image": "imgs/box.png", "pos": BOX_POS[0], "size": BOX_SIZE, "opacity": 0.5});
     
-    text1.setText(trial_name);
     // setup some python lists for storing info about the mouse1
-    mouse1.clicked_name = [];
     gotValidClick = false; // until a click is received
     mouse1.mouseClock.reset();
     // keep track of which components have finished
     part1Components = [];
     part1Components.push(text1);
     part1Components.push(mouse1);
-    part1Components.push(debugTimer);
     
     part1Components.forEach( function(thisComponent) {
       if ('status' in thisComponent)
@@ -558,7 +702,6 @@ function part1RoutineBegin(snapshot) {
 }
 
 
-var _pj;
 function part1RoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'part1'-------
@@ -587,58 +730,42 @@ function part1RoutineEachFrame() {
     if (update_time_elapsed) {
         task_time_elapsed = (t - task_time_start);
     }
-    if (initial_reveal) {
-        for (var obj, _pj_c = 0, _pj_a = objs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-            obj = _pj_a[_pj_c];
-            if (_pj.in_es6("obj", obj.name)) {
-                obj.draw();
-            }
+    highlighter.setSize([0, 0], {"log": false});
+    for (var i, _pj_c = 0, _pj_a = util.range(N_BOXES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        i = _pj_a[_pj_c];
+        if (visible[i]) {
+            continue;
         }
-        if ((t > reveal_seconds)) {
-            for (var obj, _pj_c = 0, _pj_a = objs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-                obj = _pj_a[_pj_c];
-                obj.setAutoDraw(false, {"log": false});
+        if (mouse1.isPressedIn(boxes[i])) {
+            if (first_click) {
+                task_time_start = t;
+                update_time_elapsed = true;
+                first_click = false;
             }
-            initial_reveal = false;
-        }
-    } else {
-        highlighter.setSize([0, 0], {"log": false});
-        for (var i, _pj_c = 0, _pj_a = util.range(N_BOXES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-            i = _pj_a[_pj_c];
-            if (visible[i]) {
-                continue;
-            }
-            if (mouse1.isPressedIn(boxes[i])) {
-                if (first_click) {
-                    task_time_start = t;
-                    update_time_elapsed = true;
-                    first_click = false;
+            if ((! _pj.in_es6("blank", objs[i].name))) {
+                obj_count += 1;
+                if ((obj_count >= n_fruits)) {
+                    update_time_elapsed = false;
                 }
-                if ((! _pj.in_es6("blank", objs[i].name))) {
-                    obj_count += 1;
-                    if ((obj_count >= n_fruits)) {
-                        update_time_elapsed = false;
-                    }
-                } else {
-                    if (_pj.in_es6("_blank", objs[i].name)) {
-                        n_commissions[i] += 1;
-                    } else {
-                        n_omissions[i] += 1;
-                    }
-                }
-                clicked_boxes.push(boxes[i].name);
-                click_times.push(task_time_elapsed);
-                objs[i].setAutoDraw(true, {"log": false});
-                visible[i] = true;
-                visible_t[i] = t;
-                break;
             } else {
-                if (boxes[i].contains(mouse1)) {
-                    highlighter.setPos(boxes[i].pos, {"log": false});
-                    highlighter.setSize(BOX_SIZE, {"log": false});
-                    highlighter.draw();
-                    break;
+                if (_pj.in_es6("_blank", objs[i].name)) {
+                    n_commissions[i] += 1;
+                } else {
+                    n_omissions[i] += 1;
                 }
+            }
+            clicked_boxes.push(boxes[i].name);
+            click_times.push(task_time_elapsed);
+            objs[i].setAutoDraw(true, {"log": false});
+            visible[i] = true;
+            visible_t[i] = t;
+            break;
+        } else {
+            if (boxes[i].contains(mouse1)) {
+                highlighter.setPos(boxes[i].pos, {"log": false});
+                highlighter.setSize(BOX_SIZE, {"log": false});
+                highlighter.draw();
+                break;
             }
         }
     }
@@ -670,48 +797,6 @@ function part1RoutineEachFrame() {
       text1.setAutoDraw(true);
     }
 
-    // *mouse1* updates
-    if (t >= 0.0 && mouse1.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      mouse1.tStart = t;  // (not accounting for frame time here)
-      mouse1.frameNStart = frameN;  // exact frame index
-      
-      mouse1.status = PsychoJS.Status.STARTED;
-      prevButtonState = mouse1.getPressed();  // if button is down already this ISN'T a new click
-      }
-    if (mouse1.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
-      _mouseButtons = mouse1.getPressed();
-      if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
-        prevButtonState = _mouseButtons;
-        if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
-          // check if the mouse was inside our 'clickable' objects
-          gotValidClick = false;
-          for (const obj of [cont_button]) {
-            if (obj.contains(mouse1)) {
-              gotValidClick = true;
-              mouse1.clicked_name.push(obj.name)
-            }
-          }
-          if (gotValidClick === true) { // abort routine on response
-            continueRoutine = false;
-          }
-        }
-      }
-    }
-    
-    // *debugTimer* updates
-    if ((SHOW_TIMER) && debugTimer.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      debugTimer.tStart = t;  // (not accounting for frame time here)
-      debugTimer.frameNStart = frameN;  // exact frame index
-      
-      debugTimer.setAutoDraw(true);
-    }
-
-    
-    if (debugTimer.status === PsychoJS.Status.STARTED){ // only update if being drawn
-      debugTimer.setText(util.round(task_time_elapsed, 3), false);
-    }
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
       return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
@@ -748,14 +833,17 @@ function part1RoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     });
-    psychoJS.experiment.addData("clicked_boxes", clicked_boxes);
-    psychoJS.experiment.addData("click_times", click_times);
-    psychoJS.experiment.addData("time_taken_sec", click_times.pop());
-    psychoJS.experiment.addData("correct_boxes", correct_boxes);
-    psychoJS.experiment.addData("omission_errors", n_omissions);
-    psychoJS.experiment.addData("commission_errors", n_commissions);
-    total_errors = (util.sum(n_omissions) + util.sum(n_commissions));
-    psychoJS.experiment.addData("total_errors", total_errors);
+    if ((! SKIP_PART_1)) {
+        psychoJS.experiment.addData("clicked_boxes", clicked_boxes);
+        psychoJS.experiment.addData("click_times", click_times);
+        psychoJS.experiment.addData("time_taken_sec", click_times.pop());
+        psychoJS.experiment.addData("correct_boxes", correct_boxes);
+        psychoJS.experiment.addData("omission_errors", n_omissions);
+        psychoJS.experiment.addData("commission_errors", n_commissions);
+        total_errors = (util.sum(n_omissions) + util.sum(n_commissions));
+        psychoJS.experiment.addData("total_errors", total_errors);
+    }
+    highlighter.size = [0, 0];
     
     // store data for psychoJS.experiment (ExperimentHandler)
     // the Routine "part1" was not non-slip safe, so reset the non-slip timer
@@ -766,11 +854,15 @@ function part1RoutineEnd() {
 }
 
 
+var CONT_BUTTON_SIZE;
 var DRAGGING;
+var integerPart;
+var decimalPart;
 var contents;
 var clicked_obj;
 var fruits_left;
 var show_continue;
+var first_click_time;
 var snapped;
 var part2Components;
 function part2RoutineBegin(snapshot) {
@@ -783,12 +875,16 @@ function part2RoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
+    CONT_BUTTON_SIZE = [0.32, 0.112];
     DRAGGING = false;
-    highlighter.size = [0, 0];
+    integerPart = null;
+    decimalPart = null;
     contents = [null, null, null, null, null, null, null, null];
     clicked_obj = null;
     fruits_left = n_fruits;
     show_continue = false;
+    first_click = true;
+    first_click_time = 0;
     function _snapped(clicked_obj, box, thresh2 = (UNIT * UNIT)) {
         var bx, by, dx, dy, ox, oy;
         [ox, oy] = clicked_obj.pos;
@@ -822,6 +918,8 @@ function part2RoutineBegin(snapshot) {
 }
 
 
+var time_since_start;
+var time_since_first_click;
 function part2RoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'part2'-------
@@ -829,7 +927,26 @@ function part2RoutineEachFrame() {
     t = part2Clock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    debug2.text = `fruits_left = ${fruits_left}
+    
+            // add-on: pad(n: number, width: number): string
+            function pad(n, width) {
+                width = width || 2;
+                integerPart = Number.parseInt(n);
+                decimalPart = (n+'').match(/\.[0-9]*/);
+                if (!decimalPart)
+                    decimalPart = '';
+                return (integerPart+'').padStart(width,'0') + decimalPart;
+            }
+    
+            if ((fruits_left > 0)) {
+        time_since_start = t;
+        if ((! first_click)) {
+            time_since_first_click = (t - first_click_time);
+        }
+    }
+    debug2.text = `time_since_start = ${pad(Number.parseFloat(time_since_start).toPrecision(3), 1)}
+    time_since_first_click = ${pad(Number.parseFloat(time_since_first_click).toPrecision(3), 1)}
+    fruits_left = ${fruits_left}
     contents = ${contents}`
     ;
     if ((fruits_left < 1)) {
@@ -841,6 +958,10 @@ function part2RoutineEachFrame() {
         for (var found_fruit, _pj_c = 0, _pj_a = found_fruits, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
             found_fruit = _pj_a[_pj_c];
             if (mouse2.isPressedIn(found_fruit)) {
+                if (first_click) {
+                    first_click_time = t;
+                    first_click = false;
+                }
                 clicked_obj = found_fruit;
                 for (var i, _pj_f = 0, _pj_d = util.range(8), _pj_e = _pj_d.length; (_pj_f < _pj_e); _pj_f += 1) {
                     i = _pj_d[_pj_f];
@@ -967,6 +1088,9 @@ function part2RoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     });
+    psychoJS.experiment.addData("time_since_start", time_since_start);
+    psychoJS.experiment.addData("time_since_first_click", time_since_first_click);
+    
     // store data for psychoJS.experiment (ExperimentHandler)
     // the Routine "part2" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
@@ -1012,6 +1136,8 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
+  
+  
   
   
   
