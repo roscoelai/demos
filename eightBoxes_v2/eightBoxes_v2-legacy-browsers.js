@@ -49,15 +49,15 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
     {'name': 'conditions.csv', 'path': 'conditions.csv'},
+    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
     {'name': 'imgs/banana.png', 'path': 'imgs/banana.png'},
+    {'name': 'imgs/grapes.png', 'path': 'imgs/grapes.png'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'imgs/watermelon.png', 'path': 'imgs/watermelon.png'},
+    {'name': 'imgs/orange.png', 'path': 'imgs/orange.png'},
     {'name': 'imgs/box.png', 'path': 'imgs/box.png'},
     {'name': 'imgs/apple.png', 'path': 'imgs/apple.png'},
-    {'name': 'imgs/orange.png', 'path': 'imgs/orange.png'},
-    {'name': 'imgs/watermelon.png', 'path': 'imgs/watermelon.png'},
-    {'name': 'imgs/grapes.png', 'path': 'imgs/grapes.png'},
     {'name': 'imgs/strawberry.png', 'path': 'imgs/strawberry.png'}
   ]
 });
@@ -91,25 +91,26 @@ var inst_text_2;
 var inst_cont;
 var inst_mouse;
 var part0Clock;
-var DEBUG;
 var N_BOXES;
-var RANDOMIZE;
+var RANDOMIZE_FRUITS;
+var RANDOMIZE_POSITIONS;
 var UNIT;
-var OBJ_POS;
-var BLANK_DURATION;
 var box_width;
 var obj_width;
 var BOX_SIZE;
 var OBJ_SIZE;
 var BLANK_SIZE;
+var OBJ_POS;
 var NCOL;
-var X0;
-var Y0;
+var BOX_X0;
+var BOX_Y0;
 var x;
 var y;
 var BOX_POS;
 var idxs8;
 var boxes;
+var FRUIT_X0;
+var FRUIT_Y0;
 var FRUIT_POS;
 var IMG_PATHS;
 var objs6;
@@ -153,22 +154,21 @@ async function experimentInit() {
   inst_mouse.mouseClock = new util.Clock();
   // Initialize components for Routine "part0"
   part0Clock = new util.Clock();
-  DEBUG = true;
   N_BOXES = 8;
-  RANDOMIZE = false;
+  RANDOMIZE_FRUITS = true;
+  RANDOMIZE_POSITIONS = false;
   UNIT = 0.1;
-  if ((! RANDOMIZE)) {
-      OBJ_POS = {"Practice trial": [0, 6], "Trial 1": [5, 3], "Trial 2": [0, 3, 6], "Trial 3": [1, 4, 6, 7], "Trial 4": [0, 2, 5, 6], "Trial 5": [0, 1, 2, 5, 7], "Trial 6": [0, 2, 3, 4, 5, 6]};
-  }
-  BLANK_DURATION = OBJ_DURATION;
   box_width = (UNIT * 2.0);
   obj_width = (UNIT * 1.6);
   BOX_SIZE = [box_width, box_width];
   OBJ_SIZE = [obj_width, obj_width];
   BLANK_SIZE = OBJ_SIZE;
+  if ((! RANDOMIZE_POSITIONS)) {
+      OBJ_POS = {"Practice trial": [0, 6], "Trial 1": [5, 3], "Trial 2": [0, 3, 6], "Trial 3": [1, 4, 6, 7], "Trial 4": [0, 2, 5, 6], "Trial 5": [0, 1, 2, 5, 7], "Trial 6": [0, 2, 3, 4, 5, 6]};
+  }
   NCOL = 4;
-  X0 = (- 3);
-  Y0 = 0;
+  BOX_X0 = (- 3);
+  BOX_Y0 = 0;
   x = 0;
   y = 0;
   BOX_POS = [];
@@ -176,22 +176,26 @@ async function experimentInit() {
   boxes = [];
   for (var i, _pj_c = 0, _pj_a = util.range(N_BOXES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
       i = _pj_a[_pj_c];
-      x = ((X0 + ((i % NCOL) * 2)) * UNIT);
-      y = ((Y0 - (Number.parseInt((i / NCOL)) * 2)) * UNIT);
+      x = ((BOX_X0 + ((i % NCOL) * 2)) * UNIT);
+      y = ((BOX_Y0 - (Number.parseInt((i / NCOL)) * 2)) * UNIT);
       BOX_POS.push([x, y]);
       idxs8.push(i);
       boxes.push(new visual.ImageStim({"win": psychoJS.window, "name": `box${(i + 1)}`, "image": "imgs/box.png", "pos": BOX_POS[i], "size": BOX_SIZE, "opacity": 0.5}));
   }
+  FRUIT_X0 = (- 0.4);
+  FRUIT_Y0 = (2 * UNIT);
   FRUIT_POS = [];
   for (var i, _pj_c = 0, _pj_a = util.range(6), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
       i = _pj_a[_pj_c];
-      FRUIT_POS.push([((- 0.4) + (i * 0.16)), (2 * UNIT)]);
+      x = (FRUIT_X0 + (i * obj_width));
+      y = FRUIT_Y0;
+      FRUIT_POS.push([x, y]);
   }
   IMG_PATHS = ["imgs/apple.png", "imgs/banana.png", "imgs/grapes.png", "imgs/orange.png", "imgs/strawberry.png", "imgs/watermelon.png"];
   objs6 = [];
   for (var i, _pj_c = 0, _pj_a = util.range(6), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
       i = _pj_a[_pj_c];
-      objs6.push(new visual.ImageStim({"win": psychoJS.window, "name": `obj${(i + 1)}`, "image": IMG_PATHS[i], "pos": [0, 0], "size": OBJ_SIZE, "opacity": 1.0}));
+      objs6.push(new visual.ImageStim({"win": psychoJS.window, "name": `obj${(i + 1)}`, "image": IMG_PATHS[i], "pos": [0, 0], "size": OBJ_SIZE}));
   }
   
   text0 = new visual.TextStim({
@@ -448,12 +452,12 @@ async function trialsLoopEnd() {
 }
 
 
-var initial_reveal;
 var objs;
 var visible;
 var visible_t;
 var n_omissions;
 var n_commissions;
+var correct_choices;
 var idxs;
 var correct_boxes;
 var part0Components;
@@ -467,12 +471,12 @@ function part0RoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    initial_reveal = true;
     objs = [];
     visible = [];
     visible_t = [];
     n_omissions = [];
     n_commissions = [];
+    correct_choices = [];
     for (var i, _pj_c = 0, _pj_a = util.range(N_BOXES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
         i = _pj_a[_pj_c];
         objs.push(null);
@@ -480,14 +484,17 @@ function part0RoutineBegin(snapshot) {
         visible_t.push(null);
         n_omissions.push(0);
         n_commissions.push(0);
+        correct_choices.push(null);
         boxes[i].autoDraw = true;
     }
-    if (RANDOMIZE) {
-        util.shuffle(objs6);
+    if (RANDOMIZE_POSITIONS) {
         util.shuffle(idxs8);
         idxs = idxs8.slice(0, n_fruits);
     } else {
         idxs = OBJ_POS[trial_name];
+    }
+    if (RANDOMIZE_FRUITS) {
+        util.shuffle(objs6);
     }
     correct_boxes = [];
     for (var i, _pj_c = 0, _pj_a = util.range(n_fruits), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
@@ -495,6 +502,7 @@ function part0RoutineBegin(snapshot) {
         objs[idxs[i]] = objs6[i];
         objs[idxs[i]].pos = BOX_POS[idxs[i]];
         correct_boxes.push(`box${(idxs[i] + 1)}`);
+        correct_choices[idxs[i]] = objs6[i].name;
     }
     correct_boxes.sort();
     for (var i, _pj_c = 0, _pj_a = util.range(N_BOXES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
@@ -544,19 +552,12 @@ function part0RoutineEachFrame() {
     }
     _pj = {};
     _pj_snippets(_pj);
-    if (initial_reveal) {
+    if ((t <= reveal_seconds)) {
         for (var obj, _pj_c = 0, _pj_a = objs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
             obj = _pj_a[_pj_c];
             if (_pj.in_es6("obj", obj.name)) {
                 obj.draw();
             }
-        }
-        if ((t > reveal_seconds)) {
-            for (var obj, _pj_c = 0, _pj_a = objs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-                obj = _pj_a[_pj_c];
-                obj.setAutoDraw(false, {"log": false});
-            }
-            initial_reveal = false;
         }
     } else {
         continueRoutine = false;
@@ -615,7 +616,9 @@ function part0RoutineEnd() {
 }
 
 
+var DEBUG;
 var OBJ_DURATION;
+var BLANK_DURATION;
 var SKIP_PART_1;
 var clicked_boxes;
 var click_times;
@@ -626,6 +629,7 @@ var task_time_start;
 var task_time_elapsed;
 var found_count;
 var found_fruits;
+var fruit_pos;
 var highlighter;
 var part1Components;
 function part1RoutineBegin(snapshot) {
@@ -656,11 +660,9 @@ function part1RoutineBegin(snapshot) {
     }
     _pj = {};
     _pj_snippets(_pj);
-    if (DEBUG) {
-        OBJ_DURATION = 1.0;
-    } else {
-        OBJ_DURATION = 3.0;
-    }
+    DEBUG = true;
+    OBJ_DURATION = (DEBUG ? 1.0 : 3.0);
+    BLANK_DURATION = OBJ_DURATION;
     SKIP_PART_1 = true;
     clicked_boxes = [];
     click_times = [];
@@ -671,12 +673,13 @@ function part1RoutineBegin(snapshot) {
     task_time_elapsed = 0.0;
     found_count = 0;
     found_fruits = [];
+    fruit_pos = FRUIT_POS;
     if (SKIP_PART_1) {
         for (var obj, _pj_c = 0, _pj_a = objs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
             obj = _pj_a[_pj_c];
             if ((! _pj.in_es6("blank", obj.name))) {
                 found_fruits.push(obj);
-                found_fruits.slice((- 1))[0].pos = FRUIT_POS[found_count];
+                found_fruits.slice((- 1))[0].pos = fruit_pos[found_count];
                 found_fruits.slice((- 1))[0].autoDraw = true;
                 found_count += 1;
             }
@@ -1078,6 +1081,7 @@ function part2RoutineEachFrame() {
 }
 
 
+var errors;
 function part2RoutineEnd() {
   return async function () {
     //------Ending Routine 'part2'-------
@@ -1088,6 +1092,20 @@ function part2RoutineEnd() {
     });
     psychoJS.experiment.addData("time_since_start", time_since_start);
     psychoJS.experiment.addData("time_since_first_click", time_since_first_click);
+    psychoJS.experiment.addData("choices", contents);
+    psychoJS.experiment.addData("correct_choices", correct_choices);
+    errors = 0;
+    for (var i, _pj_c = 0, _pj_a = util.range(contents.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        i = _pj_a[_pj_c];
+        if ((contents[i] !== correct_choices[i])) {
+            errors += 1;
+        }
+    }
+    psychoJS.experiment.addData("errors", errors);
+    for (var found_fruit, _pj_c = 0, _pj_a = found_fruits, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        found_fruit = _pj_a[_pj_c];
+        found_fruit.autoDraw = false;
+    }
     
     // store data for psychoJS.experiment (ExperimentHandler)
     // the Routine "part2" was not non-slip safe, so reset the non-slip timer
