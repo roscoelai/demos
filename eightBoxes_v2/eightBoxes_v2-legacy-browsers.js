@@ -49,16 +49,16 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'conditions.csv', 'path': 'conditions.csv'},
-    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
-    {'name': 'imgs/banana.png', 'path': 'imgs/banana.png'},
     {'name': 'imgs/grapes.png', 'path': 'imgs/grapes.png'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
-    {'name': 'imgs/watermelon.png', 'path': 'imgs/watermelon.png'},
-    {'name': 'imgs/orange.png', 'path': 'imgs/orange.png'},
     {'name': 'imgs/box.png', 'path': 'imgs/box.png'},
+    {'name': 'imgs/banana.png', 'path': 'imgs/banana.png'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'imgs/orange.png', 'path': 'imgs/orange.png'},
+    {'name': 'imgs/strawberry.png', 'path': 'imgs/strawberry.png'},
     {'name': 'imgs/apple.png', 'path': 'imgs/apple.png'},
-    {'name': 'imgs/strawberry.png', 'path': 'imgs/strawberry.png'}
+    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
+    {'name': 'imgs/watermelon.png', 'path': 'imgs/watermelon.png'},
+    {'name': 'conditions.csv', 'path': 'conditions.csv'}
   ]
 });
 
@@ -616,10 +616,10 @@ function part0RoutineEnd() {
 }
 
 
+var SKIP_PART_1;
 var DEBUG;
 var OBJ_DURATION;
 var BLANK_DURATION;
-var SKIP_PART_1;
 var clicked_boxes;
 var click_times;
 var first_click;
@@ -660,10 +660,10 @@ function part1RoutineBegin(snapshot) {
     }
     _pj = {};
     _pj_snippets(_pj);
+    SKIP_PART_1 = true;
     DEBUG = true;
     OBJ_DURATION = (DEBUG ? 1.0 : 3.0);
     BLANK_DURATION = OBJ_DURATION;
-    SKIP_PART_1 = true;
     clicked_boxes = [];
     click_times = [];
     first_click = true;
@@ -679,10 +679,14 @@ function part1RoutineBegin(snapshot) {
             obj = _pj_a[_pj_c];
             if ((! _pj.in_es6("blank", obj.name))) {
                 found_fruits.push(obj);
-                found_fruits.slice((- 1))[0].pos = fruit_pos[found_count];
-                found_fruits.slice((- 1))[0].autoDraw = true;
-                found_count += 1;
             }
+        }
+        util.shuffle(found_fruits);
+        for (var found_fruit, _pj_c = 0, _pj_a = found_fruits, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+            found_fruit = _pj_a[_pj_c];
+            found_fruit.pos = fruit_pos[found_count];
+            found_fruit.autoDraw = true;
+            found_count += 1;
         }
         continueRoutine = false;
     }
