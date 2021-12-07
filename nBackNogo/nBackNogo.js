@@ -120,7 +120,7 @@ async function experimentInit() {
   fix = new visual.TextStim({
     win: psychoJS.window,
     name: 'fix',
-    text: '+',
+    text: '',
     font: 'Open Sans',
     units: undefined, 
     pos: [0, 0], height: 0.1,  wrapWidth: undefined, ori: 0.0,
@@ -144,7 +144,7 @@ async function experimentInit() {
   trialFix = new visual.TextStim({
     win: psychoJS.window,
     name: 'trialFix',
-    text: '+',
+    text: '',
     font: 'Open Sans',
     units: undefined, 
     pos: [0, 0], height: 0.1,  wrapWidth: undefined, ori: 0.0,
@@ -288,7 +288,7 @@ function fixationRoutineBegin(snapshot) {
     fixationClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    routineTimer.add(1.000000);
+    routineTimer.add(1.500000);
     // update component parameters for each repeat
     // keep track of which components have finished
     fixationComponents = [];
@@ -320,7 +320,7 @@ function fixationRoutineEachFrame() {
       fix.setAutoDraw(true);
     }
 
-    frameRemains = 0.0 + 1.0 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + 1.5 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (fix.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       fix.setAutoDraw(false);
     }
@@ -414,7 +414,7 @@ function trialRoutineBegin(snapshot) {
     trialClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    routineTimer.add(2.000000);
+    routineTimer.add(2.500000);
     // update component parameters for each repeat
     trialStim.setText(stimulus);
     trialResp.keys = undefined;
@@ -465,7 +465,7 @@ function trialRoutineEachFrame() {
       trialFix.setAutoDraw(true);
     }
 
-    frameRemains = 1 + 1.0 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 1 + 1.5 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (trialFix.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       trialFix.setAutoDraw(false);
     }
@@ -482,7 +482,7 @@ function trialRoutineEachFrame() {
       psychoJS.window.callOnFlip(function() { trialResp.clearEvents(); });
     }
 
-    frameRemains = 0.0 + 2 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    frameRemains = 0.0 + 2.5 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
     if (trialResp.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       trialResp.status = PsychoJS.Status.FINISHED;
   }
