@@ -2,7 +2,7 @@
  * Eightboxes_V2 Test *
  **********************/
 
-import { core, data, sound, util, visual } from '../lib/psychojs-2021.2.3.js';
+import { core, data, sound, util, visual } from './lib/psychojs-2021.2.3.js';
 const { PsychoJS } = core;
 const { TrialHandler } = data;
 const { Scheduler } = util;
@@ -57,16 +57,17 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/grapes.png', 'path': 'imgs/grapes.png'},
-    {'name': 'imgs/box.png', 'path': 'imgs/box.png'},
-    {'name': 'imgs/banana.png', 'path': 'imgs/banana.png'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
-    {'name': 'imgs/orange.png', 'path': 'imgs/orange.png'},
-    {'name': 'imgs/strawberry.png', 'path': 'imgs/strawberry.png'},
     {'name': 'imgs/apple.png', 'path': 'imgs/apple.png'},
+    {'name': 'imgs/banana.png', 'path': 'imgs/banana.png'},
+    {'name': 'conditions_v2.csv', 'path': 'conditions_v2.csv'},
+    {'name': 'imgs/box.png', 'path': 'imgs/box.png'},
+    {'name': 'imgs/orange.png', 'path': 'imgs/orange.png'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
     {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
+    {'name': 'imgs/grapes.png', 'path': 'imgs/grapes.png'},
+    {'name': 'imgs/strawberry.png', 'path': 'imgs/strawberry.png'},
     {'name': 'imgs/watermelon.png', 'path': 'imgs/watermelon.png'},
-    {'name': 'conditions.csv', 'path': 'conditions.csv'}
+    {'name': 'imgs/cherries.png', 'path': 'imgs/cherries.png'}
   ]
 });
 
@@ -108,7 +109,7 @@ var obj_width;
 var BOX_SIZE;
 var OBJ_SIZE;
 var BLANK_SIZE;
-var OBJ_POS;
+var pos;
 var NCOL;
 var BOX_X0;
 var BOX_Y0;
@@ -121,7 +122,8 @@ var FRUIT_X0;
 var FRUIT_Y0;
 var FRUIT_POS;
 var IMG_PATHS;
-var objs6;
+var IMG_NAMES;
+var objs7;
 var text0;
 var part1Clock;
 var text1;
@@ -171,9 +173,7 @@ async function experimentInit() {
   BOX_SIZE = [box_width, box_width];
   OBJ_SIZE = [obj_width, obj_width];
   BLANK_SIZE = OBJ_SIZE;
-  if ((! RANDOMIZE_POSITIONS)) {
-      OBJ_POS = {"Practice trial": [0, 6], "Trial 1": [5, 3], "Trial 2": [0, 3, 6], "Trial 3": [1, 4, 6, 7], "Trial 4": [0, 2, 5, 6], "Trial 5": [0, 1, 2, 5, 7], "Trial 6": [0, 2, 3, 4, 5, 6]};
-  }
+  pos = null;
   NCOL = 4;
   BOX_X0 = (- 3);
   BOX_Y0 = 0;
@@ -199,11 +199,12 @@ async function experimentInit() {
       y = FRUIT_Y0;
       FRUIT_POS.push([x, y]);
   }
-  IMG_PATHS = ["imgs/apple.png", "imgs/banana.png", "imgs/grapes.png", "imgs/orange.png", "imgs/strawberry.png", "imgs/watermelon.png"];
-  objs6 = [];
-  for (var i, _pj_c = 0, _pj_a = util.range(6), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+  IMG_PATHS = ["imgs/apple.png", "imgs/banana.png", "imgs/cherries.png", "imgs/grapes.png", "imgs/orange.png", "imgs/strawberry.png", "imgs/watermelon.png"];
+  IMG_NAMES = ["apple", "banana", "cherries", "grapes", "orange", "strawberry", "watermelon"];
+  objs7 = [];
+  for (var i, _pj_c = 0, _pj_a = util.range(7), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
       i = _pj_a[_pj_c];
-      objs6.push(new visual.ImageStim({"win": psychoJS.window, "name": `obj${(i + 1)}`, "image": IMG_PATHS[i], "pos": [0, 0], "size": OBJ_SIZE}));
+      objs7.push(new visual.ImageStim({"win": psychoJS.window, "name": IMG_NAMES[i], "image": IMG_PATHS[i], "pos": [0, 0], "size": OBJ_SIZE}));
   }
   
   text0 = new visual.TextStim({
@@ -424,7 +425,7 @@ function trialsLoopBegin(trialsLoopScheduler, snapshot) {
       psychoJS: psychoJS,
       nReps: 1, method: TrialHandler.Method.SEQUENTIAL,
       extraInfo: expInfo, originPath: undefined,
-      trialList: 'conditions.csv',
+      trialList: 'conditions_v2.csv',
       seed: undefined, name: 'trials'
     });
     psychoJS.experiment.addLoop(trials); // add the loop to the experiment
@@ -497,18 +498,26 @@ function part0RoutineBegin(snapshot) {
         util.shuffle(idxs8);
         idxs = idxs8.slice(0, n_fruits);
     } else {
-        idxs = OBJ_POS[trial_name];
+        pos = [pos1, pos2, pos3, pos4, pos5, pos6];
+        idxs = [];
+        for (var p, _pj_c = 0, _pj_a = pos, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+            p = _pj_a[_pj_c];
+            if ((p === null)) {
+                break;
+            }
+            idxs.push(p);
+        }
     }
     if (RANDOMIZE_FRUITS) {
-        util.shuffle(objs6);
+        util.shuffle(objs7);
     }
     correct_boxes = [];
     for (var i, _pj_c = 0, _pj_a = util.range(n_fruits), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
         i = _pj_a[_pj_c];
-        objs[idxs[i]] = objs6[i];
+        objs[idxs[i]] = objs7[i];
         objs[idxs[i]].pos = BOX_POS[idxs[i]];
         correct_boxes.push(`box${(idxs[i] + 1)}`);
-        correct_choices[idxs[i]] = objs6[i].name;
+        correct_choices[idxs[i]] = objs7[i].name;
     }
     correct_boxes.sort();
     for (var i, _pj_c = 0, _pj_a = util.range(N_BOXES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
@@ -560,7 +569,7 @@ function part0RoutineEachFrame() {
     if ((t <= reveal_seconds)) {
         for (var obj, _pj_c = 0, _pj_a = objs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
             obj = _pj_a[_pj_c];
-            if (_pj.in_es6("obj", obj.name)) {
+            if ((! _pj.in_es6("blank", obj.name))) {
                 obj.draw();
             }
         }
