@@ -51,24 +51,24 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/pot3.png', 'path': 'imgs/pot3.png'},
-    {'name': 'imgs/spin-btn.png', 'path': 'imgs/spin-btn.png'},
-    {'name': 'imgs/sticker1.png', 'path': 'imgs/sticker1.png'},
-    {'name': 'imgs/sticker6.png', 'path': 'imgs/sticker6.png'},
-    {'name': 'imgs/pot6.png', 'path': 'imgs/pot6.png'},
-    {'name': 'imgs/pot7.png', 'path': 'imgs/pot7.png'},
-    {'name': 'imgs/pot1.png', 'path': 'imgs/pot1.png'},
-    {'name': 'imgs/pot4.png', 'path': 'imgs/pot4.png'},
     {'name': 'imgs/sticker3.png', 'path': 'imgs/sticker3.png'},
+    {'name': 'imgs/sticker6.png', 'path': 'imgs/sticker6.png'},
+    {'name': 'imgs/pot7.png', 'path': 'imgs/pot7.png'},
+    {'name': 'imgs/pot3.png', 'path': 'imgs/pot3.png'},
+    {'name': 'imgs/pot8.png', 'path': 'imgs/pot8.png'},
+    {'name': 'imgs/end-btn.png', 'path': 'imgs/end-btn.png'},
+    {'name': 'imgs/sticker4.png', 'path': 'imgs/sticker4.png'},
+    {'name': 'imgs/spin-btn.png', 'path': 'imgs/spin-btn.png'},
+    {'name': 'imgs/pot2.png', 'path': 'imgs/pot2.png'},
+    {'name': 'imgs/pot1.png', 'path': 'imgs/pot1.png'},
+    {'name': 'imgs/sticker2.png', 'path': 'imgs/sticker2.png'},
+    {'name': 'imgs/turntable.png', 'path': 'imgs/turntable.png'},
+    {'name': 'imgs/pot6.png', 'path': 'imgs/pot6.png'},
+    {'name': 'imgs/pot5.png', 'path': 'imgs/pot5.png'},
+    {'name': 'imgs/pot4.png', 'path': 'imgs/pot4.png'},
     {'name': 'imgs/sticker5.png', 'path': 'imgs/sticker5.png'},
     {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
-    {'name': 'imgs/turntable.png', 'path': 'imgs/turntable.png'},
-    {'name': 'imgs/pot2.png', 'path': 'imgs/pot2.png'},
-    {'name': 'imgs/pot5.png', 'path': 'imgs/pot5.png'},
-    {'name': 'imgs/end-btn.png', 'path': 'imgs/end-btn.png'},
-    {'name': 'imgs/pot8.png', 'path': 'imgs/pot8.png'},
-    {'name': 'imgs/sticker2.png', 'path': 'imgs/sticker2.png'},
-    {'name': 'imgs/sticker4.png', 'path': 'imgs/sticker4.png'}
+    {'name': 'imgs/sticker1.png', 'path': 'imgs/sticker1.png'}
   ]
 });
 
@@ -97,24 +97,17 @@ async function updateInfo() {
 
 
 var placeClock;
-var DIST_FROM_CENTER;
-var ONE_DEG;
-var TURNTABLE_SIZE;
-var POT_SIZE;
-var STICKER_SIZE;
-var STICKER_X0;
-var STICKER_Y0;
-var theta;
-var x360;
-var y360;
-var idxs;
-var turntable;
-var pots;
-var objs;
-var contents;
-var stickers;
-var sticker_coords;
-var coord;
+var N_POTS;
+var N_STICKERS;
+var RADIUS;
+var SPIN_BUTTON_SIZE;
+var DEG_PER_POT;
+var THRESH2;
+var deg2xy;
+var dxdy;
+var dist2;
+var snapped;
+var repelled;
 var place_mouse;
 var place_disp;
 var spin_button;
@@ -130,55 +123,56 @@ var routineTimer;
 async function experimentInit() {
   // Initialize components for Routine "place"
   placeClock = new util.Clock();
-  DIST_FROM_CENTER = 0.25;
-  ONE_DEG = (pi / 180);
-  TURNTABLE_SIZE = 0.65;
-  POT_SIZE = 0.1;
-  STICKER_SIZE = 0.05;
-  STICKER_X0 = 0.5;
-  STICKER_Y0 = 0.25;
-  theta = 0;
-  x360 = [];
-  y360 = [];
-  for (var i, _pj_c = 0, _pj_a = util.range(360), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-      i = _pj_a[_pj_c];
-      theta = (i * ONE_DEG);
-      x360.push((DIST_FROM_CENTER * Math.sin(theta)));
-      y360.push((DIST_FROM_CENTER * Math.cos(theta)));
+  N_POTS = 8;
+  N_STICKERS = 6;
+  RADIUS = 0.25;
+  SPIN_BUTTON_SIZE = [0.156, 0.1];
+  DEG_PER_POT = (360 / N_POTS);
+  THRESH2 = (0.05 * 0.05);
+  function _deg2xy(deg, radius) {
+      var rad, x, y;
+      rad = ((deg * pi) / 180);
+      x = (radius * Math.sin(rad));
+      y = (radius * Math.cos(rad));
+      return [x, y];
   }
-  idxs = [];
-  for (var i, _pj_c = 0, _pj_a = util.range(0, 360, 45), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-      i = _pj_a[_pj_c];
-      idxs.push(i);
+  deg2xy = _deg2xy;
+  function _dxdy(p, q) {
+      var dx, dy;
+      dx = (p[0] - q[0]);
+      dy = (p[1] - q[1]);
+      return [dx, dy];
   }
-  turntable = new visual.ImageStim({"win": psychoJS.window, "name": "turntable", "image": "imgs/turntable.png", "pos": [0, 0], "size": TURNTABLE_SIZE, "opacity": 0.7});
-  turntable.autoDraw = true;
-  pots = [];
-  objs = [];
-  contents = [];
-  for (var i, _pj_c = 0, _pj_a = util.range(8), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-      i = _pj_a[_pj_c];
-      pots.push(new visual.ImageStim({"win": psychoJS.window, "name": `pot${(i + 1)}`, "image": `imgs/pot${(i + 1)}.png`, "pos": [x360[idxs[i]], y360[idxs[i]]], "size": POT_SIZE}));
-      objs.push(null);
-      contents.push(null);
+  dxdy = _dxdy;
+  function _dist2(p, q) {
+      var dx, dy;
+      [dx, dy] = dxdy(p, q);
+      return ((dx * dx) + (dy * dy));
   }
-  for (var pot, _pj_c = 0, _pj_a = pots, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-      pot = _pj_a[_pj_c];
-      pot.autoDraw = true;
+  dist2 = _dist2;
+  function _snapped(a, b, thresh2 = THRESH2) {
+      if ((dist2(a.pos, b.pos) <= thresh2)) {
+          a.pos = b.pos;
+          return true;
+      }
+      return false;
   }
-  stickers = [];
-  sticker_coords = [];
-  coord = null;
-  for (var i, _pj_c = 0, _pj_a = util.range(6), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-      i = _pj_a[_pj_c];
-      coord = [STICKER_X0, (STICKER_Y0 - (0.1 * i))];
-      sticker_coords.push(coord);
-      stickers.push(new visual.ImageStim({"win": psychoJS.window, "name": `sticker${(i + 1)}`, "image": `imgs/sticker${(i + 1)}.png`, "pos": coord, "size": STICKER_SIZE}));
+  snapped = _snapped;
+  function _repelled(x, y, r = 0.1, thresh2 = THRESH2) {
+      var d2, di, dj, dx, dy, i, j, ratio;
+      d2 = dist2(x.pos, y.pos);
+      if (((d2 > 0) && (d2 <= thresh2))) {
+          ratio = (r / Math.sqrt(d2));
+          [dx, dy] = dxdy(x.pos, y.pos);
+          di = (ratio * dx);
+          dj = (ratio * dy);
+          [i, j] = y.pos;
+          x.pos = [(i + di), (j + dj)];
+          return true;
+      }
+      return false;
   }
-  for (var sticker, _pj_c = 0, _pj_a = stickers, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-      sticker = _pj_a[_pj_c];
-      sticker.autoDraw = true;
-  }
+  repelled = _repelled;
   
   place_mouse = new core.Mouse({
     win: psychoJS.window,
@@ -258,16 +252,18 @@ async function experimentInit() {
 var t;
 var frameN;
 var continueRoutine;
-var END_PART_1;
 var DRAGGING;
-var THRESH2;
-var SPIN_BUTTON_SIZE;
-var stickers_left;
 var clicked_obj;
-var dxdy;
-var dist2;
-var snapped;
-var repelled;
+var stickers_left;
+var turntable;
+var pots;
+var objs;
+var contents;
+var pot_angles;
+var STICKER_X0;
+var STICKER_Y0;
+var stickers;
+var sticker_coords;
 var gotValidClick;
 var placeComponents;
 function placeRoutineBegin(snapshot) {
@@ -280,48 +276,39 @@ function placeRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    END_PART_1 = false;
     DRAGGING = false;
-    THRESH2 = (0.05 * 0.05);
-    SPIN_BUTTON_SIZE = [0.156, 0.1];
-    stickers_left = 6;
     clicked_obj = null;
-    function _dxdy(p, q) {
-        var dx, dy;
-        dx = (p[0] - q[0]);
-        dy = (p[1] - q[1]);
-        return [dx, dy];
+    stickers_left = N_STICKERS;
+    turntable = new visual.ImageStim({"win": psychoJS.window, "name": "turntable", "image": "imgs/turntable.png", "pos": [0, 0], "size": 0.65, "opacity": 0.7});
+    pots = [];
+    objs = [];
+    contents = [];
+    pot_angles = [];
+    for (var i, _pj_c = 0, _pj_a = util.range(N_POTS), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        i = _pj_a[_pj_c];
+        pot_angles.push((i * DEG_PER_POT));
+        pots.push(new visual.ImageStim({"win": psychoJS.window, "name": `pot${(i + 1)}`, "image": `imgs/pot${(i + 1)}.png`, "pos": deg2xy(pot_angles[i], RADIUS), "size": 0.1}));
+        objs.push(null);
+        contents.push(null);
     }
-    dxdy = _dxdy;
-    function _dist2(p, q) {
-        var dx, dy;
-        [dx, dy] = dxdy(p, q);
-        return ((dx * dx) + (dy * dy));
+    STICKER_X0 = 0.5;
+    STICKER_Y0 = 0.25;
+    stickers = [];
+    sticker_coords = [];
+    for (var i, _pj_c = 0, _pj_a = util.range(N_STICKERS), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        i = _pj_a[_pj_c];
+        sticker_coords.push([STICKER_X0, (STICKER_Y0 - (0.1 * i))]);
+        stickers.push(new visual.ImageStim({"win": psychoJS.window, "name": `sticker${(i + 1)}`, "image": `imgs/sticker${(i + 1)}.png`, "pos": sticker_coords[i], "size": 0.05}));
     }
-    dist2 = _dist2;
-    function _snapped(x, y, thresh2 = THRESH2) {
-        if ((dist2(x.pos, y.pos) <= thresh2)) {
-            x.pos = y.pos;
-            return true;
-        }
-        return false;
+    turntable.autoDraw = true;
+    for (var pot, _pj_c = 0, _pj_a = pots, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        pot = _pj_a[_pj_c];
+        pot.autoDraw = true;
     }
-    snapped = _snapped;
-    function _repelled(x, y, r = 0.1, thresh2 = THRESH2) {
-        var d2, di, dj, dx, dy, i, j, ratio;
-        d2 = dist2(x.pos, y.pos);
-        if (((d2 > 0) && (d2 <= thresh2))) {
-            ratio = (r / Math.sqrt(d2));
-            [dx, dy] = dxdy(x.pos, y.pos);
-            di = (ratio * dx);
-            dj = (ratio * dy);
-            [i, j] = y.pos;
-            x.pos = [(i + di), (j + dj)];
-            return true;
-        }
-        return false;
+    for (var sticker, _pj_c = 0, _pj_a = stickers, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        sticker = _pj_a[_pj_c];
+        sticker.autoDraw = true;
     }
-    repelled = _repelled;
     
     // setup some python lists for storing info about the place_mouse
     place_mouse.clicked_name = [];
@@ -353,58 +340,54 @@ function placeRoutineEachFrame() {
     place_disp.text = `Sticker left: ${stickers_left}
     contents = ${contents}`
     ;
-    if ((stickers_left > 0)) {
-        if ((! DRAGGING)) {
-            for (var sticker, _pj_c = 0, _pj_a = stickers, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-                sticker = _pj_a[_pj_c];
-                if (place_mouse.isPressedIn(sticker)) {
-                    clicked_obj = sticker;
-                    for (var i, _pj_f = 0, _pj_d = util.range(8), _pj_e = _pj_d.length; (_pj_f < _pj_e); _pj_f += 1) {
-                        i = _pj_d[_pj_f];
-                        if ((contents[i] === sticker.name)) {
-                            objs[i] = null;
-                            contents[i] = null;
-                            stickers_left += 1;
-                            break;
-                        }
-                    }
-                    DRAGGING = true;
-                }
-            }
-        }
-        if ((util.sum(place_mouse.getPressed()) > 0)) {
-            if (DRAGGING) {
-                clicked_obj.pos = place_mouse.getPos();
-            }
-        } else {
-            DRAGGING = false;
-            if ((clicked_obj !== null)) {
-                for (var i, _pj_c = 0, _pj_a = util.range(8), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-                    i = _pj_a[_pj_c];
-                    if ((contents[i] === clicked_obj.name)) {
-                        break;
-                    } else {
-                        if (((contents[i] !== null) && repelled(clicked_obj, pots[i]))) {
-                            break;
-                        } else {
-                            if (snapped(clicked_obj, pots[i])) {
-                                objs[i] = clicked_obj;
-                                contents[i] = clicked_obj.name;
-                                stickers_left -= 1;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    } else {
+    if ((! DRAGGING)) {
         for (var sticker, _pj_c = 0, _pj_a = stickers, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
             sticker = _pj_a[_pj_c];
-            sticker.autoDraw = false;
+            if (place_mouse.isPressedIn(sticker)) {
+                clicked_obj = sticker;
+                for (var i, _pj_f = 0, _pj_d = util.range(N_POTS), _pj_e = _pj_d.length; (_pj_f < _pj_e); _pj_f += 1) {
+                    i = _pj_d[_pj_f];
+                    if ((contents[i] === sticker.name)) {
+                        objs[i] = null;
+                        contents[i] = null;
+                        stickers_left += 1;
+                        break;
+                    }
+                }
+                DRAGGING = true;
+            }
         }
-        END_PART_1 = true;
+    }
+    if ((util.sum(place_mouse.getPressed()) > 0)) {
+        if (DRAGGING) {
+            clicked_obj.pos = place_mouse.getPos();
+        }
+    } else {
+        DRAGGING = false;
+        if ((clicked_obj !== null)) {
+            for (var i, _pj_c = 0, _pj_a = util.range(N_POTS), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+                i = _pj_a[_pj_c];
+                if ((contents[i] === clicked_obj.name)) {
+                    break;
+                } else {
+                    if (((contents[i] !== null) && repelled(clicked_obj, pots[i]))) {
+                        break;
+                    } else {
+                        if (snapped(clicked_obj, pots[i])) {
+                            objs[i] = clicked_obj;
+                            contents[i] = clicked_obj.name;
+                            stickers_left -= 1;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if ((stickers_left < 1)) {
         spin_button.size = SPIN_BUTTON_SIZE;
+    } else {
+        spin_button.size = [0, 0];
     }
     
     // *place_mouse* updates
@@ -448,7 +431,7 @@ function placeRoutineEachFrame() {
 
     
     // *spin_button* updates
-    if ((END_PART_1) && spin_button.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.0 && spin_button.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       spin_button.tStart = t;  // (not accounting for frame time here)
       spin_button.frameNStart = frameN;  // exact frame index
@@ -491,6 +474,11 @@ function placeRoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     });
+    for (var sticker, _pj_c = 0, _pj_a = stickers, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        sticker = _pj_a[_pj_c];
+        sticker.autoDraw = false;
+    }
+    
     // store data for psychoJS.experiment (ExperimentHandler)
     // the Routine "place" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
@@ -538,11 +526,14 @@ function spinRoutineEachFrame() {
     t = spinClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    shift = Number.parseInt(((SPEED_MULTIPLER * t) * (SPIN_DUR - t)));
-    for (var i, _pj_c = 0, _pj_a = util.range(8), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+    shift = ((SPEED_MULTIPLER * t) * (SPIN_DUR - t));
+    for (var i, _pj_c = 0, _pj_a = util.range(N_POTS), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
         i = _pj_a[_pj_c];
-        idxs[i] = ((idxs[i] + shift) % 360);
-        pots[i].pos = [x360[idxs[i]], y360[idxs[i]]];
+        pot_angles[i] = ((pot_angles[i] + shift) % 360);
+        pots[i].pos = deg2xy(pot_angles[i], RADIUS);
+        if ((objs[i] !== null)) {
+            objs[i].pos = pots[i].pos;
+        }
     }
     turntable.ori = ((turntable.ori - shift) % 360);
     
@@ -640,7 +631,7 @@ function trialRoutineBegin(snapshot) {
     buttons = util.sum(trial_mouse.getPressed());
     blanks = [];
     starts = [];
-    for (var i, _pj_c = 0, _pj_a = util.range(8), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+    for (var i, _pj_c = 0, _pj_a = util.range(N_POTS), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
         i = _pj_a[_pj_c];
         blanks.push(new visual.ImageStim({"win": psychoJS.window, "name": `blank${(i + 1)}`, "image": `imgs/empty-box.png`, "pos": pots[i].pos, "size": 0.05, "opacity": 1.0}));
         starts.push(null);
@@ -683,56 +674,58 @@ function trialRoutineEachFrame() {
     t = trialClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    if ((stickers_found >= 6)) {
-        trial_disp.text = `All stickers found!`;
-        END_TRIAL = true;
+    if (END_TRIAL) {
         end_button.size = END_BUTTON_SIZE;
     } else {
-        if ((clicks_left < 1)) {
-            trial_disp.text = `No tries left!`;
+        if ((stickers_found >= 6)) {
+            trial_disp.text = `All stickers found!`;
             END_TRIAL = true;
-            end_button.size = END_BUTTON_SIZE;
         } else {
-            trial_disp.text = `Tries left = ${clicks_left}`;
-            if ((buttons !== util.sum(trial_mouse.getPressed()))) {
-                buttons = util.sum(trial_mouse.getPressed());
-                for (var i, _pj_c = 0, _pj_a = util.range(8), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-                    i = _pj_a[_pj_c];
-                    if (trial_mouse.isPressedIn(pots[i])) {
-                        pot_choices.push(pots[i].name);
-                        sticker_choices.push(contents[i]);
-                        if ((contents[i] !== null)) {
-                            objs[i].pos = pots[i].pos;
-                            outcome.push("correct");
-                        } else {
-                            outcome.push("wrong");
-                            score -= 1;
+            if ((clicks_left < 1)) {
+                trial_disp.text = `No tries left!`;
+                END_TRIAL = true;
+            } else {
+                trial_disp.text = `Tries left = ${clicks_left}`;
+                if ((buttons !== util.sum(trial_mouse.getPressed()))) {
+                    buttons = util.sum(trial_mouse.getPressed());
+                    for (var i, _pj_c = 0, _pj_a = util.range(N_POTS), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+                        i = _pj_a[_pj_c];
+                        if (((starts[i] === null) && trial_mouse.isPressedIn(pots[i]))) {
+                            pot_choices.push(pots[i].name);
+                            sticker_choices.push(contents[i]);
+                            if ((contents[i] !== null)) {
+                                objs[i].pos = pots[i].pos;
+                                outcome.push("correct");
+                            } else {
+                                outcome.push("wrong");
+                                score -= 1;
+                            }
+                            starts[i] = t;
+                            clicks_left -= 1;
+                            break;
                         }
-                        starts[i] = t;
-                        clicks_left -= 1;
-                        break;
                     }
                 }
-            }
-            for (var i, _pj_c = 0, _pj_a = util.range(8), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-                i = _pj_a[_pj_c];
-                if ((starts[i] !== null)) {
-                    if (((t - starts[i]) < SHOW_DUR)) {
-                        if ((objs[i] !== null)) {
-                            objs[i].autoDraw = true;
+                for (var i, _pj_c = 0, _pj_a = util.range(N_POTS), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+                    i = _pj_a[_pj_c];
+                    if ((starts[i] !== null)) {
+                        if (((t - starts[i]) < SHOW_DUR)) {
+                            if ((objs[i] !== null)) {
+                                objs[i].autoDraw = true;
+                            } else {
+                                blanks[i].autoDraw = true;
+                            }
                         } else {
-                            blanks[i].autoDraw = true;
+                            if ((objs[i] !== null)) {
+                                objs[i].pos = sticker_coords[stickers_found];
+                                stickers_found += 1;
+                            } else {
+                                blanks[i].autoDraw = false;
+                            }
+                            starts[i] = null;
+                            objs[i] = null;
+                            contents[i] = null;
                         }
-                    } else {
-                        if ((objs[i] !== null)) {
-                            objs[i].pos = sticker_coords[stickers_found];
-                            stickers_found += 1;
-                        } else {
-                            blanks[i].autoDraw = false;
-                        }
-                        starts[i] = null;
-                        objs[i] = null;
-                        contents[i] = null;
                     }
                 }
             }

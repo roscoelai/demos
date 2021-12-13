@@ -28,24 +28,24 @@ TODO:
 - [x] Make stickers disappear ( after _all_ stickers placed, for now )
 - [ ] Or make then disappear immediately after 'snapping'
     - Remove sticker will become redundant ( and impossible )
-- [ ] Transition between placement and spin is... rather weird
+- [x] Transition between placement and spin is... rather weird
+    - Make it possible to change mind even after placing all 6 stickers
 - [x] Draw a 'spin' button after all stickers placed in pots
 - [x] Spin animation for pots
-- [x] Draw image of some turntable that revolves with the pots
-- [x] Make rotation speed follow a quadratic curve
-- [ ] Draw 'cover' or 'lid' for turntable ( that can also show rotation )
-- [x] On clicking correct pot, reveal sticker at side
-- [x] On clicking correct pot, reveal sticker at pot, then move to side
-- [ ] Animate the movement?
+- [x] Draw image of turntable that revolves with the pots
+- [x] Rotation speed based on quadratic equation
+- [ ] Draw a 'cover' or 'lid' for turntable (?)
+- [x] On clicking correct pot, reveal sticker at pot, then move to the side
+    - Animate the movement?
 - [ ] Show some congratulatory message
 - [x] On clicking incorrect pot, reveal blank at pot for a short while
-- [x] Rules for ending experiment ( 16 clicks or 6 stickers found )
-- [x] Record which pots were clicked on in order
+- [x] Rules for ending experiment ( 6 stickers found or 16 clicks )
+- [x] Record which pots were clicked in order
 - [x] Record if choices were correct/incorrect in order
 - [x] Test JS (online) version
 - [.] Record which pots contained which stickers
-- [x] Calculate score
-- [ ] Rethink what to record
-- [ ] Declutter output CSV
-- [ ] Test robustness ( try to break the thing )
+- [x] Calculate score ( 16 - errors )
+- [ ] Rethink what/how to record
+    - Declutter output CSV
+- [ ] Test robustness ( try wacky responses )
 
