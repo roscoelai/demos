@@ -1,0 +1,5 @@
+practiceBlock,block,sequenceFile,showFeedback
+Control-only,Control,sequences/practice-control.csv,1
+2-Back-only,2-Back,sequences/practice-2back.csv,1
+Cycle-Control,Control,sequences/practice-cycle-control.csv,0
+Cycle-2-Back,2-Back,sequences/practice-cycle-2back.csv,0
