@@ -55,15 +55,11 @@ psychoJS.start({
   expInfo: expInfo,
   resources: [
     {'name': 'sequences/practice-1.csv', 'path': 'sequences/practice-1.csv'},
-    {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
     {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
-    {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
     {'name': 'imgs/day-mock.png', 'path': 'imgs/day-mock.png'},
-    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
     {'name': 'imgs/night-mock.png', 'path': 'imgs/night-mock.png'},
     {'name': 'imgs/stack-of-cards.png', 'path': 'imgs/stack-of-cards.png'},
-    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
-    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'}
+    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'}
   ]
 });
 
