@@ -57,11 +57,11 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'sequences/practice-2back.csv', 'path': 'sequences/practice-2back.csv'},
-    {'name': 'sequences/practice-blocks.csv', 'path': 'sequences/practice-blocks.csv'},
     {'name': 'sequences/practice-cycle-2back.csv', 'path': 'sequences/practice-cycle-2back.csv'},
     {'name': 'sequences/practice-cycle-control.csv', 'path': 'sequences/practice-cycle-control.csv'},
-    {'name': 'sequences/practice-control.csv', 'path': 'sequences/practice-control.csv'}
+    {'name': 'sequences/practice-2back.csv', 'path': 'sequences/practice-2back.csv'},
+    {'name': 'sequences/practice-control.csv', 'path': 'sequences/practice-control.csv'},
+    {'name': 'sequences/practice-blocks.csv', 'path': 'sequences/practice-blocks.csv'}
   ]
 });
 
@@ -103,10 +103,10 @@ var prac_restClock;
 var prFix;
 var prInstr;
 var prac_trialClock;
-var ptStim;
-var ptResp;
-var ptFeedback;
-var ptDebug;
+var pracStim;
+var pracResp;
+var pracFeedback;
+var pracDebug;
 var globalClock;
 var routineTimer;
 async function experimentInit() {
@@ -191,9 +191,9 @@ async function experimentInit() {
   
   // Initialize components for Routine "prac_trial"
   prac_trialClock = new util.Clock();
-  ptStim = new visual.TextStim({
+  pracStim = new visual.TextStim({
     win: psychoJS.window,
-    name: 'ptStim',
+    name: 'pracStim',
     text: '',
     font: 'Open Sans',
     units: undefined, 
@@ -202,11 +202,11 @@ async function experimentInit() {
     depth: 0.0 
   });
   
-  ptResp = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
+  pracResp = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
   
-  ptFeedback = new visual.TextStim({
+  pracFeedback = new visual.TextStim({
     win: psychoJS.window,
-    name: 'ptFeedback',
+    name: 'pracFeedback',
     text: '',
     font: 'Open Sans',
     units: undefined, 
@@ -215,9 +215,9 @@ async function experimentInit() {
     depth: -3.0 
   });
   
-  ptDebug = new visual.TextStim({
+  pracDebug = new visual.TextStim({
     win: psychoJS.window,
-    name: 'ptDebug',
+    name: 'pracDebug',
     text: '',
     font: 'Open Sans',
     units: undefined, 
@@ -372,7 +372,7 @@ function practice_blocksLoopBegin(practice_blocksLoopScheduler, snapshot) {
     // set up handler to look after randomisation of conditions etc
     practice_blocks = new TrialHandler({
       psychoJS: psychoJS,
-      nReps: 2, method: TrialHandler.Method.SEQUENTIAL,
+      nReps: 1, method: TrialHandler.Method.SEQUENTIAL,
       extraInfo: expInfo, originPath: undefined,
       trialList: 'sequences/practice-blocks.csv',
       seed: undefined, name: 'practice_blocks'
@@ -681,12 +681,14 @@ function prac_restRoutineEnd() {
 }
 
 
-var _ptResp_allKeys;
+var _pracResp_allKeys;
 var SHOW_DEBUG;
 var FEEDBACK_DURATION;
 var show_feedback;
 var t_start;
 var get_keys;
+var get_rt;
+var uncorrected_reaction_time;
 var prac_trialComponents;
 function prac_trialRoutineBegin(snapshot) {
   return async function () {
@@ -698,23 +700,24 @@ function prac_trialRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    ptStim.setText(stimulus);
-    ptResp.keys = undefined;
-    ptResp.rt = undefined;
-    _ptResp_allKeys = [];
-    SHOW_DEBUG = true;
+    pracStim.setText(stimulus);
+    pracResp.keys = undefined;
+    pracResp.rt = undefined;
+    _pracResp_allKeys = [];
+    SHOW_DEBUG = false;
     FEEDBACK_DURATION = 1.0;
     show_feedback = (showFeedback === 1);
     t_start = null;
     get_keys = true;
-    ptResp.keys = null;
+    get_rt = true;
+    uncorrected_reaction_time = null;
     
     // keep track of which components have finished
     prac_trialComponents = [];
-    prac_trialComponents.push(ptStim);
-    prac_trialComponents.push(ptResp);
-    prac_trialComponents.push(ptFeedback);
-    prac_trialComponents.push(ptDebug);
+    prac_trialComponents.push(pracStim);
+    prac_trialComponents.push(pracResp);
+    prac_trialComponents.push(pracFeedback);
+    prac_trialComponents.push(pracDebug);
     
     for (const thisComponent of prac_trialComponents)
       if ('status' in thisComponent)
@@ -724,6 +727,7 @@ function prac_trialRoutineBegin(snapshot) {
 }
 
 
+var _pj;
 function prac_trialRoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'prac_trial'-------
@@ -732,102 +736,124 @@ function prac_trialRoutineEachFrame() {
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
     
-    // *ptStim* updates
-    if (t >= 0.0 && ptStim.status === PsychoJS.Status.NOT_STARTED) {
+    // *pracStim* updates
+    if (t >= 0.0 && pracStim.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      ptStim.tStart = t;  // (not accounting for frame time here)
-      ptStim.frameNStart = frameN;  // exact frame index
+      pracStim.tStart = t;  // (not accounting for frame time here)
+      pracStim.frameNStart = frameN;  // exact frame index
       
-      ptStim.setAutoDraw(true);
+      pracStim.setAutoDraw(true);
     }
 
     frameRemains = 0.0 + 1.0 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
-    if (ptStim.status === PsychoJS.Status.STARTED && t >= frameRemains) {
-      ptStim.setAutoDraw(false);
+    if (pracStim.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      pracStim.setAutoDraw(false);
     }
     
-    // *ptResp* updates
-    if ((get_keys) && ptResp.status === PsychoJS.Status.NOT_STARTED) {
+    // *pracResp* updates
+    if ((get_keys) && pracResp.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      ptResp.tStart = t;  // (not accounting for frame time here)
-      ptResp.frameNStart = frameN;  // exact frame index
+      pracResp.tStart = t;  // (not accounting for frame time here)
+      pracResp.frameNStart = frameN;  // exact frame index
       
       // keyboard checking is just starting
-      psychoJS.window.callOnFlip(function() { ptResp.clock.reset(); });  // t=0 on next screen flip
-      psychoJS.window.callOnFlip(function() { ptResp.start(); }); // start on screen flip
-      psychoJS.window.callOnFlip(function() { ptResp.clearEvents(); });
+      psychoJS.window.callOnFlip(function() { pracResp.clock.reset(); });  // t=0 on next screen flip
+      psychoJS.window.callOnFlip(function() { pracResp.start(); }); // start on screen flip
+      psychoJS.window.callOnFlip(function() { pracResp.clearEvents(); });
     }
 
-    if (ptResp.status === PsychoJS.Status.STARTED) {
-      let theseKeys = ptResp.getKeys({keyList: ['a', 'l'], waitRelease: false});
-      _ptResp_allKeys = _ptResp_allKeys.concat(theseKeys);
-      if (_ptResp_allKeys.length > 0) {
-        ptResp.keys = _ptResp_allKeys[0].name;  // just the first key pressed
-        ptResp.rt = _ptResp_allKeys[0].rt;
+    if (pracResp.status === PsychoJS.Status.STARTED) {
+      let theseKeys = pracResp.getKeys({keyList: ['a', 'l'], waitRelease: false});
+      _pracResp_allKeys = _pracResp_allKeys.concat(theseKeys);
+      if (_pracResp_allKeys.length > 0) {
+        pracResp.keys = _pracResp_allKeys[0].name;  // just the first key pressed
+        pracResp.rt = _pracResp_allKeys[0].rt;
         // was this correct?
-        if (ptResp.keys == corrAns) {
-            ptResp.corr = 1;
+        if (pracResp.keys == corrAns) {
+            pracResp.corr = 1;
         } else {
-            ptResp.corr = 0;
+            pracResp.corr = 0;
         }
       }
     }
     
+    var _pj;
+    function _pj_snippets(container) {
+        function in_es6(left, right) {
+            if (((right instanceof Array) || ((typeof right) === "string"))) {
+                return (right.indexOf(left) > (- 1));
+            } else {
+                if (((right instanceof Map) || (right instanceof Set) || (right instanceof WeakMap) || (right instanceof WeakSet))) {
+                    return right.has(left);
+                } else {
+                    return (left in right);
+                }
+            }
+        }
+        container["in_es6"] = in_es6;
+        return container;
+    }
+    _pj = {};
+    _pj_snippets(_pj);
     if (SHOW_DEBUG) {
-        ptDebug.text = `show_feedback = ${show_feedback}
+        pracDebug.text = `show_feedback = ${show_feedback}
     t = ${round(t, 3)}`
     ;
         if ((t_start !== null)) {
-            ptDebug.text += `
+            pracDebug.text += `
     t_start = ${round(t_start, 3)}`
     ;
         }
-        if ((ptResp.keys !== null)) {
-            ptDebug.text += `
-    ptResp.keys = ${ptResp.keys}`
+        if ((pracResp.keys !== null)) {
+            pracDebug.text += `
+    pracResp.keys = ${pracResp.keys}`
     ;
         }
+    }
+    if ((get_rt && _pj.in_es6(pracResp.keys, ["a", "l"]))) {
+        uncorrected_reaction_time = t;
+        get_rt = false;
     }
     if (show_feedback) {
         if (((t_start !== null) && ((t - t_start) > FEEDBACK_DURATION))) {
             continueRoutine = false;
         }
-        if (((get_keys && (ptResp.keys !== null)) && (ptResp.keys.length > 0))) {
+        if ((get_keys && _pj.in_es6(pracResp.keys, ["a", "l"]))) {
             t_start = t;
             get_keys = false;
-            ptFeedback.text = ((ptResp.keys === corrAns) ? "Correct!" : "Wrong!");
+            pracFeedback.text = ((pracResp.corr === 1) ? "Correct!" : "Wrong!");
         } else {
             if ((get_keys && (t > 2.5))) {
                 t_start = t;
                 get_keys = false;
-                ptFeedback.text = ((stimulus === 0) ? "Correct!" : "Too slow!");
+                pracFeedback.text = ((stimulus === 0) ? "Correct!" : "Too slow!");
             }
         }
     } else {
-        ptFeedback.text = "";
+        pracFeedback.text = "";
         if ((t > 2.5)) {
             continueRoutine = false;
         }
     }
     
     
-    // *ptFeedback* updates
-    if ((show_feedback) && ptFeedback.status === PsychoJS.Status.NOT_STARTED) {
+    // *pracFeedback* updates
+    if ((show_feedback) && pracFeedback.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      ptFeedback.tStart = t;  // (not accounting for frame time here)
-      ptFeedback.frameNStart = frameN;  // exact frame index
+      pracFeedback.tStart = t;  // (not accounting for frame time here)
+      pracFeedback.frameNStart = frameN;  // exact frame index
       
-      ptFeedback.setAutoDraw(true);
+      pracFeedback.setAutoDraw(true);
     }
 
     
-    // *ptDebug* updates
-    if ((SHOW_DEBUG) && ptDebug.status === PsychoJS.Status.NOT_STARTED) {
+    // *pracDebug* updates
+    if ((SHOW_DEBUG) && pracDebug.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      ptDebug.tStart = t;  // (not accounting for frame time here)
-      ptDebug.frameNStart = frameN;  // exact frame index
+      pracDebug.tStart = t;  // (not accounting for frame time here)
+      pracDebug.frameNStart = frameN;  // exact frame index
       
-      ptDebug.setAutoDraw(true);
+      pracDebug.setAutoDraw(true);
     }
 
     // check for quit (typically the Esc key)
@@ -866,22 +892,23 @@ function prac_trialRoutineEnd() {
       }
     }
     // was no response the correct answer?!
-    if (ptResp.keys === undefined) {
+    if (pracResp.keys === undefined) {
       if (['None','none',undefined].includes(corrAns)) {
-         ptResp.corr = 1;  // correct non-response
+         pracResp.corr = 1;  // correct non-response
       } else {
-         ptResp.corr = 0;  // failed to respond (incorrectly)
+         pracResp.corr = 0;  // failed to respond (incorrectly)
       }
     }
     // store data for psychoJS.experiment (ExperimentHandler)
-    psychoJS.experiment.addData('ptResp.keys', ptResp.keys);
-    psychoJS.experiment.addData('ptResp.corr', ptResp.corr);
-    if (typeof ptResp.keys !== 'undefined') {  // we had a response
-        psychoJS.experiment.addData('ptResp.rt', ptResp.rt);
+    psychoJS.experiment.addData('pracResp.keys', pracResp.keys);
+    psychoJS.experiment.addData('pracResp.corr', pracResp.corr);
+    if (typeof pracResp.keys !== 'undefined') {  // we had a response
+        psychoJS.experiment.addData('pracResp.rt', pracResp.rt);
         }
     
-    ptResp.stop();
-    ptFeedback.text = "";
+    pracResp.stop();
+    pracFeedback.text = "";
+    psychoJS.experiment.addData("uncorrected_reaction_time", uncorrected_reaction_time);
     
     // the Routine "prac_trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();

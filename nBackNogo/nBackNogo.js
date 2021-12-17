@@ -63,14 +63,14 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'sequences/block-2-of-7-2back.csv', 'path': 'sequences/block-2-of-7-2back.csv'},
-    {'name': 'sequences/block-6-of-7-2back.csv', 'path': 'sequences/block-6-of-7-2back.csv'},
-    {'name': 'sequences/block-7-of-7-control.csv', 'path': 'sequences/block-7-of-7-control.csv'},
-    {'name': 'sequences/blocks.csv', 'path': 'sequences/blocks.csv'},
     {'name': 'sequences/block-1-of-7-control.csv', 'path': 'sequences/block-1-of-7-control.csv'},
-    {'name': 'sequences/block-5-of-7-control.csv', 'path': 'sequences/block-5-of-7-control.csv'},
+    {'name': 'sequences/block-6-of-7-2back.csv', 'path': 'sequences/block-6-of-7-2back.csv'},
     {'name': 'sequences/block-3-of-7-control.csv', 'path': 'sequences/block-3-of-7-control.csv'},
-    {'name': 'sequences/block-4-of-7-2back.csv', 'path': 'sequences/block-4-of-7-2back.csv'}
+    {'name': 'sequences/blocks.csv', 'path': 'sequences/blocks.csv'},
+    {'name': 'sequences/block-7-of-7-control.csv', 'path': 'sequences/block-7-of-7-control.csv'},
+    {'name': 'sequences/block-5-of-7-control.csv', 'path': 'sequences/block-5-of-7-control.csv'},
+    {'name': 'sequences/block-4-of-7-2back.csv', 'path': 'sequences/block-4-of-7-2back.csv'},
+    {'name': 'sequences/block-2-of-7-2back.csv', 'path': 'sequences/block-2-of-7-2back.csv'}
   ]
 });
 
@@ -641,6 +641,8 @@ function task_restRoutineEnd() {
 
 var _trialResp_allKeys;
 var SHOW_DEBUG;
+var get_key;
+var uncorrected_reaction_time;
 var task_trialComponents;
 function task_trialRoutineBegin(snapshot) {
   return async function () {
@@ -658,6 +660,8 @@ function task_trialRoutineBegin(snapshot) {
     trialResp.rt = undefined;
     _trialResp_allKeys = [];
     SHOW_DEBUG = false;
+    get_key = true;
+    uncorrected_reaction_time = null;
     
     // keep track of which components have finished
     task_trialComponents = [];
@@ -674,6 +678,7 @@ function task_trialRoutineBegin(snapshot) {
 }
 
 
+var _pj;
 function task_trialRoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'task_trial'-------
@@ -742,13 +747,43 @@ function task_trialRoutineEachFrame() {
       }
     }
     
+    var _pj;
+    function _pj_snippets(container) {
+        function in_es6(left, right) {
+            if (((right instanceof Array) || ((typeof right) === "string"))) {
+                return (right.indexOf(left) > (- 1));
+            } else {
+                if (((right instanceof Map) || (right instanceof Set) || (right instanceof WeakMap) || (right instanceof WeakSet))) {
+                    return right.has(left);
+                } else {
+                    return (left in right);
+                }
+            }
+        }
+        container["in_es6"] = in_es6;
+        return container;
+    }
+    _pj = {};
+    _pj_snippets(_pj);
     if (SHOW_DEBUG) {
         trialDebug.text = `trialResp.keys = ${trialResp.keys}`;
+        trialDebug.text += `
+    t = ${round(t, 3)}`
+    ;
+        if ((uncorrected_reaction_time !== null)) {
+            trialDebug.text += `
+    uncorrected_reaction_time = ${round(uncorrected_reaction_time, 3)}`
+    ;
+        }
+    }
+    if ((get_key && _pj.in_es6(trialResp.keys, ["a", "l"]))) {
+        uncorrected_reaction_time = t;
+        get_key = false;
     }
     
     
     // *trialDebug* updates
-    if ((0.0) && trialDebug.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.0 && trialDebug.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       trialDebug.tStart = t;  // (not accounting for frame time here)
       trialDebug.frameNStart = frameN;  // exact frame index
@@ -756,7 +791,8 @@ function task_trialRoutineEachFrame() {
       trialDebug.setAutoDraw(true);
     }
 
-    if (trialDebug.status === PsychoJS.Status.STARTED && t >= (trialDebug.tStart + 2.5)) {
+    frameRemains = 0.0 + 2.5 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (trialDebug.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       trialDebug.setAutoDraw(false);
     }
     // check for quit (typically the Esc key)
@@ -810,6 +846,8 @@ function task_trialRoutineEnd() {
         }
     
     trialResp.stop();
+    psychoJS.experiment.addData("uncorrected_reaction_time", uncorrected_reaction_time);
+    
     return Scheduler.Event.NEXT;
   };
 }
