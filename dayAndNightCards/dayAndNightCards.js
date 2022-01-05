@@ -102,6 +102,7 @@ var SHOW_DEBUG;
 var CARD_SIZE;
 var DECK_SIZE;
 var BOX_SIZE;
+var NEW_CARD_POS;
 var PICTURE_DELAY;
 var FEEDBACK_DELAY;
 var terminate_experiment;
@@ -124,6 +125,7 @@ async function experimentInit() {
   CARD_SIZE = [0.18, 0.26];
   DECK_SIZE = [0.2, 0.28];
   BOX_SIZE = [0.3375, 0.2775];
+  NEW_CARD_POS = [0.011, (- 0.309)];
   PICTURE_DELAY = 0.1;
   FEEDBACK_DELAY = 0.5;
   terminate_experiment = false;
@@ -302,7 +304,7 @@ function gateRoutineBegin(snapshot) {
     day_box.autoDraw = true;
     night_box = new visual.ImageStim({"win": psychoJS.window, "name": "night_box", "image": nightBox, "pos": [0.4, 0.15], "size": BOX_SIZE});
     night_box.autoDraw = true;
-    card_stack = new visual.ImageStim({"win": psychoJS.window, "name": "card_stack", "image": `imgs/deck.png`, "pos": [0, (- 0.3)], "size": DECK_SIZE});
+    card_stack = new visual.ImageStim({"win": psychoJS.window, "name": "card_stack", "image": "imgs/deck.png", "pos": [0, (- 0.3)], "size": DECK_SIZE});
     card_stack.autoDraw = true;
     
     // keep track of which components have finished
@@ -388,10 +390,7 @@ function trialRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    if (terminate_experiment) {
-        continueRoutine = false;
-    }
-    if (practice_passed) {
+    if ((terminate_experiment || practice_passed)) {
         continueRoutine = false;
     } else {
         continueRoutine = true;
@@ -405,7 +404,7 @@ function trialRoutineBegin(snapshot) {
     choice = null;
     correct = null;
     trial_time = null;
-    card = new visual.ImageStim({"win": psychoJS.window, "name": `${stimulus}`, "image": `imgs/${stimulus}.png`, "pos": [0.011, (- 0.309)], "size": [0, 0]});
+    card = new visual.ImageStim({"win": psychoJS.window, "name": `${stimulus}`, "image": `imgs/${stimulus}.png`, "pos": NEW_CARD_POS, "size": [0, 0]});
     
     // setup some python lists for storing info about the mouse
     gotValidClick = false; // until a click is received
