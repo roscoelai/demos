@@ -1,0 +1,13 @@
+blockName,tryNumber,fileName,dayBox,nightBox,maxScore,showFeedback
+Practice 1,1,sequences/practice-1.csv,imgs/day-box.png,imgs/night-box.png,8,1
+Practice 1,2,sequences/practice-1.csv,imgs/day-box.png,imgs/night-box.png,8,1
+Practice 1,3,sequences/practice-1.csv,imgs/day-box.png,imgs/night-box.png,8,1
+Rule 1,1,sequences/rule-1.csv,imgs/day-box.png,imgs/night-box.png,16,0
+Practice 2,1,sequences/practice-2.csv,imgs/day-box.png,imgs/night-box.png,8,1
+Practice 2,2,sequences/practice-2.csv,imgs/day-box.png,imgs/night-box.png,8,1
+Practice 2,3,sequences/practice-2.csv,imgs/day-box.png,imgs/night-box.png,8,1
+Rule 2,1,sequences/rule-2.csv,imgs/day-box.png,imgs/night-box.png,16,0
+Practice 3,1,sequences/practice-3.csv,imgs/day-redline-box.png,imgs/night-redline-box.png,8,1
+Practice 3,2,sequences/practice-3.csv,imgs/day-redline-box.png,imgs/night-redline-box.png,8,1
+Practice 3,3,sequences/practice-3.csv,imgs/day-redline-box.png,imgs/night-redline-box.png,8,1
+Rule 3,1,sequences/rule-3.csv,imgs/day-redline-box.png,imgs/night-redline-box.png,16,0

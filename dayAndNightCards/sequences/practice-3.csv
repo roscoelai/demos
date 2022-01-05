@@ -1,0 +1,9 @@
+stimulus,corrAns
+day,day_box
+night-redline,day_box
+day-redline,night_box
+night,night_box
+night-redline,day_box
+night,night_box
+day,day_box
+day-redline,night_box
