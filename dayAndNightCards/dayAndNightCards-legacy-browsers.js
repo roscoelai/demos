@@ -46,22 +46,21 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'sequences/rule-2.csv', 'path': 'sequences/rule-2.csv'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
     {'name': 'sequences/practice-2.csv', 'path': 'sequences/practice-2.csv'},
-    {'name': 'sequences/rule-3.csv', 'path': 'sequences/rule-3.csv'},
-    {'name': 'imgs/night-redline-box.png', 'path': 'imgs/night-redline-box.png'},
-    {'name': 'imgs/day-redline-box.png', 'path': 'imgs/day-redline-box.png'},
-    {'name': 'sequences/practice-3.csv', 'path': 'sequences/practice-3.csv'},
-    {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
-    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
-    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
-    {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
-    {'name': 'sequences/rule-1.csv', 'path': 'sequences/rule-1.csv'},
     {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
-    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
-    {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
     {'name': 'sequences/practice-1.csv', 'path': 'sequences/practice-1.csv'},
-    {'name': 'sequences/blocks.csv', 'path': 'sequences/blocks.csv'}
+    {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
+    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
+    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
+    {'name': 'sequences/practice-3.csv', 'path': 'sequences/practice-3.csv'},
+    {'name': 'sequences/rule-1.csv', 'path': 'sequences/rule-1.csv'},
+    {'name': 'sequences/rule-3.csv', 'path': 'sequences/rule-3.csv'},
+    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
+    {'name': 'sequences/rule-2.csv', 'path': 'sequences/rule-2.csv'},
+    {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
+    {'name': 'sequences/blocks.csv', 'path': 'sequences/blocks.csv'},
+    {'name': 'imgs/night.png', 'path': 'imgs/night.png'}
   ]
 });
 
@@ -93,15 +92,24 @@ var gateClock;
 var SHOW_DEBUG;
 var CARD_SIZE;
 var DECK_SIZE;
+var CONTINUE_SIZE;
 var BOX_SIZE;
 var NEW_CARD_POS;
 var PICTURE_DELAY;
-var FEEDBACK_DELAY;
+var FEEDBACK_DELAY_CORRECT;
+var FEEDBACK_DELAY_INCORRECT;
 var terminate_experiment;
 var practice_passed;
 var practice_names;
 var cumulative_time;
+var day_box;
+var night_box;
+var card_stack;
 var snapped;
+var gateText;
+var gateReady;
+var gateCont;
+var gateMouse;
 var trialClock;
 var mouse;
 var header;
@@ -116,14 +124,22 @@ async function experimentInit() {
   SHOW_DEBUG = true;
   CARD_SIZE = [0.18, 0.26];
   DECK_SIZE = [0.2, 0.28];
+  CONTINUE_SIZE = [0.228, 0.1];
   BOX_SIZE = [0.3375, 0.2775];
   NEW_CARD_POS = [0.011, (- 0.309)];
   PICTURE_DELAY = 0.1;
-  FEEDBACK_DELAY = 0.5;
+  FEEDBACK_DELAY_CORRECT = 0.5;
+  FEEDBACK_DELAY_INCORRECT = 1.0;
   terminate_experiment = false;
   practice_passed = false;
   practice_names = ["Practice 1", "Practice 2", "Practice 3"];
   cumulative_time = 0.0;
+  day_box = new visual.ImageStim({"win": psychoJS.window, "name": "day_box", "image": "imgs/day-box.png", "pos": [(- 0.4), 0.15], "size": [0, 0]});
+  night_box = new visual.ImageStim({"win": psychoJS.window, "name": "night_box", "image": "imgs/night-box.png", "pos": [0.4, 0.15], "size": [0, 0]});
+  card_stack = new visual.ImageStim({"win": psychoJS.window, "name": "card_stack", "image": "imgs/deck.png", "pos": [0, (- 0.3)], "size": [0, 0]});
+  day_box.autoDraw = true;
+  night_box.autoDraw = true;
+  card_stack.autoDraw = true;
   function _snapped(clicked_obj, box) {
       var bx, by, dx, dy, ox, oy, thresh_x2, thresh_y2;
       [ox, oy] = clicked_obj.pos;
@@ -140,6 +156,41 @@ async function experimentInit() {
   }
   snapped = _snapped;
   
+  gateText = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'gateText',
+    text: '',
+    font: 'Open Sans',
+    units: undefined, 
+    pos: [0, 0.1], height: 0.1,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -1.0 
+  });
+  
+  gateReady = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'gateReady',
+    text: 'Ready?',
+    font: 'Open Sans',
+    units: undefined, 
+    pos: [0, (- 0.1)], height: 0.1,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -2.0 
+  });
+  
+  gateCont = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'gateCont', units : undefined, 
+    image : 'imgs/continue.png', mask : undefined,
+    ori : 0.0, pos : [0, (- 0.4)], size : CONTINUE_SIZE,
+    color : new util.Color([1, 1, 1]), opacity : undefined,
+    flipHoriz : false, flipVert : false,
+    texRes : 128.0, interpolate : true, depth : -3.0 
+  });
+  gateMouse = new core.Mouse({
+    win: psychoJS.window,
+  });
+  gateMouse.mouseClock = new util.Clock();
   // Initialize components for Routine "trial"
   trialClock = new util.Clock();
   mouse = new core.Mouse({
@@ -278,10 +329,9 @@ async function blocksLoopEnd() {
 var t;
 var frameN;
 var continueRoutine;
+var show_feedback;
 var score;
-var day_box;
-var night_box;
-var card_stack;
+var gotValidClick;
 var gateComponents;
 function gateRoutineBegin(snapshot) {
   return async function () {
@@ -293,16 +343,27 @@ function gateRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
+    if ((terminate_experiment || practice_passed)) {
+        continueRoutine = false;
+    } else {
+        continueRoutine = true;
+    }
+    day_box.size = [0, 0];
+    night_box.size = [0, 0];
+    card_stack.size = [0, 0];
+    show_feedback = (isPractice === 1);
     score = 0;
-    day_box = new visual.ImageStim({"win": psychoJS.window, "name": "day_box", "image": dayBox, "pos": [(- 0.4), 0.15], "size": BOX_SIZE});
-    day_box.autoDraw = true;
-    night_box = new visual.ImageStim({"win": psychoJS.window, "name": "night_box", "image": nightBox, "pos": [0.4, 0.15], "size": BOX_SIZE});
-    night_box.autoDraw = true;
-    card_stack = new visual.ImageStim({"win": psychoJS.window, "name": "card_stack", "image": "imgs/deck.png", "pos": [0, (- 0.3)], "size": DECK_SIZE});
-    card_stack.autoDraw = true;
     
+    gateText.setText(blockName);
+    // setup some python lists for storing info about the gateMouse
+    gateMouse.clicked_name = [];
+    gotValidClick = false; // until a click is received
     // keep track of which components have finished
     gateComponents = [];
+    gateComponents.push(gateText);
+    gateComponents.push(gateReady);
+    gateComponents.push(gateCont);
+    gateComponents.push(gateMouse);
     
     gateComponents.forEach( function(thisComponent) {
       if ('status' in thisComponent)
@@ -313,6 +374,8 @@ function gateRoutineBegin(snapshot) {
 }
 
 
+var prevButtonState;
+var _mouseButtons;
 function gateRoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'gate'-------
@@ -320,6 +383,65 @@ function gateRoutineEachFrame() {
     t = gateClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
+    
+    // *gateText* updates
+    if (t >= 0.0 && gateText.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      gateText.tStart = t;  // (not accounting for frame time here)
+      gateText.frameNStart = frameN;  // exact frame index
+      
+      gateText.setAutoDraw(true);
+    }
+
+    
+    // *gateReady* updates
+    if (t >= 0.0 && gateReady.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      gateReady.tStart = t;  // (not accounting for frame time here)
+      gateReady.frameNStart = frameN;  // exact frame index
+      
+      gateReady.setAutoDraw(true);
+    }
+
+    
+    // *gateCont* updates
+    if (t >= 0.0 && gateCont.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      gateCont.tStart = t;  // (not accounting for frame time here)
+      gateCont.frameNStart = frameN;  // exact frame index
+      
+      gateCont.setAutoDraw(true);
+    }
+
+    // *gateMouse* updates
+    if (t >= 0.0 && gateMouse.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      gateMouse.tStart = t;  // (not accounting for frame time here)
+      gateMouse.frameNStart = frameN;  // exact frame index
+      
+      gateMouse.status = PsychoJS.Status.STARTED;
+      gateMouse.mouseClock.reset();
+      prevButtonState = gateMouse.getPressed();  // if button is down already this ISN'T a new click
+      }
+    if (gateMouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
+      _mouseButtons = gateMouse.getPressed();
+      if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
+        prevButtonState = _mouseButtons;
+        if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
+          // check if the mouse was inside our 'clickable' objects
+          gotValidClick = false;
+          for (const obj of [gateCont]) {
+            if (obj.contains(gateMouse)) {
+              gotValidClick = true;
+              gateMouse.clicked_name.push(obj.name)
+            }
+          }
+          if (gotValidClick === true) { // abort routine on response
+            continueRoutine = false;
+          }
+        }
+      }
+    }
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
       return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
@@ -355,6 +477,7 @@ function gateRoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     });
+    // store data for psychoJS.experiment (ExperimentHandler)
     // the Routine "gate" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
@@ -373,7 +496,6 @@ var choice;
 var correct;
 var trial_time;
 var card;
-var gotValidClick;
 var trialComponents;
 function trialRoutineBegin(snapshot) {
   return async function () {
@@ -390,6 +512,9 @@ function trialRoutineBegin(snapshot) {
     } else {
         continueRoutine = true;
     }
+    day_box.size = BOX_SIZE;
+    night_box.size = BOX_SIZE;
+    card_stack.size = DECK_SIZE;
     drag_in_process = false;
     clicked_object = null;
     lock_card_stack = false;
@@ -422,6 +547,7 @@ function trialRoutineBegin(snapshot) {
 
 
 var _pj;
+var feedback_delay;
 function trialRoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'trial'-------
@@ -449,9 +575,12 @@ function trialRoutineEachFrame() {
     _pj_snippets(_pj);
     if (SHOW_DEBUG) {
         debug.text = `tryNumber = ${tryNumber}`;
+        debug.text = `
+    trial = ${trial}`
+    ;
         if (_pj.in_es6(blockName, practice_names)) {
             debug.text += `
-    score = ${score}`
+    score = ${score} (out of ${maxScore})`
     ;
         }
         debug.text += `
@@ -470,7 +599,11 @@ function trialRoutineEachFrame() {
         }
     }
     if ((feedback_delay_start !== null)) {
-        if (((t - feedback_delay_start) > FEEDBACK_DELAY)) {
+        feedback_delay = FEEDBACK_DELAY_CORRECT;
+        if ((correct === 0)) {
+            feedback_delay = FEEDBACK_DELAY_INCORRECT;
+        }
+        if (((t - feedback_delay_start) > feedback_delay)) {
             continueRoutine = false;
         }
     } else {
@@ -518,7 +651,7 @@ function trialRoutineEachFrame() {
                     score += 1;
                 } else {
                     correct = 0;
-                    feedback.text = "Wrong!";
+                    feedback.text = "Let's think again";
                 }
             }
             clicked_object = null;
@@ -537,7 +670,7 @@ function trialRoutineEachFrame() {
 
     
     // *feedback* updates
-    if ((showFeedback) && feedback.status === PsychoJS.Status.NOT_STARTED) {
+    if ((show_feedback) && feedback.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       feedback.tStart = t;  // (not accounting for frame time here)
       feedback.frameNStart = frameN;  // exact frame index
