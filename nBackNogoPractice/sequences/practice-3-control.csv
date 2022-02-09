@@ -1,0 +1,17 @@
+trial,stimulus,label,corrAns
+1,7,non-target,a
+2,3,non-target,a
+3,4,non-target,a
+4,9,0-back-target,l
+5,7,non-target,a
+6,0,nogo,
+7,0,nogo,
+8,8,non-target,a
+9,9,0-back-target,l
+10,2,non-target,a
+11,9,0-back-target,l
+12,4,non-target,a
+13,0,nogo,
+14,6,non-target,a
+15,0,nogo,
+16,9,0-back-target,l

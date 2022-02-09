@@ -52,16 +52,18 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'sequences/practice-2back.csv', 'path': 'sequences/practice-2back.csv'},
     {'name': 'imgs/slide-07.png', 'path': 'imgs/slide-07.png'},
+    {'name': 'sequences/practice-4-2back.csv', 'path': 'sequences/practice-4-2back.csv'},
     {'name': 'imgs/slide-09.png', 'path': 'imgs/slide-09.png'},
+    {'name': 'sequences/practice-1-control.csv', 'path': 'sequences/practice-1-control.csv'},
     {'name': 'sequences/practice-cycle-2back.csv', 'path': 'sequences/practice-cycle-2back.csv'},
-    {'name': 'sequences/practice-control.csv', 'path': 'sequences/practice-control.csv'},
     {'name': 'sequences/practice-cycle-control.csv', 'path': 'sequences/practice-cycle-control.csv'},
     {'name': 'imgs/slide-02.png', 'path': 'imgs/slide-02.png'},
     {'name': 'imgs/slide-01.png', 'path': 'imgs/slide-01.png'},
+    {'name': 'sequences/practice-3-control.csv', 'path': 'sequences/practice-3-control.csv'},
     {'name': 'sequences/practice-blocks.csv', 'path': 'sequences/practice-blocks.csv'},
     {'name': 'imgs/slide-04.png', 'path': 'imgs/slide-04.png'},
+    {'name': 'sequences/practice-2-2back.csv', 'path': 'sequences/practice-2-2back.csv'},
     {'name': 'imgs/slide-05.png', 'path': 'imgs/slide-05.png'}
   ]
 });
@@ -294,7 +296,7 @@ function first_instRoutineEachFrame() {
 
     
     // *fiResp* updates
-    if (t >= 0.0 && fiResp.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.3 && fiResp.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       fiResp.tStart = t;  // (not accounting for frame time here)
       fiResp.frameNStart = frameN;  // exact frame index
@@ -302,6 +304,7 @@ function first_instRoutineEachFrame() {
       // keyboard checking is just starting
       fiResp.clock.reset();
       fiResp.start();
+      fiResp.clearEvents();
     }
 
     if (fiResp.status === PsychoJS.Status.STARTED) {
@@ -472,8 +475,8 @@ function prac_instRoutineBegin(snapshot) {
     stim_dur = stimDur;
     blank_dur = blankDur;
     feedback_dur = feedbackDur;
-    resp_dur = (stim_dur + blank_dur);
-    max_t = (resp_dur + feedback_dur);
+    resp_dur = stim_dur;
+    max_t = ((resp_dur + feedback_dur) + blank_dur);
     
     piImage.setSize(FULL_SLIDE_SIZE);
     piImage.setImage(instFile);
@@ -517,7 +520,7 @@ function prac_instRoutineEachFrame() {
 
     
     // *piResp* updates
-    if (t >= 0.0 && piResp.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.3 && piResp.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       piResp.tStart = t;  // (not accounting for frame time here)
       piResp.frameNStart = frameN;  // exact frame index
@@ -525,6 +528,7 @@ function prac_instRoutineEachFrame() {
       // keyboard checking is just starting
       piResp.clock.reset();
       piResp.start();
+      piResp.clearEvents();
     }
 
     if (piResp.status === PsychoJS.Status.STARTED) {
@@ -729,6 +733,9 @@ function prac_trialRoutineEachFrame() {
     t = prac_trialClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
+    if ((t > max_t)) {
+        continueRoutine = false;
+    }
     if ((raw_rt === null)) {
         if ((pracResp.keys && (pracResp.keys.length > 0))) {
             raw_rt = t;
@@ -741,14 +748,15 @@ function prac_trialRoutineEachFrame() {
             }
         }
     }
-    if ((((raw_rt !== null) && (t > (raw_rt + feedback_dur))) || (t > max_t))) {
-        continueRoutine = false;
+    if ((! show_feedback)) {
+        pracFeedback.text = "";
     }
     if ((SHOW_DEBUG && ((frameN % 6) === 0))) {
-        pracDebug.text = `${blockName}
+        pracDebug.text = `Debug:
+    blockName = ${blockName}
     stim_dur = ${stim_dur} s
-    blank_dur = ${blank_dur} s
     feedback_dur = ${feedback_dur} s
+    blank_dur = ${blank_dur} s
     show_feedback = ${show_feedback}
     show_goodjob = ${show_goodjob}
     pracResp.keys = ${pracResp.keys}
@@ -807,7 +815,7 @@ function prac_trialRoutineEachFrame() {
     
     
     // *pracFeedback* updates
-    if ((show_feedback) && pracFeedback.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= stim_dur && pracFeedback.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       pracFeedback.tStart = t;  // (not accounting for frame time here)
       pracFeedback.frameNStart = frameN;  // exact frame index
@@ -815,6 +823,10 @@ function prac_trialRoutineEachFrame() {
       pracFeedback.setAutoDraw(true);
     }
 
+    frameRemains = stim_dur + feedback_dur - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+    if (pracFeedback.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      pracFeedback.setAutoDraw(false);
+    }
     
     // *pracDebug* updates
     if ((SHOW_DEBUG) && pracDebug.status === PsychoJS.Status.NOT_STARTED) {
@@ -939,7 +951,7 @@ function task_goodjobRoutineEachFrame() {
 
     
     // *tgResp* updates
-    if (t >= 0.0 && tgResp.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.3 && tgResp.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       tgResp.tStart = t;  // (not accounting for frame time here)
       tgResp.frameNStart = frameN;  // exact frame index
@@ -947,6 +959,7 @@ function task_goodjobRoutineEachFrame() {
       // keyboard checking is just starting
       tgResp.clock.reset();
       tgResp.start();
+      tgResp.clearEvents();
     }
 
     if (tgResp.status === PsychoJS.Status.STARTED) {
@@ -1052,7 +1065,7 @@ function terminateRoutineEachFrame() {
 
     
     // *termResp* updates
-    if (t >= 0.0 && termResp.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.3 && termResp.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       termResp.tStart = t;  // (not accounting for frame time here)
       termResp.frameNStart = frameN;  // exact frame index
@@ -1060,6 +1073,7 @@ function terminateRoutineEachFrame() {
       // keyboard checking is just starting
       termResp.clock.reset();
       termResp.start();
+      termResp.clearEvents();
     }
 
     if (termResp.status === PsychoJS.Status.STARTED) {
