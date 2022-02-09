@@ -1,4 +1,4 @@
-block,sequenceFile
+blockName,sequenceFile
 Control,sequences/block-1-of-7-control.csv
 2-Back,sequences/block-2-of-7-2back.csv
 Control,sequences/block-3-of-7-control.csv

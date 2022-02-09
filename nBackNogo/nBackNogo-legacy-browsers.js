@@ -55,14 +55,16 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'sequences/block-1-of-7-control.csv', 'path': 'sequences/block-1-of-7-control.csv'},
-    {'name': 'sequences/block-6-of-7-2back.csv', 'path': 'sequences/block-6-of-7-2back.csv'},
     {'name': 'sequences/block-3-of-7-control.csv', 'path': 'sequences/block-3-of-7-control.csv'},
     {'name': 'sequences/blocks.csv', 'path': 'sequences/blocks.csv'},
+    {'name': 'sequences/block-1-of-7-control.csv', 'path': 'sequences/block-1-of-7-control.csv'},
     {'name': 'sequences/block-7-of-7-control.csv', 'path': 'sequences/block-7-of-7-control.csv'},
-    {'name': 'sequences/block-5-of-7-control.csv', 'path': 'sequences/block-5-of-7-control.csv'},
     {'name': 'sequences/block-4-of-7-2back.csv', 'path': 'sequences/block-4-of-7-2back.csv'},
-    {'name': 'sequences/block-2-of-7-2back.csv', 'path': 'sequences/block-2-of-7-2back.csv'}
+    {'name': 'imgs/slide-11.png', 'path': 'imgs/slide-11.png'},
+    {'name': 'imgs/slide-12.png', 'path': 'imgs/slide-12.png'},
+    {'name': 'sequences/block-5-of-7-control.csv', 'path': 'sequences/block-5-of-7-control.csv'},
+    {'name': 'sequences/block-2-of-7-2back.csv', 'path': 'sequences/block-2-of-7-2back.csv'},
+    {'name': 'sequences/block-6-of-7-2back.csv', 'path': 'sequences/block-6-of-7-2back.csv'}
   ]
 });
 
@@ -91,10 +93,13 @@ async function updateInfo() {
 
 
 var task_rem1Clock;
-var tr1Body;
+var SHOW_DEBUG;
+var FULL_SLIDE_SIZE;
+var SHORT_SLIDE_SIZE;
+var tr1Image;
 var tr1Resp;
 var task_rem2Clock;
-var tr2Body;
+var tr2Image;
 var tr2Resp;
 var task_restClock;
 var restFix;
@@ -111,32 +116,32 @@ var routineTimer;
 async function experimentInit() {
   // Initialize components for Routine "task_rem1"
   task_rem1Clock = new util.Clock();
-  tr1Body = new visual.TextStim({
-    win: psychoJS.window,
-    name: 'tr1Body',
-    text: 'Reminder:\n\nThis scan consists of Control and 2-Back periods. In the Control periods, the number 9 is the target. In the 2-Back periods, any number that matches the number presented two numbers back is the target.\n\nPress L for target numbers.\nPress A for non-target numbers.\nDo not press anything for 0.\n\nPress any key to continue.',
-    font: 'Open Sans',
-    units: undefined, 
-    pos: [0, 0], height: 0.03,  wrapWidth: undefined, ori: 0.0,
-    color: new util.Color('white'),  opacity: undefined,
-    depth: 0.0 
-  });
+  SHOW_DEBUG = false;
+  FULL_SLIDE_SIZE = [1.4, 0.7875];
+  SHORT_SLIDE_SIZE = [1.4, 0.6699];
   
+  tr1Image = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'tr1Image', units : undefined, 
+    image : 'imgs/slide-11.png', mask : undefined,
+    ori : 0.0, pos : [0, 0], size : SHORT_SLIDE_SIZE,
+    color : new util.Color([1, 1, 1]), opacity : undefined,
+    flipHoriz : false, flipVert : false,
+    texRes : 128.0, interpolate : true, depth : -1.0 
+  });
   tr1Resp = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
   
   // Initialize components for Routine "task_rem2"
   task_rem2Clock = new util.Clock();
-  tr2Body = new visual.TextStim({
-    win: psychoJS.window,
-    name: 'tr2Body',
-    text: 'Place your left index finger on A \nand right index finger on L.\n\nWait for the tester to start the scan.',
-    font: 'Open Sans',
-    units: undefined, 
-    pos: [0, 0], height: 0.03,  wrapWidth: undefined, ori: 0.0,
-    color: new util.Color('white'),  opacity: undefined,
-    depth: 0.0 
+  tr2Image = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'tr2Image', units : undefined, 
+    image : 'imgs/slide-12.png', mask : undefined,
+    ori : 0.0, pos : [0, 0], size : SHORT_SLIDE_SIZE,
+    color : new util.Color([1, 1, 1]), opacity : undefined,
+    flipHoriz : false, flipVert : false,
+    texRes : 128.0, interpolate : true, depth : 0.0 
   });
-  
   tr2Resp = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
   
   // Initialize components for Routine "task_rest"
@@ -195,7 +200,7 @@ async function experimentInit() {
     text: '',
     font: 'Open Sans',
     units: undefined, 
-    pos: [0.5, 0.4], height: 0.02,  wrapWidth: undefined, ori: 0.0,
+    pos: [0.0, 0.4], height: 0.02,  wrapWidth: undefined, ori: 0.0,
     color: new util.Color('white'),  opacity: undefined,
     depth: -4.0 
   });
@@ -241,7 +246,7 @@ function task_rem1RoutineBegin(snapshot) {
     _tr1Resp_allKeys = [];
     // keep track of which components have finished
     task_rem1Components = [];
-    task_rem1Components.push(tr1Body);
+    task_rem1Components.push(tr1Image);
     task_rem1Components.push(tr1Resp);
     
     task_rem1Components.forEach( function(thisComponent) {
@@ -261,18 +266,18 @@ function task_rem1RoutineEachFrame() {
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
     
-    // *tr1Body* updates
-    if (t >= 0.0 && tr1Body.status === PsychoJS.Status.NOT_STARTED) {
+    // *tr1Image* updates
+    if (t >= 0.0 && tr1Image.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      tr1Body.tStart = t;  // (not accounting for frame time here)
-      tr1Body.frameNStart = frameN;  // exact frame index
+      tr1Image.tStart = t;  // (not accounting for frame time here)
+      tr1Image.frameNStart = frameN;  // exact frame index
       
-      tr1Body.setAutoDraw(true);
+      tr1Image.setAutoDraw(true);
     }
 
     
     // *tr1Resp* updates
-    if (t >= 0.0 && tr1Resp.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.3 && tr1Resp.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       tr1Resp.tStart = t;  // (not accounting for frame time here)
       tr1Resp.frameNStart = frameN;  // exact frame index
@@ -280,6 +285,7 @@ function task_rem1RoutineEachFrame() {
       // keyboard checking is just starting
       tr1Resp.clock.reset();
       tr1Resp.start();
+      tr1Resp.clearEvents();
     }
 
     if (tr1Resp.status === PsychoJS.Status.STARTED) {
@@ -354,7 +360,7 @@ function task_rem2RoutineBegin(snapshot) {
     _tr2Resp_allKeys = [];
     // keep track of which components have finished
     task_rem2Components = [];
-    task_rem2Components.push(tr2Body);
+    task_rem2Components.push(tr2Image);
     task_rem2Components.push(tr2Resp);
     
     task_rem2Components.forEach( function(thisComponent) {
@@ -374,18 +380,18 @@ function task_rem2RoutineEachFrame() {
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
     
-    // *tr2Body* updates
-    if (t >= 0.0 && tr2Body.status === PsychoJS.Status.NOT_STARTED) {
+    // *tr2Image* updates
+    if (t >= 0.0 && tr2Image.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      tr2Body.tStart = t;  // (not accounting for frame time here)
-      tr2Body.frameNStart = frameN;  // exact frame index
+      tr2Image.tStart = t;  // (not accounting for frame time here)
+      tr2Image.frameNStart = frameN;  // exact frame index
       
-      tr2Body.setAutoDraw(true);
+      tr2Image.setAutoDraw(true);
     }
 
     
     // *tr2Resp* updates
-    if (t >= 0.0 && tr2Resp.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.3 && tr2Resp.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       tr2Resp.tStart = t;  // (not accounting for frame time here)
       tr2Resp.frameNStart = frameN;  // exact frame index
@@ -393,10 +399,11 @@ function task_rem2RoutineEachFrame() {
       // keyboard checking is just starting
       tr2Resp.clock.reset();
       tr2Resp.start();
+      tr2Resp.clearEvents();
     }
 
     if (tr2Resp.status === PsychoJS.Status.STARTED) {
-      let theseKeys = tr2Resp.getKeys({keyList: ['f1', 'q'], waitRelease: false});
+      let theseKeys = tr2Resp.getKeys({keyList: ['f1'], waitRelease: false});
       _tr2Resp_allKeys = _tr2Resp_allKeys.concat(theseKeys);
       if (_tr2Resp_allKeys.length > 0) {
         tr2Resp.keys = _tr2Resp_allKeys[_tr2Resp_allKeys.length - 1].name;  // just the last key pressed
@@ -545,7 +552,7 @@ function task_restRoutineBegin(snapshot) {
     continueRoutine = true; // until we're told otherwise
     routineTimer.add(5.000000);
     // update component parameters for each repeat
-    restInstr.setText(block);
+    restInstr.setText(blockName);
     // keep track of which components have finished
     task_restComponents = [];
     task_restComponents.push(restFix);
@@ -637,7 +644,6 @@ function task_restRoutineEnd() {
 
 
 var _trialResp_allKeys;
-var SHOW_DEBUG;
 var get_key;
 var uncorrected_reaction_time;
 var task_trialComponents;
@@ -656,7 +662,6 @@ function task_trialRoutineBegin(snapshot) {
     trialResp.keys = undefined;
     trialResp.rt = undefined;
     _trialResp_allKeys = [];
-    SHOW_DEBUG = false;
     get_key = true;
     uncorrected_reaction_time = null;
     
@@ -763,6 +768,10 @@ function task_trialRoutineEachFrame() {
     }
     _pj = {};
     _pj_snippets(_pj);
+    if ((get_key && _pj.in_es6(trialResp.keys, ["a", "l"]))) {
+        uncorrected_reaction_time = t;
+        get_key = false;
+    }
     if (SHOW_DEBUG) {
         trialDebug.text = `trialResp.keys = ${trialResp.keys}`;
         trialDebug.text += `
@@ -773,10 +782,6 @@ function task_trialRoutineEachFrame() {
     uncorrected_reaction_time = ${round(uncorrected_reaction_time, 3)}`
     ;
         }
-    }
-    if ((get_key && _pj.in_es6(trialResp.keys, ["a", "l"]))) {
-        uncorrected_reaction_time = t;
-        get_key = false;
     }
     
     
@@ -973,6 +978,8 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
+  
+  
   
   
   psychoJS.window.close();
