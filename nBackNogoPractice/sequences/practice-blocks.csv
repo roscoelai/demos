@@ -1,5 +1,7 @@
-practiceBlock,block,sequenceFile,showFeedback
-Control-only,Control,sequences/practice-control.csv,1
-2-Back-only,2-Back,sequences/practice-2back.csv,1
-Cycle-Control,Control,sequences/practice-cycle-control.csv,0
-Cycle-2-Back,2-Back,sequences/practice-cycle-2back.csv,0
+practiceBlock,blockNum,blockName,instFile,sequenceFile,showFeedback,showGoodjob,stimDur,blankDur,feedbackDur
+Control-only,1,Control,imgs/slide-02.png,sequences/practice-control.csv,1,1,2,2,2
+2-Back-only,2,2-Back,imgs/slide-05.png,sequences/practice-2back.csv,1,0,2,2,2
+Control-only,3,Control,imgs/slide-07.png,sequences/practice-control.csv,1,0,1,1.5,1.5
+2-Back-only,4,2-Back,imgs/slide-07.png,sequences/practice-2back.csv,1,0,1,1.5,1.5
+Cycle-Control,5,Control,imgs/slide-09.png,sequences/practice-cycle-control.csv,0,0,1,0.5,1
+Cycle-2-Back,6,2-Back,imgs/slide-09.png,sequences/practice-cycle-2back.csv,0,0,1,0.5,1
