@@ -52,19 +52,19 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
+    {'name': 'imgs/slide-05.png', 'path': 'imgs/slide-05.png'},
+    {'name': 'imgs/slide-09.png', 'path': 'imgs/slide-09.png'},
     {'name': 'imgs/slide-07.png', 'path': 'imgs/slide-07.png'},
     {'name': 'sequences/practice-4-2back.csv', 'path': 'sequences/practice-4-2back.csv'},
-    {'name': 'imgs/slide-09.png', 'path': 'imgs/slide-09.png'},
-    {'name': 'sequences/practice-1-control.csv', 'path': 'sequences/practice-1-control.csv'},
-    {'name': 'sequences/practice-cycle-2back.csv', 'path': 'sequences/practice-cycle-2back.csv'},
-    {'name': 'sequences/practice-cycle-control.csv', 'path': 'sequences/practice-cycle-control.csv'},
-    {'name': 'imgs/slide-02.png', 'path': 'imgs/slide-02.png'},
-    {'name': 'imgs/slide-01.png', 'path': 'imgs/slide-01.png'},
     {'name': 'sequences/practice-3-control.csv', 'path': 'sequences/practice-3-control.csv'},
-    {'name': 'sequences/practice-blocks.csv', 'path': 'sequences/practice-blocks.csv'},
-    {'name': 'imgs/slide-04.png', 'path': 'imgs/slide-04.png'},
+    {'name': 'sequences/practice-cycle-control.csv', 'path': 'sequences/practice-cycle-control.csv'},
     {'name': 'sequences/practice-2-2back.csv', 'path': 'sequences/practice-2-2back.csv'},
-    {'name': 'imgs/slide-05.png', 'path': 'imgs/slide-05.png'}
+    {'name': 'sequences/practice-cycle-2back.csv', 'path': 'sequences/practice-cycle-2back.csv'},
+    {'name': 'imgs/slide-01.png', 'path': 'imgs/slide-01.png'},
+    {'name': 'imgs/slide-02.png', 'path': 'imgs/slide-02.png'},
+    {'name': 'sequences/practice-1-control.csv', 'path': 'sequences/practice-1-control.csv'},
+    {'name': 'sequences/practice-blocks.csv', 'path': 'sequences/practice-blocks.csv'},
+    {'name': 'imgs/slide-04.png', 'path': 'imgs/slide-04.png'}
   ]
 });
 
@@ -122,7 +122,7 @@ async function experimentInit() {
   first_instClock = new util.Clock();
   SHOW_DEBUG = true;
   FULL_SLIDE_SIZE = [1.4, 0.7875];
-  SHORT_SLIDE_SIZE = [1.0, 0.6699];
+  SHORT_SLIDE_SIZE = [1.4, 0.6699];
   
   fiImage = new visual.ImageStim({
     win : psychoJS.window,
@@ -504,7 +504,7 @@ function prac_instRoutineEachFrame() {
     t = prac_instClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    if ((blockNum === 6)) {
+    if (((blockNum === 4) || (blockNum === 6))) {
         continueRoutine = false;
     }
     
