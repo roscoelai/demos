@@ -13,7 +13,7 @@ const { round } = util;
 
 // store info about the experiment session:
 let expName = 'BEPS-PAMS-CLASS';  // from the Builder filename that created this script
-let expInfo = {'participant': '', 'debug': 'true'};
+let expInfo = {'participant': '', 'use_audio [y/n]': 'y', 'debug [y/n]': 'y'};
 
 // Start code blocks for 'Before Experiment'
 // init psychoJS:
@@ -60,70 +60,128 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/slides/slide-38.png', 'path': 'imgs/slides/slide-38.png'},
-    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
-    {'name': 'imgs/slides/slide-60.png', 'path': 'imgs/slides/slide-60.png'},
-    {'name': 'imgs/slides/slide-42.png', 'path': 'imgs/slides/slide-42.png'},
-    {'name': 'imgs/slides/slide-45.png', 'path': 'imgs/slides/slide-45.png'},
-    {'name': 'imgs/slides/slide-33.png', 'path': 'imgs/slides/slide-33.png'},
-    {'name': 'imgs/slides/slide-29.png', 'path': 'imgs/slides/slide-29.png'},
-    {'name': 'imgs/slides/slide-35.png', 'path': 'imgs/slides/slide-35.png'},
-    {'name': 'imgs/slides/slide-17.png', 'path': 'imgs/slides/slide-17.png'},
-    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
-    {'name': 'imgs/slides/slide-54.png', 'path': 'imgs/slides/slide-54.png'},
-    {'name': 'imgs/slides/slide-32.png', 'path': 'imgs/slides/slide-32.png'},
-    {'name': 'imgs/slides/slide-58.png', 'path': 'imgs/slides/slide-58.png'},
-    {'name': 'imgs/slides/slide-37.png', 'path': 'imgs/slides/slide-37.png'},
-    {'name': 'imgs/slides/slide-48.png', 'path': 'imgs/slides/slide-48.png'},
-    {'name': 'imgs/slides/slide-28.png', 'path': 'imgs/slides/slide-28.png'},
+    {'name': 'aud/mp3/62_CLASS-23-untie.mp3', 'path': 'aud/mp3/62_CLASS-23-untie.mp3'},
     {'name': 'imgs/slides/slide-65.png', 'path': 'imgs/slides/slide-65.png'},
-    {'name': 'imgs/slides/slide-34.png', 'path': 'imgs/slides/slide-34.png'},
-    {'name': 'imgs/slides/slide-52.png', 'path': 'imgs/slides/slide-52.png'},
-    {'name': 'imgs/slides/slide-63.png', 'path': 'imgs/slides/slide-63.png'},
-    {'name': 'imgs/slides/slide-25.png', 'path': 'imgs/slides/slide-25.png'},
-    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'},
-    {'name': 'imgs/slides/slide-36.png', 'path': 'imgs/slides/slide-36.png'},
-    {'name': 'imgs/slides/slide-41.png', 'path': 'imgs/slides/slide-41.png'},
-    {'name': 'imgs/slides/slide-19.png', 'path': 'imgs/slides/slide-19.png'},
-    {'name': 'imgs/slides/slide-40.png', 'path': 'imgs/slides/slide-40.png'},
-    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
-    {'name': 'imgs/slides/slide-14.png', 'path': 'imgs/slides/slide-14.png'},
-    {'name': 'imgs/slides/slide-61.png', 'path': 'imgs/slides/slide-61.png'},
-    {'name': 'imgs/slides/slide-44.png', 'path': 'imgs/slides/slide-44.png'},
-    {'name': 'imgs/slides/slide-21.png', 'path': 'imgs/slides/slide-21.png'},
-    {'name': 'imgs/slides/slide-24.png', 'path': 'imgs/slides/slide-24.png'},
-    {'name': 'imgs/slides/slide-27.png', 'path': 'imgs/slides/slide-27.png'},
-    {'name': 'imgs/slides/slide-39.png', 'path': 'imgs/slides/slide-39.png'},
-    {'name': 'imgs/slides/slide-66.png', 'path': 'imgs/slides/slide-66.png'},
-    {'name': 'imgs/slides/slide-20.png', 'path': 'imgs/slides/slide-20.png'},
-    {'name': 'imgs/slides/slide-59.png', 'path': 'imgs/slides/slide-59.png'},
-    {'name': 'imgs/slides/slide-55.png', 'path': 'imgs/slides/slide-55.png'},
-    {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
-    {'name': 'imgs/slides/slide-30.png', 'path': 'imgs/slides/slide-30.png'},
-    {'name': 'imgs/slides/slide-62.png', 'path': 'imgs/slides/slide-62.png'},
-    {'name': 'imgs/slides/slide-26.png', 'path': 'imgs/slides/slide-26.png'},
-    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
     {'name': 'imgs/slides/slide-46.png', 'path': 'imgs/slides/slide-46.png'},
-    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
-    {'name': 'sequences/conditions.csv', 'path': 'sequences/conditions.csv'},
-    {'name': 'imgs/slides/slide-16.png', 'path': 'imgs/slides/slide-16.png'},
-    {'name': 'imgs/slides/slide-22.png', 'path': 'imgs/slides/slide-22.png'},
-    {'name': 'imgs/slides/slide-31.png', 'path': 'imgs/slides/slide-31.png'},
-    {'name': 'imgs/slides/slide-43.png', 'path': 'imgs/slides/slide-43.png'},
-    {'name': 'imgs/transparent-box.png', 'path': 'imgs/transparent-box.png'},
-    {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
+    {'name': 'imgs/slides/slide-21.png', 'path': 'imgs/slides/slide-21.png'},
+    {'name': 'imgs/slides/slide-26.png', 'path': 'imgs/slides/slide-26.png'},
+    {'name': 'aud/mp3/35_PAMS-17-minus.mp3', 'path': 'aud/mp3/35_PAMS-17-minus.mp3'},
+    {'name': 'imgs/slides/slide-40.png', 'path': 'imgs/slides/slide-40.png'},
+    {'name': 'aud/mp3/46_CLASS-11a-cat.mp3', 'path': 'aud/mp3/46_CLASS-11a-cat.mp3'},
+    {'name': 'aud/mp3/63_CLASS-24-moon.mp3', 'path': 'aud/mp3/63_CLASS-24-moon.mp3'},
+    {'name': 'aud/mp3/41_CLASS-6-beach.mp3', 'path': 'aud/mp3/41_CLASS-6-beach.mp3'},
+    {'name': 'imgs/slides/slide-25.png', 'path': 'imgs/slides/slide-25.png'},
+    {'name': 'aud/mp3/25_PAMS-7-5or8.mp3', 'path': 'aud/mp3/25_PAMS-7-5or8.mp3'},
+    {'name': 'aud/mp3/54_CLASS-15-mice.mp3', 'path': 'aud/mp3/54_CLASS-15-mice.mp3'},
+    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
+    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
+    {'name': 'aud/mp3/20_PAMS-2-human.mp3', 'path': 'aud/mp3/20_PAMS-2-human.mp3'},
+    {'name': 'aud/mp3/40_CLASS-5-rock.mp3', 'path': 'aud/mp3/40_CLASS-5-rock.mp3'},
+    {'name': 'imgs/slides/slide-17.png', 'path': 'imgs/slides/slide-17.png'},
+    {'name': 'imgs/slides/slide-32.png', 'path': 'imgs/slides/slide-32.png'},
+    {'name': 'aud/mp3/17_BEPS-15-rectangle.mp3', 'path': 'aud/mp3/17_BEPS-15-rectangle.mp3'},
+    {'name': 'imgs/slides/slide-59.png', 'path': 'imgs/slides/slide-59.png'},
+    {'name': 'aud/mp3/14_BEPS-13a-pattern1.mp3', 'path': 'aud/mp3/14_BEPS-13a-pattern1.mp3'},
+    {'name': 'imgs/slides/slide-27.png', 'path': 'imgs/slides/slide-27.png'},
+    {'name': 'imgs/slides/slide-34.png', 'path': 'imgs/slides/slide-34.png'},
+    {'name': 'imgs/slides/slide-44.png', 'path': 'imgs/slides/slide-44.png'},
+    {'name': 'aud/mp3/28_PAMS-10-pattern1.mp3', 'path': 'aud/mp3/28_PAMS-10-pattern1.mp3'},
+    {'name': 'aud/mp3/45_CLASS-10-lady.mp3', 'path': 'aud/mp3/45_CLASS-10-lady.mp3'},
+    {'name': 'imgs/slides/slide-19.png', 'path': 'imgs/slides/slide-19.png'},
+    {'name': 'imgs/slides/slide-14.png', 'path': 'imgs/slides/slide-14.png'},
+    {'name': 'aud/mp3/56_CLASS-17-sunshine.mp3', 'path': 'aud/mp3/56_CLASS-17-sunshine.mp3'},
+    {'name': 'imgs/slides/slide-35.png', 'path': 'imgs/slides/slide-35.png'},
+    {'name': 'aud/mp3/65_CLASS-26-sand.mp3', 'path': 'aud/mp3/65_CLASS-26-sand.mp3'},
+    {'name': 'aud/mp3/11_BEPS-10-letterB.mp3', 'path': 'aud/mp3/11_BEPS-10-letterB.mp3'},
+    {'name': 'imgs/slides/slide-58.png', 'path': 'imgs/slides/slide-58.png'},
+    {'name': 'aud/mp3/39_CLASS-4-tortoise.mp3', 'path': 'aud/mp3/39_CLASS-4-tortoise.mp3'},
+    {'name': 'imgs/slides/slide-66.png', 'path': 'imgs/slides/slide-66.png'},
+    {'name': 'aud/mp3/29_PAMS-11-pattern2.mp3', 'path': 'aud/mp3/29_PAMS-11-pattern2.mp3'},
+    {'name': 'imgs/slides/slide-60.png', 'path': 'imgs/slides/slide-60.png'},
     {'name': 'imgs/slides/slide-51.png', 'path': 'imgs/slides/slide-51.png'},
-    {'name': 'imgs/slides/slide-15.png', 'path': 'imgs/slides/slide-15.png'},
-    {'name': 'imgs/slides/slide-47.png', 'path': 'imgs/slides/slide-47.png'},
-    {'name': 'imgs/slides/slide-23.png', 'path': 'imgs/slides/slide-23.png'},
-    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
-    {'name': 'imgs/slides/slide-13.png', 'path': 'imgs/slides/slide-13.png'},
-    {'name': 'imgs/slides/slide-57.png', 'path': 'imgs/slides/slide-57.png'},
-    {'name': 'imgs/slides/slide-18.png', 'path': 'imgs/slides/slide-18.png'},
-    {'name': 'imgs/slides/slide-56.png', 'path': 'imgs/slides/slide-56.png'},
+    {'name': 'aud/mp3/30_PAMS-12-pencil.mp3', 'path': 'aud/mp3/30_PAMS-12-pencil.mp3'},
+    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
+    {'name': 'imgs/slides/slide-38.png', 'path': 'imgs/slides/slide-38.png'},
+    {'name': 'aud/mp3/47_CLASS-11b-bear.mp3', 'path': 'aud/mp3/47_CLASS-11b-bear.mp3'},
+    {'name': 'aud/mp3/31_PAMS-13-horse.mp3', 'path': 'aud/mp3/31_PAMS-13-horse.mp3'},
+    {'name': 'imgs/slides/slide-42.png', 'path': 'imgs/slides/slide-42.png'},
     {'name': 'imgs/slides/slide-53.png', 'path': 'imgs/slides/slide-53.png'},
+    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
+    {'name': 'imgs/slides/slide-48.png', 'path': 'imgs/slides/slide-48.png'},
+    {'name': 'aud/mp3/37_CLASS-2,3-belong.mp3', 'path': 'aud/mp3/37_CLASS-2,3-belong.mp3'},
+    {'name': 'aud/mp3/23_PAMS-5-9or6.mp3', 'path': 'aud/mp3/23_PAMS-5-9or6.mp3'},
+    {'name': 'aud/mp3/59_CLASS-20-pen2.mp3', 'path': 'aud/mp3/59_CLASS-20-pen2.mp3'},
+    {'name': 'imgs/slides/slide-36.png', 'path': 'imgs/slides/slide-36.png'},
+    {'name': 'aud/mp3/53_CLASS-14-look.mp3', 'path': 'aud/mp3/53_CLASS-14-look.mp3'},
+    {'name': 'aud/mp3/44_CLASS-9-badminton.mp3', 'path': 'aud/mp3/44_CLASS-9-badminton.mp3'},
+    {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
+    {'name': 'aud/mp3/48_CLASS-11c-cup.mp3', 'path': 'aud/mp3/48_CLASS-11c-cup.mp3'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'imgs/transparent-box.png', 'path': 'imgs/transparent-box.png'},
+    {'name': 'imgs/slides/slide-62.png', 'path': 'imgs/slides/slide-62.png'},
+    {'name': 'aud/mp3/36_CLASS-1-tree.mp3', 'path': 'aud/mp3/36_CLASS-1-tree.mp3'},
+    {'name': 'aud/mp3/60_CLASS-21-findS.mp3', 'path': 'aud/mp3/60_CLASS-21-findS.mp3'},
+    {'name': 'aud/mp3/43_CLASS-8-carrots.mp3', 'path': 'aud/mp3/43_CLASS-8-carrots.mp3'},
+    {'name': 'imgs/slides/slide-52.png', 'path': 'imgs/slides/slide-52.png'},
+    {'name': 'aud/mp3/55_CLASS-16-cat.mp3', 'path': 'aud/mp3/55_CLASS-16-cat.mp3'},
+    {'name': 'imgs/slides/slide-13.png', 'path': 'imgs/slides/slide-13.png'},
+    {'name': 'aud/mp3/18_BEPS-16-cookie.mp3', 'path': 'aud/mp3/18_BEPS-16-cookie.mp3'},
+    {'name': 'sequences/conditions.csv', 'path': 'sequences/conditions.csv'},
+    {'name': 'aud/mp3/32_PAMS-14-cows.mp3', 'path': 'aud/mp3/32_PAMS-14-cows.mp3'},
+    {'name': 'imgs/slides/slide-29.png', 'path': 'imgs/slides/slide-29.png'},
+    {'name': 'imgs/slides/slide-63.png', 'path': 'imgs/slides/slide-63.png'},
+    {'name': 'aud/mp3/64_CLASS-25-redo.mp3', 'path': 'aud/mp3/64_CLASS-25-redo.mp3'},
     {'name': 'imgs/slides/slide-64.png', 'path': 'imgs/slides/slide-64.png'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'}
+    {'name': 'aud/mp3/22_PAMS-4-apple2.mp3', 'path': 'aud/mp3/22_PAMS-4-apple2.mp3'},
+    {'name': 'aud/mp3/42_CLASS-7-pluck.mp3', 'path': 'aud/mp3/42_CLASS-7-pluck.mp3'},
+    {'name': 'imgs/slides/slide-30.png', 'path': 'imgs/slides/slide-30.png'},
+    {'name': 'imgs/slides/slide-55.png', 'path': 'imgs/slides/slide-55.png'},
+    {'name': 'aud/mp3/05_BEPS-4,5,6-color.mp3', 'path': 'aud/mp3/05_BEPS-4,5,6-color.mp3'},
+    {'name': 'aud/mp3/10_BEPS-9-letterA.mp3', 'path': 'aud/mp3/10_BEPS-9-letterA.mp3'},
+    {'name': 'aud/mp3/16_BEPS-14-symmetry.mp3', 'path': 'aud/mp3/16_BEPS-14-symmetry.mp3'},
+    {'name': 'imgs/slides/slide-15.png', 'path': 'imgs/slides/slide-15.png'},
+    {'name': 'aud/mp3/08_BEPS-7-square.mp3', 'path': 'aud/mp3/08_BEPS-7-square.mp3'},
+    {'name': 'aud/mp3/27_PAMS-9-popcorn.mp3', 'path': 'aud/mp3/27_PAMS-9-popcorn.mp3'},
+    {'name': 'imgs/slides/slide-41.png', 'path': 'imgs/slides/slide-41.png'},
+    {'name': 'imgs/slides/slide-28.png', 'path': 'imgs/slides/slide-28.png'},
+    {'name': 'aud/mp3/21_PAMS-3-apple1.mp3', 'path': 'aud/mp3/21_PAMS-3-apple1.mp3'},
+    {'name': 'aud/mp3/26_PAMS-8-21or17.mp3', 'path': 'aud/mp3/26_PAMS-8-21or17.mp3'},
+    {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
+    {'name': 'aud/mp3/34_PAMS-16-sweets.mp3', 'path': 'aud/mp3/34_PAMS-16-sweets.mp3'},
+    {'name': 'aud/mp3/57_CLASS-18-box.mp3', 'path': 'aud/mp3/57_CLASS-18-box.mp3'},
+    {'name': 'imgs/slides/slide-47.png', 'path': 'imgs/slides/slide-47.png'},
+    {'name': 'imgs/slides/slide-22.png', 'path': 'imgs/slides/slide-22.png'},
+    {'name': 'imgs/slides/slide-16.png', 'path': 'imgs/slides/slide-16.png'},
+    {'name': 'imgs/slides/slide-54.png', 'path': 'imgs/slides/slide-54.png'},
+    {'name': 'aud/mp3/61_CLASS-22-monkey.mp3', 'path': 'aud/mp3/61_CLASS-22-monkey.mp3'},
+    {'name': 'imgs/slides/slide-20.png', 'path': 'imgs/slides/slide-20.png'},
+    {'name': 'imgs/slides/slide-31.png', 'path': 'imgs/slides/slide-31.png'},
+    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'},
+    {'name': 'aud/mp3/09_BEPS-8-triangle.mp3', 'path': 'aud/mp3/09_BEPS-8-triangle.mp3'},
+    {'name': 'aud/mp3/12_BEPS-11-letterC.mp3', 'path': 'aud/mp3/12_BEPS-11-letterC.mp3'},
+    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
+    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
+    {'name': 'aud/mp3/15_BEPS-13b-pattern2.mp3', 'path': 'aud/mp3/15_BEPS-13b-pattern2.mp3'},
+    {'name': 'aud/mp3/33_PAMS-15-plus.mp3', 'path': 'aud/mp3/33_PAMS-15-plus.mp3'},
+    {'name': 'aud/mp3/01_intro.mp3', 'path': 'aud/mp3/01_intro.mp3'},
+    {'name': 'imgs/slides/slide-39.png', 'path': 'imgs/slides/slide-39.png'},
+    {'name': 'imgs/slides/slide-43.png', 'path': 'imgs/slides/slide-43.png'},
+    {'name': 'aud/mp3/04_BEPS-3-red.mp3', 'path': 'aud/mp3/04_BEPS-3-red.mp3'},
+    {'name': 'imgs/slides/slide-33.png', 'path': 'imgs/slides/slide-33.png'},
+    {'name': 'imgs/slides/slide-24.png', 'path': 'imgs/slides/slide-24.png'},
+    {'name': 'imgs/slides/slide-45.png', 'path': 'imgs/slides/slide-45.png'},
+    {'name': 'imgs/slides/slide-57.png', 'path': 'imgs/slides/slide-57.png'},
+    {'name': 'aud/mp3/03_BEPS-2-yellow.mp3', 'path': 'aud/mp3/03_BEPS-2-yellow.mp3'},
+    {'name': 'aud/mp3/58_CLASS-19-pen1.mp3', 'path': 'aud/mp3/58_CLASS-19-pen1.mp3'},
+    {'name': 'imgs/slides/slide-56.png', 'path': 'imgs/slides/slide-56.png'},
+    {'name': 'imgs/slides/slide-37.png', 'path': 'imgs/slides/slide-37.png'},
+    {'name': 'aud/mp3/13_BEPS-12-name.mp3', 'path': 'aud/mp3/13_BEPS-12-name.mp3'},
+    {'name': 'imgs/slides/slide-23.png', 'path': 'imgs/slides/slide-23.png'},
+    {'name': 'aud/mp3/24_PAMS-6-8or12.mp3', 'path': 'aud/mp3/24_PAMS-6-8or12.mp3'},
+    {'name': 'imgs/slides/slide-61.png', 'path': 'imgs/slides/slide-61.png'},
+    {'name': 'imgs/slides/slide-18.png', 'path': 'imgs/slides/slide-18.png'},
+    {'name': 'aud/mp3/02_BEPS-1-white.mp3', 'path': 'aud/mp3/02_BEPS-1-white.mp3'},
+    {'name': 'aud/mp3/19_PAMS-1-flower.mp3', 'path': 'aud/mp3/19_PAMS-1-flower.mp3'}
   ]
 });
 
@@ -157,6 +215,7 @@ var hide;
 var unhide;
 var make_slide;
 var SHOW_DEBUG;
+var USE_AUDIO;
 var CLICK_BOX_OPACITY;
 var SLIDE_SIZE;
 var CONT_SIZE;
@@ -167,6 +226,7 @@ var all_cimgs;
 var beginSlide;
 var beginCont;
 var beginMouse;
+var beginSound;
 var gateClock;
 var trialChoiceClock;
 var MAX_OPTIONS;
@@ -356,34 +416,34 @@ async function experimentInit() {
       sizes = size_rep([0.275, 0.085], names.length);
       return make_boxes(names, xys, sizes);
   }
-  function get_9_6() {
+  function get_9or6() {
       var dx, names, sizes, xys, y0;
-      names = ["nine", "six"];
+      names = ["9", "6"];
       y0 = (- 0.01);
       dx = 0.28;
       xys = [[(- dx), y0], [dx, y0]];
       sizes = size_rep([0.3, 0.32], names.length);
       return make_boxes(names, xys, sizes);
   }
-  function get_8_12() {
+  function get_8or12() {
       var names, sizes, xys, y0;
-      names = ["eight", "twelve"];
+      names = ["8", "12"];
       y0 = (- 0.03);
       xys = [[(- 0.32), y0], [0.295, y0]];
       sizes = [[0.25, 0.33], [0.38, 0.33]];
       return make_boxes(names, xys, sizes);
   }
-  function get_5_8() {
+  function get_5or8() {
       var names, sizes, xys, y0;
-      names = ["five", "eight"];
+      names = ["5", "8"];
       y0 = (- 0.045);
       xys = [[(- 0.31), y0], [0.33, y0]];
       sizes = size_rep([0.3, 0.36], names.length);
       return make_boxes(names, xys, sizes);
   }
-  function get_21_17() {
+  function get_21or17() {
       var names, sizes, xys, y0;
-      names = ["twenty_one", "seventeen"];
+      names = ["21", "17"];
       y0 = (- 0.01);
       xys = [[(- 0.33), y0], [0.34, y0]];
       sizes = size_rep([0.36, 0.32], names.length);
@@ -634,14 +694,15 @@ async function experimentInit() {
       return make_boxes(names, xys, sizes);
   }
   
-  SHOW_DEBUG = true;
+  SHOW_DEBUG = ((expInfo["debug [y/n]"][0] === "y") || (expInfo["debug [y/n]"][0] === "Y"));
+  USE_AUDIO = ((expInfo["use_audio [y/n]"][0] === "y") || (expInfo["use_audio [y/n]"][0] === "Y"));
   CLICK_BOX_OPACITY = (SHOW_DEBUG ? 0.25 : 0);
   SLIDE_SIZE = [1.2, 0.675];
   CONT_SIZE = [0.228, 0.1];
   GLOBAL_CONT = new visual.ImageStim({"win": psychoJS.window, "name": "global_cont", "image": "imgs/continue.png", "pos": [0, (- 0.4)], "size": [0, 0]});
   BLANK_IMG = make_box("_", [0, 0], 0);
   RED_BOX = make_box("red_box", [0, 0], 1);
-  all_cimgs = {"02": get_6umbrellas, "03": get_6umbrellas, "04": get_6umbrellas, "05": get_1umbrella, "06": get_1umbrella, "07": get_1umbrella, "14": get_pattern1, "15": get_pattern2, "16": get_symmetry, "17": get_shapes, "18": get_cookies, "19": get_flowers, "20": get_yes_no, "23": get_9_6, "24": get_8_12, "25": get_5_8, "26": get_21_17, "27": get_popcorns, "30": get_apples, "31": get_farm, "36": get_trees, "37": get_vehicles, "38": get_hot, "39": get_speed, "40": get_weight, "41": get_weather, "42": get_tools, "43": get_carrots, "44": get_badminton, "45": get_lady, "46": get_prepositions, "47": get_prepositions, "48": get_room1, "51": get_swimmer, "52": get_shirt, "53": get_look, "54": get_mice, "55": get_cat, "56": get_sunshine, "57": get_box, "58": get_pen, "59": get_pen, "60": get_room2, "61": get_animals, "62": get_un, "63": get_moon, "64": get_words, "65": get_sand};
+  all_cimgs = {"02": get_6umbrellas, "03": get_6umbrellas, "04": get_6umbrellas, "05": get_1umbrella, "06": get_1umbrella, "07": get_1umbrella, "14": get_pattern1, "15": get_pattern2, "16": get_symmetry, "17": get_shapes, "18": get_cookies, "19": get_flowers, "20": get_yes_no, "23": get_9or6, "24": get_8or12, "25": get_5or8, "26": get_21or17, "27": get_popcorns, "30": get_apples, "31": get_farm, "36": get_trees, "37": get_vehicles, "38": get_hot, "39": get_speed, "40": get_weight, "41": get_weather, "42": get_tools, "43": get_carrots, "44": get_badminton, "45": get_lady, "46": get_prepositions, "47": get_prepositions, "48": get_room1, "51": get_swimmer, "52": get_shirt, "53": get_look, "54": get_mice, "55": get_cat, "56": get_sunshine, "57": get_box, "58": get_pen, "59": get_pen, "60": get_room2, "61": get_animals, "62": get_un, "63": get_moon, "64": get_words, "65": get_sand};
   
   beginSlide = new visual.ImageStim({
     win : psychoJS.window,
@@ -665,6 +726,12 @@ async function experimentInit() {
     win: psychoJS.window,
   });
   beginMouse.mouseClock = new util.Clock();
+  beginSound = new sound.Sound({
+    win: psychoJS.window,
+    value: 'aud/mp3/01_intro.mp3',
+    secs: (- 1),
+    });
+  beginSound.setVolume(1.0);
   // Initialize components for Routine "gate"
   gateClock = new util.Clock();
   // Initialize components for Routine "trialChoice"
@@ -847,11 +914,13 @@ function beginRoutineBegin(snapshot) {
     // setup some python lists for storing info about the beginMouse
     beginMouse.clicked_name = [];
     gotValidClick = false; // until a click is received
+    beginSound.setVolume(1.0);
     // keep track of which components have finished
     beginComponents = [];
     beginComponents.push(beginSlide);
     beginComponents.push(beginCont);
     beginComponents.push(beginMouse);
+    beginComponents.push(beginSound);
     
     for (const thisComponent of beginComponents)
       if ('status' in thisComponent)
@@ -919,6 +988,19 @@ function beginRoutineEachFrame() {
         }
       }
     }
+    // start/stop beginSound
+    if ((USE_AUDIO) && beginSound.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      beginSound.tStart = t;  // (not accounting for frame time here)
+      beginSound.frameNStart = frameN;  // exact frame index
+      
+      psychoJS.window.callOnFlip(function(){ beginSound.play(); });  // screen flip
+      beginSound.status = PsychoJS.Status.STARTED;
+    }
+    if (t >= (beginSound.getDuration() + beginSound.tStart)     && beginSound.status === PsychoJS.Status.STARTED) {
+      beginSound.stop();  // stop the sound (if longer than duration)
+      beginSound.status = PsychoJS.Status.FINISHED;
+    }
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
       return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
@@ -955,6 +1037,7 @@ function beginRoutineEnd() {
       }
     }
     // store data for psychoJS.experiment (ExperimentHandler)
+    beginSound.stop();  // ensure sound has stopped at end of routine
     // the Routine "begin" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
@@ -1019,6 +1102,8 @@ var is_drawing;
 var is_text;
 var slide_num;
 var slide;
+var aud_file;
+var trial_sound;
 var gateComponents;
 function gateRoutineBegin(snapshot) {
   return async function () {
@@ -1034,11 +1119,17 @@ function gateRoutineBegin(snapshot) {
     is_drawing = (qnType === "drawing");
     is_text = (qnType === "text");
     slide_num = ((slideNum < 10) ? `0${slideNum}` : slideNum);
-    if ((slideNum !== "NA")) {
+    if ((slide_num !== "NA")) {
         slide = make_slide(slide_num);
         slide.autoDraw = true;
     } else {
         slide = BLANK_IMG;
+    }
+    if (USE_AUDIO) {
+        aud_file = (audFile ? `aud/mp3/${audFile}.mp3` : "A");
+        trial_sound = new sound.Sound({"win": psychoJS.window, "value": aud_file, "secs": (- 1), "stereo": true, "hamming": true, "name": "trial_sound"});
+        trial_sound.setVolume(1.0);
+        trial_sound.play();
     }
     
     // keep track of which components have finished
@@ -1133,7 +1224,6 @@ function trialChoiceRoutineBegin(snapshot) {
                 for (var i, _pj_c = 0, _pj_a = util.range(cimgs.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
                     i = _pj_a[_pj_c];
                     cimg_names.push(cimgs[i].name);
-                    console.log(`cimgs[${i}] = ${cimgs[i]}`);
                 }
             }
         }
@@ -1165,7 +1255,8 @@ function trialChoiceRoutineEachFrame() {
     if ((is_choice && SHOW_DEBUG)) {
         trialChoiceDebug.text = `trialChoice
     taskName = ${taskName}
-    slideNum = ${slideNum}
+    audFile = ${audFile}
+    slide_num = ${slide_num}
     qnNum = ${qnNum}
     qnType = ${qnType}
     corrAns = ${corrAns}
@@ -1252,6 +1343,13 @@ function trialChoiceRoutineEnd() {
     if (is_choice) {
         if ((qnNum === "13a1")) {
             skip_next = (trialChoiceMouse.clicked_name.toString() === corrAns.toString());
+        }
+        if ((qnNum === "21_1")) {
+            if ((((typeof trialChoiceMouse.clicked_name) === "string") || (trialChoiceMouse.clicked_name instanceof String))) {
+                skip_next = (trialChoiceMouse.clicked_name.toString()[0] === "s");
+            } else {
+                skip_next = (trialChoiceMouse.clicked_name[0].toString()[0] === "s");
+            }
         }
         if (SHOW_DEBUG) {
             console.log(`trialChoiceMouse.clicked_name = ${trialChoiceMouse.clicked_name}`);
@@ -1709,6 +1807,9 @@ function wipeRoutineEnd() {
       if (typeof thisComponent.setAutoDraw === 'function') {
         thisComponent.setAutoDraw(false);
       }
+    }
+    if (USE_AUDIO) {
+        trial_sound.stop();
     }
     hide(slide);
     hide(GLOBAL_CONT);
