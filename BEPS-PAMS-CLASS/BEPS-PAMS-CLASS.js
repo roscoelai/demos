@@ -13,7 +13,7 @@ const { round } = util;
 
 // store info about the experiment session:
 let expName = 'BEPS-PAMS-CLASS';  // from the Builder filename that created this script
-let expInfo = {'participant': '', 'debug': 'false'};
+let expInfo = {'participant': '', 'debug': 'true'};
 
 // Start code blocks for 'Before Experiment'
 // init psychoJS:
@@ -48,6 +48,9 @@ const trialsLoopScheduler = new Scheduler(psychoJS);
 flowScheduler.add(trialsLoopBegin(trialsLoopScheduler));
 flowScheduler.add(trialsLoopScheduler);
 flowScheduler.add(trialsLoopEnd);
+flowScheduler.add(zeEndRoutineBegin());
+flowScheduler.add(zeEndRoutineEachFrame());
+flowScheduler.add(zeEndRoutineEnd());
 flowScheduler.add(quitPsychoJS, '', true);
 
 // quit if user presses Cancel in dialog box:
@@ -57,60 +60,70 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/cards/class-card-18.png', 'path': 'imgs/cards/class-card-18.png'},
-    {'name': 'imgs/cards/pams-card-14.png', 'path': 'imgs/cards/pams-card-14.png'},
-    {'name': 'imgs/cards/class-card-23.png', 'path': 'imgs/cards/class-card-23.png'},
-    {'name': 'imgs/cards/pams-card-08.png', 'path': 'imgs/cards/pams-card-08.png'},
-    {'name': 'imgs/cards/class-card-13.png', 'path': 'imgs/cards/class-card-13.png'},
-    {'name': 'imgs/cards/pams-card-11.png', 'path': 'imgs/cards/pams-card-11.png'},
-    {'name': 'imgs/cards/pams-card-01.png', 'path': 'imgs/cards/pams-card-01.png'},
-    {'name': 'imgs/cards/pams-card-10.png', 'path': 'imgs/cards/pams-card-10.png'},
-    {'name': 'imgs/cards/pams-card-04.png', 'path': 'imgs/cards/pams-card-04.png'},
-    {'name': 'imgs/cards/class-card-02.png', 'path': 'imgs/cards/class-card-02.png'},
-    {'name': 'imgs/draw_square.png', 'path': 'imgs/draw_square.png'},
-    {'name': 'imgs/cards/pams-card-15.png', 'path': 'imgs/cards/pams-card-15.png'},
-    {'name': 'imgs/cards/beps-card-06.png', 'path': 'imgs/cards/beps-card-06.png'},
-    {'name': 'imgs/cards/class-card-12.png', 'path': 'imgs/cards/class-card-12.png'},
-    {'name': 'imgs/cards/class-card-04.png', 'path': 'imgs/cards/class-card-04.png'},
-    {'name': 'imgs/cards/beps-card-04.png', 'path': 'imgs/cards/beps-card-04.png'},
-    {'name': 'imgs/cards/class-card-05.png', 'path': 'imgs/cards/class-card-05.png'},
-    {'name': 'imgs/cards/class-card-25.png', 'path': 'imgs/cards/class-card-25.png'},
-    {'name': 'imgs/cards/class-card-11.png', 'path': 'imgs/cards/class-card-11.png'},
-    {'name': 'imgs/cards/class-card-20.png', 'path': 'imgs/cards/class-card-20.png'},
-    {'name': 'imgs/cards/pams-card-02.png', 'path': 'imgs/cards/pams-card-02.png'},
-    {'name': 'imgs/transparent-box.png', 'path': 'imgs/transparent-box.png'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
-    {'name': 'imgs/cards/pams-card-03.png', 'path': 'imgs/cards/pams-card-03.png'},
+    {'name': 'imgs/slides/slide-38.png', 'path': 'imgs/slides/slide-38.png'},
+    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
+    {'name': 'imgs/slides/slide-60.png', 'path': 'imgs/slides/slide-60.png'},
+    {'name': 'imgs/slides/slide-42.png', 'path': 'imgs/slides/slide-42.png'},
+    {'name': 'imgs/slides/slide-45.png', 'path': 'imgs/slides/slide-45.png'},
+    {'name': 'imgs/slides/slide-33.png', 'path': 'imgs/slides/slide-33.png'},
+    {'name': 'imgs/slides/slide-29.png', 'path': 'imgs/slides/slide-29.png'},
+    {'name': 'imgs/slides/slide-35.png', 'path': 'imgs/slides/slide-35.png'},
+    {'name': 'imgs/slides/slide-17.png', 'path': 'imgs/slides/slide-17.png'},
+    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
+    {'name': 'imgs/slides/slide-54.png', 'path': 'imgs/slides/slide-54.png'},
+    {'name': 'imgs/slides/slide-32.png', 'path': 'imgs/slides/slide-32.png'},
+    {'name': 'imgs/slides/slide-58.png', 'path': 'imgs/slides/slide-58.png'},
+    {'name': 'imgs/slides/slide-37.png', 'path': 'imgs/slides/slide-37.png'},
+    {'name': 'imgs/slides/slide-48.png', 'path': 'imgs/slides/slide-48.png'},
+    {'name': 'imgs/slides/slide-28.png', 'path': 'imgs/slides/slide-28.png'},
+    {'name': 'imgs/slides/slide-65.png', 'path': 'imgs/slides/slide-65.png'},
+    {'name': 'imgs/slides/slide-34.png', 'path': 'imgs/slides/slide-34.png'},
+    {'name': 'imgs/slides/slide-52.png', 'path': 'imgs/slides/slide-52.png'},
+    {'name': 'imgs/slides/slide-63.png', 'path': 'imgs/slides/slide-63.png'},
+    {'name': 'imgs/slides/slide-25.png', 'path': 'imgs/slides/slide-25.png'},
+    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'},
+    {'name': 'imgs/slides/slide-36.png', 'path': 'imgs/slides/slide-36.png'},
+    {'name': 'imgs/slides/slide-41.png', 'path': 'imgs/slides/slide-41.png'},
+    {'name': 'imgs/slides/slide-19.png', 'path': 'imgs/slides/slide-19.png'},
+    {'name': 'imgs/slides/slide-40.png', 'path': 'imgs/slides/slide-40.png'},
+    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
+    {'name': 'imgs/slides/slide-14.png', 'path': 'imgs/slides/slide-14.png'},
+    {'name': 'imgs/slides/slide-61.png', 'path': 'imgs/slides/slide-61.png'},
+    {'name': 'imgs/slides/slide-44.png', 'path': 'imgs/slides/slide-44.png'},
+    {'name': 'imgs/slides/slide-21.png', 'path': 'imgs/slides/slide-21.png'},
+    {'name': 'imgs/slides/slide-24.png', 'path': 'imgs/slides/slide-24.png'},
+    {'name': 'imgs/slides/slide-27.png', 'path': 'imgs/slides/slide-27.png'},
+    {'name': 'imgs/slides/slide-39.png', 'path': 'imgs/slides/slide-39.png'},
+    {'name': 'imgs/slides/slide-66.png', 'path': 'imgs/slides/slide-66.png'},
+    {'name': 'imgs/slides/slide-20.png', 'path': 'imgs/slides/slide-20.png'},
+    {'name': 'imgs/slides/slide-59.png', 'path': 'imgs/slides/slide-59.png'},
+    {'name': 'imgs/slides/slide-55.png', 'path': 'imgs/slides/slide-55.png'},
+    {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
+    {'name': 'imgs/slides/slide-30.png', 'path': 'imgs/slides/slide-30.png'},
+    {'name': 'imgs/slides/slide-62.png', 'path': 'imgs/slides/slide-62.png'},
+    {'name': 'imgs/slides/slide-26.png', 'path': 'imgs/slides/slide-26.png'},
+    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
+    {'name': 'imgs/slides/slide-46.png', 'path': 'imgs/slides/slide-46.png'},
+    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
     {'name': 'sequences/conditions.csv', 'path': 'sequences/conditions.csv'},
-    {'name': 'imgs/cards/class-card-24.png', 'path': 'imgs/cards/class-card-24.png'},
-    {'name': 'imgs/cards/class-card-26.png', 'path': 'imgs/cards/class-card-26.png'},
-    {'name': 'imgs/cards/pams-card-05.png', 'path': 'imgs/cards/pams-card-05.png'},
-    {'name': 'imgs/cards/class-card-08.png', 'path': 'imgs/cards/class-card-08.png'},
-    {'name': 'imgs/cards/class-card-03.png', 'path': 'imgs/cards/class-card-03.png'},
-    {'name': 'imgs/cards/pams-card-06.png', 'path': 'imgs/cards/pams-card-06.png'},
-    {'name': 'imgs/cards/class-card-22.png', 'path': 'imgs/cards/class-card-22.png'},
-    {'name': 'imgs/cards/pams-card-07.png', 'path': 'imgs/cards/pams-card-07.png'},
-    {'name': 'imgs/cards/class-card-09.png', 'path': 'imgs/cards/class-card-09.png'},
-    {'name': 'imgs/cards/pams-card-13.png', 'path': 'imgs/cards/pams-card-13.png'},
-    {'name': 'imgs/cards/class-card-21.png', 'path': 'imgs/cards/class-card-21.png'},
-    {'name': 'imgs/draw_triangle.png', 'path': 'imgs/draw_triangle.png'},
-    {'name': 'imgs/cards/class-card-06.png', 'path': 'imgs/cards/class-card-06.png'},
-    {'name': 'imgs/cards/pams-card-12.png', 'path': 'imgs/cards/pams-card-12.png'},
-    {'name': 'imgs/cards/beps-card-07.png', 'path': 'imgs/cards/beps-card-07.png'},
-    {'name': 'imgs/cards/class-card-16.png', 'path': 'imgs/cards/class-card-16.png'},
-    {'name': 'imgs/cards/beps-card-03.png', 'path': 'imgs/cards/beps-card-03.png'},
-    {'name': 'imgs/cards/class-card-14.png', 'path': 'imgs/cards/class-card-14.png'},
-    {'name': 'imgs/cards/class-card-19.png', 'path': 'imgs/cards/class-card-19.png'},
-    {'name': 'imgs/cards/pams-card-17.png', 'path': 'imgs/cards/pams-card-17.png'},
-    {'name': 'imgs/cards/class-card-10.png', 'path': 'imgs/cards/class-card-10.png'},
-    {'name': 'imgs/cards/pams-card-09.png', 'path': 'imgs/cards/pams-card-09.png'},
-    {'name': 'imgs/cards/class-card-07.png', 'path': 'imgs/cards/class-card-07.png'},
-    {'name': 'imgs/cards/beps-card-05.png', 'path': 'imgs/cards/beps-card-05.png'},
-    {'name': 'imgs/cards/class-card-17.png', 'path': 'imgs/cards/class-card-17.png'},
-    {'name': 'imgs/cards/beps-card-01.png', 'path': 'imgs/cards/beps-card-01.png'},
-    {'name': 'imgs/cards/pams-card-16.png', 'path': 'imgs/cards/pams-card-16.png'},
-    {'name': 'imgs/cards/class-card-15.png', 'path': 'imgs/cards/class-card-15.png'},
-    {'name': 'imgs/cards/class-card-01.png', 'path': 'imgs/cards/class-card-01.png'}
+    {'name': 'imgs/slides/slide-16.png', 'path': 'imgs/slides/slide-16.png'},
+    {'name': 'imgs/slides/slide-22.png', 'path': 'imgs/slides/slide-22.png'},
+    {'name': 'imgs/slides/slide-31.png', 'path': 'imgs/slides/slide-31.png'},
+    {'name': 'imgs/slides/slide-43.png', 'path': 'imgs/slides/slide-43.png'},
+    {'name': 'imgs/transparent-box.png', 'path': 'imgs/transparent-box.png'},
+    {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
+    {'name': 'imgs/slides/slide-51.png', 'path': 'imgs/slides/slide-51.png'},
+    {'name': 'imgs/slides/slide-15.png', 'path': 'imgs/slides/slide-15.png'},
+    {'name': 'imgs/slides/slide-47.png', 'path': 'imgs/slides/slide-47.png'},
+    {'name': 'imgs/slides/slide-23.png', 'path': 'imgs/slides/slide-23.png'},
+    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
+    {'name': 'imgs/slides/slide-13.png', 'path': 'imgs/slides/slide-13.png'},
+    {'name': 'imgs/slides/slide-57.png', 'path': 'imgs/slides/slide-57.png'},
+    {'name': 'imgs/slides/slide-18.png', 'path': 'imgs/slides/slide-18.png'},
+    {'name': 'imgs/slides/slide-56.png', 'path': 'imgs/slides/slide-56.png'},
+    {'name': 'imgs/slides/slide-53.png', 'path': 'imgs/slides/slide-53.png'},
+    {'name': 'imgs/slides/slide-64.png', 'path': 'imgs/slides/slide-64.png'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'}
   ]
 });
 
@@ -140,22 +153,26 @@ async function updateInfo() {
 
 var beginClock;
 var _pj;
+var hide;
+var unhide;
+var make_slide;
 var SHOW_DEBUG;
 var CLICK_BOX_OPACITY;
-var CARD_SIZE;
-var DRAW_SHAPES_SIZE;
+var SLIDE_SIZE;
 var CONT_SIZE;
 var GLOBAL_CONT;
 var BLANK_IMG;
 var RED_BOX;
-var cards;
-var hide;
-var unhide;
+var all_cimgs;
+var beginSlide;
+var beginCont;
+var beginMouse;
 var gateClock;
 var trialChoiceClock;
+var MAX_OPTIONS;
 var skip_next;
+var cimgs;
 var cimg_names;
-var trialChoiceText;
 var trialChoiceMouse;
 var trialChoiceDebug;
 var trialDrawingClock;
@@ -166,8 +183,6 @@ var x;
 var y;
 var xx;
 var yy;
-var trialDrawingText;
-var trialDrawingMouse;
 var trialDrawingBrush;
 var gettrialDrawingBrush;
 var trialDrawingBrushReset;
@@ -176,12 +191,21 @@ var trialDrawingBrushBrushPos;
 var trialDrawingBrushPointer;
 var trialDrawingBrushAtStartPoint;
 var trialDrawingBrushShapes;
+var trialDrawingMouse;
 var trialDrawingDebug;
-var trialVerbalClock;
-var trialVerbalText;
-var trialVerbalMouse;
-var trialVerbalDebug;
+var trialTextClock;
+var textbox_xys;
+var textbox_sizes;
+var textbox_lhs;
+var trialTextTextbox;
+var trialTextMouse;
+var trialTextDebug;
 var wipeClock;
+var zeEndClock;
+var endSlide;
+var endCont;
+var endMouse;
+var endKeyResp;
 var globalClock;
 var routineTimer;
 async function experimentInit() {
@@ -189,378 +213,28 @@ async function experimentInit() {
   beginClock = new util.Clock();
   var _pj;
   function _pj_snippets(container) {
-      function in_es6(left, right) {
-          if (((right instanceof Array) || ((typeof right) === "string"))) {
-              return (right.indexOf(left) > (- 1));
-          } else {
-              if (((right instanceof Map) || (right instanceof Set) || (right instanceof WeakMap) || (right instanceof WeakSet))) {
-                  return right.has(left);
+      function _assert(comp, msg) {
+          function PJAssertionError(message) {
+              this.name = "PJAssertionError";
+              this.message = (message || "Custom error PJAssertionError");
+              if (((typeof Error.captureStackTrace) === "function")) {
+                  Error.captureStackTrace(this, this.constructor);
               } else {
-                  return (left in right);
+                  this.stack = new Error(message).stack;
               }
           }
+          PJAssertionError.prototype = Object.create(Error.prototype);
+          PJAssertionError.prototype.constructor = PJAssertionError;
+          msg = (msg || "Assertion failed.");
+          if ((! comp)) {
+              throw new PJAssertionError(msg);
+          }
       }
-      container["in_es6"] = in_es6;
+      container["_assert"] = _assert;
       return container;
   }
   _pj = {};
   _pj_snippets(_pj);
-  SHOW_DEBUG = _pj.in_es6(expInfo.debug, ["true", "True", "TRUE"]);
-  CLICK_BOX_OPACITY = (SHOW_DEBUG ? 0.25 : 0);
-  CARD_SIZE = [1.0, 0.707526];
-  DRAW_SHAPES_SIZE = [0.358741, 0.3];
-  CONT_SIZE = [0.228, 0.1];
-  GLOBAL_CONT = new visual.ImageStim({"win": psychoJS.window, "name": "global_cont", "image": "imgs/continue.png", "pos": [0, (- 0.4)], "size": [0, 0]});
-  BLANK_IMG = make_box("blank", [0, 0], 0);
-  RED_BOX = make_box("red_box", [0, 0], 1);
-  function get_umbrellas() {
-      var cimg_sizes, cimgs, dx, dy, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("beps-card-01");
-      names = ["orange", "white", "yellow", "black", "blue", "red"];
-      [dx, dy] = [0.305, 0.175];
-      xy = [[(- dx), dy], [0, dy], [dx, dy], [(- dx), (- dy)], [0, (- dy)], [dx, (- dy)]];
-      cimgs = [];
-      cimg_sizes = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-          cimg_sizes.push([0.26, 0.26]);
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_draw_shapes(name) {
-      var img;
-      img = new visual.ImageStim({"win": psychoJS.window, "name": name, "image": `imgs/${name}.png`, "pos": [(- 0.32), 0], "size": [0, 0]});
-      return [[img], [DRAW_SHAPES_SIZE], [], []];
-  }
-  function get_patterns(which) {
-      var cimg_sizes, cimgs, dy1, dy2, img_sizes, imgs, names, sizes, xys;
-      cards = {"practice": "beps-card-03", "trial": "beps-card-04"};
-      [imgs, img_sizes] = make_card(cards[which], [0, (- 0.08)]);
-      names = {"practice": ["star", "bread", "watermelon", "pizza"], "trial": ["ice_cream", "basketball", "car", "beachball"]};
-      dy1 = (- 0.28);
-      dy2 = (- 0.26);
-      xys = {"practice": [[(- 0.31), dy1], [(- 0.105), dy1], [0.13, dy1], [0.32, dy1]], "trial": [[(- 0.335), dy2], [(- 0.13), dy2], [0.085, dy2], [0.31, dy2]]};
-      sizes = {"practice": [0.18, 0.18], "trial": [0.2, 0.22]};
-      cimgs = [];
-      cimg_sizes = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names[which].length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[which][i], xys[which][i]));
-          cimg_sizes.push(sizes[which]);
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_symmetry() {
-      var cimg_sizes, cimgs, dx, dy, img_sizes, imgs, names, xy, y0;
-      y0 = (- 0.1);
-      [imgs, img_sizes] = make_card("beps-card-05", [0, y0]);
-      names = ["burger", "tree", "sun", "cloud"];
-      [dx, dy] = [0.285, 0.165];
-      xy = [[(- dx), (y0 + dy)], [dx, (y0 + dy)], [(- dx), (y0 - dy)], [dx, (y0 - dy)]];
-      cimgs = [];
-      cimg_sizes = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-          cimg_sizes.push([0.295, 0.305]);
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_shapes() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("beps-card-06");
-      names = ["rectangle", "circle", "triangle", "square"];
-      xy = [[(- 0.215), 0.165], [0.29, 0.18], [(- 0.185), (- 0.15)], [0.29, (- 0.17)]];
-      cimg_sizes = [[0.45, 0.19], [0.28, 0.28], [0.27, 0.24], [0.25, 0.25]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_cookies() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("beps-card-07");
-      names = ["cookie1", "cookie2", "cookie3", "cookie4"];
-      xy = [[(- 0.365), (- 0.01)], [(- 0.105), (- 0.015)], [0.19, (- 0.01)], [0.415, (- 0.01)]];
-      cimg_sizes = [[0.2, 0.2], [0.24, 0.24], [0.275, 0.275], [0.135, 0.135]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_flowers() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("pams-card-01", [0, (- 0.05)]);
-      names = ["flowers3", "flowers5", "flowers4", "flowers1"];
-      xy = [[(- 0.235), 0.02], [0.24, 0.015], [(- 0.225), (- 0.265)], [0.24, (- 0.25)]];
-      cimg_sizes = [[0.42, 0.14], [0.4, 0.25], [0.24, 0.24], [0.135, 0.135]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_9_6() {
-      var cimg_sizes, cimgs, dx, dy, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("pams-card-05");
-      names = ["nine", "six"];
-      [dx, dy] = [0.3, 0.01];
-      xy = [[(- dx), dy], [dx, dy]];
-      cimgs = [];
-      cimg_sizes = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-          cimg_sizes.push([0.3, 0.32]);
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_8_12() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("pams-card-06");
-      names = ["eight", "twelve"];
-      xy = [[(- 0.33), 0.01], [0.29, 0.01]];
-      cimgs = [];
-      cimg_sizes = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-          cimg_sizes.push([0.3, 0.32]);
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_5_8() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("pams-card-07");
-      names = ["five", "eight"];
-      xy = [[(- 0.31), 0.01], [0.3, 0.01]];
-      cimgs = [];
-      cimg_sizes = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-          cimg_sizes.push([0.3, 0.32]);
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_21_17() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("pams-card-08");
-      names = ["twenty_one", "seventeen"];
-      xy = [[(- 0.285), 0.01], [0.3, 0.01]];
-      cimgs = [];
-      cimg_sizes = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-          cimg_sizes.push([0.3, 0.32]);
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_popcorns() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("pams-card-09");
-      names = ["popcorns_left", "popcorns_right"];
-      xy = [[(- 0.25), 0], [0.25, 0]];
-      cimgs = [];
-      cimg_sizes = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-          cimg_sizes.push([0.46, 0.47]);
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_trees() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-01");
-      names = ["tree1", "tree2", "tree3", "tree4"];
-      xy = [[(- 0.325), (- 0.045)], [(- 0.085), (- 0.165)], [0.125, (- 0.115)], [0.355, (- 0.14)]];
-      cimg_sizes = [[0.28, 0.44], [0.14, 0.2], [0.19, 0.3], [0.17, 0.25]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_vehicles() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-02");
-      names = ["car", "bus", "ball", "bicycle"];
-      xy = [[(- 0.275), 0.1], [0.2, 0.1], [(- 0.27), (- 0.18)], [0.2, (- 0.18)]];
-      cimg_sizes = [[0.33, 0.22], [0.43, 0.22], [0.21, 0.21], [0.32, 0.22]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_hot() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-03");
-      names = ["ice_cream", "fire", "sun", "iron"];
-      xy = [[(- 0.205), 0.0925], [0.205, 0.0925], [(- 0.2075), (- 0.19)], [0.205, (- 0.19)]];
-      cimg_sizes = [[0.16, 0.25], [0.23, 0.25], [0.24, 0.24], [0.32, 0.17]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_weather() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-06");
-      names = ["sunny", "cloudy", "rainy"];
-      xy = [[(- 0.31), (- 0.065)], [0, (- 0.085)], [0.335, (- 0.085)]];
-      cimg_sizes = [[0.26, 0.26], [0.32, 0.26], [0.26, 0.26]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_tools() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-07");
-      names = ["scissors", "nail", "tweezers"];
-      xy = [[(- 0.325), (- 0.04)], [0, (- 0.045)], [0.325, (- 0.045)]];
-      cimg_sizes = [[0.26, 0.26], [0.2, 0.31], [0.29, 0.16]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_carrots() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-08");
-      names = ["starry_carrots", "sally_carrots", "both_carrots"];
-      xy = [[(- 0.34), (- 0.03)], [(- 0.03), (- 0.03)], [0.3, (- 0.03)]];
-      cimg_sizes = [[0.23, 0.3], [0.19, 0.3], [0.31, 0.3]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_badminton() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-09");
-      names = ["jack_play", "jack_playing", "jack_played"];
-      xy = [[0, (- 0.2)], [0, (- 0.25)], [0, (- 0.3)]];
-      cimg_sizes = [[0.66, 0.048], [0.72, 0.048], [0.69, 0.048]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_swimmer() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-12");
-      names = ["boys_are", "boy_is"];
-      xy = [[(- 0.31), (- 0.27)], [0.31, (- 0.27)]];
-      cimg_sizes = [[0.33, 0.06], [0.3, 0.06]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_shirt() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-13");
-      names = ["smelly", "smell"];
-      xy = [[(- 0.305), (- 0.265)], [0.28, (- 0.265)]];
-      cimg_sizes = [[0.32, 0.06], [0.3, 0.06]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_look() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-14");
-      names = ["book", "cup", "leaf"];
-      xy = [[(- 0.075), (- 0.02)], [0.17, (- 0.02)], [0.385, (- 0.02)]];
-      cimg_sizes = [[0.21, 0.2], [0.16, 0.2], [0.16, 0.2]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_mice() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-15");
-      names = ["rice", "map", "dice"];
-      xy = [[(- 0.1), (- 0.05)], [0.14, (- 0.06)], [0.38, (- 0.07)]];
-      cimg_sizes = [[0.19, 0.19], [0.22, 0.19], [0.17, 0.19]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_cat() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-16");
-      names = ["mat", "house", "car"];
-      xy = [[(- 0.07), (- 0.09)], [0.155, (- 0.05)], [0.37, (- 0.1)]];
-      cimg_sizes = [[0.22, 0.16], [0.16, 0.22], [0.18, 0.12]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_animals() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-22");
-      names = ["monkey", "goose"];
-      xy = [[(- 0.23), (- 0.055)], [0.22, (- 0.05)]];
-      cimg_sizes = [[0.25, 0.3], [0.33, 0.3]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  function get_words() {
-      var cimg_sizes, cimgs, img_sizes, imgs, names, xy;
-      [imgs, img_sizes] = make_card("class-card-25");
-      names = ["reheart", "rethink", "reball", "resmall"];
-      xy = [[0.14, 0.115], [0.14, 0], [0.14, (- 0.13)], [0.14, (- 0.245)]];
-      cimg_sizes = [[0.3, 0.09], [0.3, 0.09], [0.3, 0.09], [0.3, 0.09]];
-      cimgs = [];
-      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-          i = _pj_a[_pj_c];
-          cimgs.push(make_box(names[i], xy[i]));
-      }
-      return [imgs, img_sizes, cimgs, cimg_sizes];
-  }
-  cards = {"pre_umbrellas": [[], [], [], []], "umbrellas": get_umbrellas(), "draw_square": get_draw_shapes("draw_square"), "draw_triangle": get_draw_shapes("draw_triangle"), "writing": [[], [], [], []], "patterns_1": get_patterns("practice"), "patterns_2": get_patterns("trial"), "symmetry": get_symmetry(), "shapes": get_shapes(), "sizes": get_cookies(), "count_choose": get_flowers(), "count_compare": get_verbal("pams-card-02", [0, (- 0.03)]), "count_exhaustive": get_verbal("pams-card-03"), "count_interference": get_verbal("pams-card-04"), "numeric_compare_1": get_9_6(), "numeric_compare_2": get_8_12(), "numeric_compare_3": get_5_8(), "numeric_compare_4": get_21_17(), "estimate_compare": get_popcorns(), "sequences_1": get_verbal("pams-card-10"), "sequences_2": get_verbal("pams-card-11"), "ratios": get_verbal("pams-card-12"), "bar_chart": get_verbal("pams-card-13", [0, (- 0.05)]), "add_concrete": get_verbal("pams-card-14"), "add_abstract": get_verbal("pams-card-15"), "subtract_concrete": get_verbal("pams-card-16"), "subtract_abstract": get_verbal("pams-card-17"), "class_1": get_trees(), "class_2": get_vehicles(), "class_3": get_hot(), "class_4": get_verbal("class-card-04"), "class_5": get_verbal("class-card-05"), "class_6": get_weather(), "class_7": get_tools(), "class_8": get_carrots(), "class_9": get_badminton(), "class_10": get_verbal("class-card-10"), "class_11": get_verbal("class-card-11"), "class_12": get_swimmer(), "class_13": get_shirt(), "class_14": get_look(), "class_15": get_mice(), "class_16": get_cat(), "class_17": get_verbal("class-card-17"), "class_18": get_verbal("class-card-18"), "class_19": get_verbal("class-card-19"), "class_20": get_verbal("class-card-20"), "class_21": get_verbal("class-card-21"), "class_22": get_animals(), "class_23": get_verbal("class-card-23"), "class_24": get_verbal("class-card-24"), "class_25": get_words(), "class_26": get_verbal("class-card-26")};
-  
   function _hide(img) {
       img.size = [0, 0];
       img.autoDraw = false;
@@ -571,37 +245,434 @@ async function experimentInit() {
       img.autoDraw = true;
   }
   unhide = _unhide;
-  function make_box(name, pos, opacity = CLICK_BOX_OPACITY) {
-      return new visual.ImageStim({"win": psychoJS.window, "name": name, "image": `imgs/transparent-box.png`, "pos": pos, "size": [0, 0], "opacity": opacity});
+  function _make_slide(slide_num, pos = [0, 0], slide_size = SLIDE_SIZE) {
+      return new visual.ImageStim({"win": psychoJS.window, "name": name, "image": `imgs/slides/slide-${slide_num}.png`, "pos": pos, "size": slide_size});
   }
-  function make_card(name, pos = [0, 0], card_size = CARD_SIZE) {
-      var card;
-      card = new visual.ImageStim({"win": psychoJS.window, "name": name, "image": `imgs/cards/${name}.png`, "pos": pos, "size": [0, 0]});
-      return [[card], [card_size]];
+  make_slide = _make_slide;
+  function make_box(name, pos, size, opacity = CLICK_BOX_OPACITY) {
+      return new visual.ImageStim({"win": psychoJS.window, "name": name, "image": `imgs/transparent-box.png`, "pos": pos, "size": size, "opacity": opacity});
   }
-  function get_verbal(name, pos = [0, 0], card_size = CARD_SIZE) {
-      var card;
-      card = new visual.ImageStim({"win": psychoJS.window, "name": name, "image": `imgs/cards/${name}.png`, "pos": pos, "size": [0, 0]});
-      return [[card], [card_size], [], []];
+  function size_rep(size, n) {
+      var sizes;
+      sizes = [];
+      for (var _, _pj_c = 0, _pj_a = util.range(n), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+          _ = _pj_a[_pj_c];
+          sizes.push(size);
+      }
+      return sizes;
+  }
+  function make_boxes(names, xys, sizes, opacity = CLICK_BOX_OPACITY) {
+      var cimgs;
+      _pj._assert((names.length === xys.length), null);
+      _pj._assert((names.length === sizes.length), null);
+      cimgs = [];
+      for (var i, _pj_c = 0, _pj_a = util.range(names.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+          i = _pj_a[_pj_c];
+          cimgs.push(make_box(names[i], xys[i], sizes[i], opacity));
+      }
+      return cimgs;
   }
   
+  function get_6umbrellas() {
+      var dx, dy, names, sizes, x0, xys, y0;
+      names = ["orange", "white", "yellow", "black", "blue", "red"];
+      x0 = 0.005;
+      y0 = (- 0.05);
+      dx = 0.325;
+      dy = 0.14;
+      xys = [[(x0 - dx), (y0 + dy)], [x0, (y0 + dy)], [(x0 + dx), (y0 + dy)], [(x0 - dx), (y0 - dy)], [x0, (y0 - dy)], [(x0 + dx), (y0 - dy)]];
+      sizes = size_rep([0.25, 0.25], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_1umbrella() {
+      var dx, names, sizes, xys, y0;
+      names = ["orange", "blue", "black"];
+      y0 = (- 0.22125);
+      dx = 0.375;
+      xys = [[(- dx), y0], [0, y0], [dx, y0]];
+      sizes = size_rep([0.275, 0.09], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_pattern1() {
+      var dx, names, sizes, x0, xys, y0;
+      names = ["star", "bread", "watermelon", "pizza"];
+      x0 = 0;
+      y0 = (- 0.145);
+      dx = 0.12;
+      xys = [[((x0 - (3 * dx)) - 0.0135), y0], [((x0 - dx) - 0.00925), y0], [((x0 + dx) - 0.005), y0], [(x0 + (3 * dx)), y0]];
+      sizes = size_rep([0.195, 0.19], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_pattern2() {
+      var dx, names, sizes, x0, xys, y0;
+      names = ["ice_cream", "basketball", "car", "beachball"];
+      x0 = 0;
+      y0 = (- 0.145);
+      dx = 0.12;
+      xys = [[((x0 - (3 * dx)) - 0.0135), y0], [((x0 - dx) - 0.00925), y0], [((x0 + dx) - 0.005), y0], [(x0 + (3 * dx)), y0]];
+      sizes = size_rep([0.195, 0.19], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_symmetry() {
+      var dx, dy, names, sizes, x0, xys, y0;
+      names = ["burger", "tree", "sun", "cloud"];
+      x0 = (- 0.03);
+      y0 = (- 0.04);
+      dx = 0.21;
+      dy = 0.14;
+      xys = [[(x0 - dx), (y0 + dy)], [(x0 + dx), (y0 + dy)], [(x0 - dx), (y0 - dy)], [(x0 + dx), (y0 - dy)]];
+      sizes = size_rep([0.25, 0.25], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_shapes() {
+      var names, sizes, xys;
+      names = ["rectangle", "circle", "triangle", "square"];
+      xys = [[(- 0.225), 0.0925], [0.26, 0.0925], [(- 0.21), (- 0.16)], [0.26, (- 0.1625)]];
+      sizes = [[0.35, 0.135], [0.21, 0.2], [0.205, 0.17], [0.185, 0.175]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_cookies() {
+      var names, sizes, xys, y0;
+      names = ["cookie1", "cookie2", "cookie3", "cookie4"];
+      y0 = (- 0.025);
+      xys = [[(- 0.385), y0], [(- 0.1125), y0], [0.195, y0], [0.435, y0]];
+      sizes = [[0.2, 0.2], [0.24, 0.24], [0.275, 0.275], [0.135, 0.135]];
+      return make_boxes(names, xys, sizes);
+  }
+  
+  function get_flowers() {
+      var names, sizes, xys;
+      names = ["flowers3", "flowers5", "flowers4", "flowers1"];
+      xys = [[(- 0.175), (- 0.025)], [0.185, (- 0.025)], [(- 0.17), (- 0.215)], [0.185, (- 0.2025)]];
+      sizes = [[0.32, 0.1], [0.3, 0.17], [0.18, 0.17], [0.09, 0.09]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_yes_no() {
+      var dx, names, sizes, xys, y0;
+      names = ["yes", "no"];
+      y0 = (- 0.2075);
+      dx = 0.2325;
+      xys = [[(- dx), y0], [dx, y0]];
+      sizes = size_rep([0.275, 0.085], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_9_6() {
+      var dx, names, sizes, xys, y0;
+      names = ["nine", "six"];
+      y0 = (- 0.01);
+      dx = 0.28;
+      xys = [[(- dx), y0], [dx, y0]];
+      sizes = size_rep([0.3, 0.32], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_8_12() {
+      var names, sizes, xys, y0;
+      names = ["eight", "twelve"];
+      y0 = (- 0.03);
+      xys = [[(- 0.32), y0], [0.295, y0]];
+      sizes = [[0.25, 0.33], [0.38, 0.33]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_5_8() {
+      var names, sizes, xys, y0;
+      names = ["five", "eight"];
+      y0 = (- 0.045);
+      xys = [[(- 0.31), y0], [0.33, y0]];
+      sizes = size_rep([0.3, 0.36], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_21_17() {
+      var names, sizes, xys, y0;
+      names = ["twenty_one", "seventeen"];
+      y0 = (- 0.01);
+      xys = [[(- 0.33), y0], [0.34, y0]];
+      sizes = size_rep([0.36, 0.32], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_popcorns() {
+      var names, sizes, xys, y0;
+      names = ["popcorns_left", "popcorns_right"];
+      y0 = (- 0.07);
+      xys = [[(- 0.27), y0], [0.25, y0]];
+      sizes = size_rep([0.46, 0.47], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_apples() {
+      var dx, names, sizes, xys, y0;
+      names = ["1", "2", "3", "4", "5", "6"];
+      y0 = (- 0.2275);
+      dx = 0.0675;
+      xys = [[((- 5) * dx), y0], [((- 3) * dx), y0], [((- 1) * dx), y0], [dx, y0], [(3 * dx), y0], [(5 * dx), y0]];
+      sizes = size_rep([0.115, 0.125], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_farm() {
+      var dx, names, sizes, x0, xys, y0;
+      names = ["1", "2", "3", "4"];
+      x0 = 0.0125;
+      y0 = (- 0.25);
+      dx = 0.1;
+      xys = [[(x0 - (3 * dx)), y0], [(x0 - (1 * dx)), y0], [(x0 + dx), y0], [(x0 + (3 * dx)), y0]];
+      sizes = size_rep([0.115, 0.125], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  
+  function get_trees() {
+      var names, sizes, xys;
+      names = ["tree1", "tree2", "tree3", "tree4"];
+      xys = [[(- 0.305), (- 0.045)], [(- 0.08), (- 0.165)], [0.12, (- 0.115)], [0.34, (- 0.14)]];
+      sizes = [[0.26, 0.44], [0.14, 0.2], [0.19, 0.3], [0.17, 0.25]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_vehicles() {
+      var names, sizes, xys;
+      names = ["car", "bus", "ball", "bicycle"];
+      xys = [[(- 0.245), 0.1], [0.21, 0.1], [(- 0.24), (- 0.18)], [0.21, (- 0.18)]];
+      sizes = [[0.33, 0.22], [0.43, 0.22], [0.21, 0.21], [0.32, 0.22]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_hot() {
+      var names, sizes, xys;
+      names = ["ice_cream", "fire", "sun", "iron"];
+      xys = [[(- 0.195), 0.0925], [0.195, 0.0925], [(- 0.1975), (- 0.18)], [0.205, (- 0.18)]];
+      sizes = [[0.16, 0.25], [0.23, 0.25], [0.24, 0.24], [0.32, 0.17]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_speed() {
+      var dx, names, sizes, xys, y0;
+      names = ["slow", "happy", "heavy"];
+      y0 = (- 0.26);
+      dx = 0.3;
+      xys = [[(- dx), y0], [0, y0], [dx, y0]];
+      sizes = size_rep([0.25, 0.08], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_weight() {
+      var dx, names, sizes, x0, xys, y0;
+      names = ["heavy", "dark", "big"];
+      x0 = 0.02;
+      y0 = (- 0.255);
+      dx = 0.3;
+      xys = [[(x0 - dx), y0], [x0, y0], [(x0 + dx), y0]];
+      sizes = size_rep([0.25, 0.08], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_weather() {
+      var dx, names, sizes, xys;
+      names = ["sunny", "cloudy", "rainy"];
+      dx = 0.345;
+      xys = [[(- dx), (- 0.075)], [0, (- 0.085)], [dx, (- 0.085)]];
+      sizes = [[0.26, 0.26], [0.32, 0.26], [0.26, 0.26]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_tools() {
+      var dx, names, sizes, xys;
+      names = ["scissors", "nail", "tweezers"];
+      dx = 0.315;
+      xys = [[(- dx), (- 0.04)], [0, (- 0.045)], [dx, (- 0.045)]];
+      sizes = [[0.26, 0.26], [0.2, 0.31], [0.29, 0.16]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_carrots() {
+      var names, sizes, xys, y0;
+      names = ["he", "she", "they"];
+      y0 = (- 0.06);
+      xys = [[(- 0.28), y0], [0.02, y0], [0.34, y0]];
+      sizes = [[0.23, 0.3], [0.19, 0.3], [0.31, 0.3]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_badminton() {
+      var names, sizes, xys;
+      names = ["play", "playing", "played"];
+      xys = [[(- 0.3), (- 0.165)], [0.005, (- 0.255)], [0.3, (- 0.165)]];
+      sizes = size_rep([0.29, 0.08], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_lady() {
+      var names, sizes, xys;
+      names = ["with", "or", "and"];
+      xys = [[(- 0.245), (- 0.2)], [(- 0.005), (- 0.28)], [0.22, (- 0.2)]];
+      sizes = size_rep([0.36, 0.06], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_prepositions() {
+      var dy, names, sizes, x0, xys, y0;
+      names = ["above", "at", "beside", "under", "on", "below", "underneath"];
+      x0 = 0.35;
+      y0 = 0.015;
+      dy = 0.06;
+      xys = [[x0, (y0 + (3 * dy))], [x0, (y0 + (2 * dy))], [x0, (y0 + dy)], [x0, y0], [x0, (y0 - dy)], [x0, (y0 - (2 * dy))], [x0, (y0 - (3 * dy))]];
+      sizes = size_rep([0.2, 0.045], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_room1() {
+      var dy, names, sizes, x0, xys, y0;
+      names = ["vase", "apple", "duck", "cup"];
+      x0 = 0.35;
+      y0 = (- 0.005);
+      dy = 0.0325;
+      xys = [[x0, (y0 + (3 * dy))], [x0, (y0 + dy)], [x0, (y0 - dy)], [x0, (y0 - (3 * dy))]];
+      sizes = size_rep([0.2, 0.045], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_swimmer() {
+      var dx, names, sizes, xys, y0;
+      names = ["boys_are", "boy_is"];
+      y0 = (- 0.255);
+      dx = 0.295;
+      xys = [[(- dx), y0], [dx, y0]];
+      sizes = [[0.33, 0.06], [0.3, 0.06]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_shirt() {
+      var names, sizes, xys, y0;
+      names = ["smelly", "smell"];
+      y0 = (- 0.255);
+      xys = [[(- 0.29), y0], [0.27, y0]];
+      sizes = [[0.32, 0.06], [0.3, 0.06]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_look() {
+      var names, sizes, xys;
+      names = ["book", "cup", "leaf"];
+      xys = [[(- 0.07), (- 0.02)], [0.165, (- 0.02)], [0.37, (- 0.02)]];
+      sizes = [[0.21, 0.2], [0.16, 0.2], [0.16, 0.2]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_mice() {
+      var names, sizes, xys;
+      names = ["rice", "map", "dice"];
+      xys = [[(- 0.095), (- 0.05)], [0.135, (- 0.06)], [0.365, (- 0.07)]];
+      sizes = [[0.19, 0.19], [0.22, 0.19], [0.17, 0.19]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_cat() {
+      var names, sizes, xys;
+      names = ["mat", "house", "car"];
+      xys = [[(- 0.07), (- 0.09)], [0.14, (- 0.05)], [0.355, (- 0.1)]];
+      sizes = [[0.22, 0.16], [0.16, 0.22], [0.18, 0.12]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_sunshine() {
+      var dx, names, sizes, x0, xys, y0;
+      names = ["sun", "shine", "sunshine"];
+      x0 = (- 0.0025);
+      y0 = (- 0.2675);
+      dx = 0.28;
+      xys = [[(x0 - dx), y0], [x0, y0], [(x0 + dx), y0]];
+      sizes = size_rep([0.23, 0.07], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_box() {
+      var dx, names, sizes, x0, xys, y0;
+      names = ["box", "ox", "bow"];
+      x0 = (- 0.0075);
+      y0 = (- 0.235);
+      dx = 0.3125;
+      xys = [[(x0 - dx), y0], [x0, y0], [(x0 + dx), y0]];
+      sizes = size_rep([0.2475, 0.08], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_pen() {
+      var names, sizes, xys;
+      names = ["A-I", "K-M", "N", "P", "Q-S"];
+      xys = [[0.0075, 0.0375], [(- 0.0775), (- 0.15)], [0.26125, (- 0.14875)], [(- 0.2475), (- 0.27125)], [0.09125, (- 0.27125)]];
+      sizes = [[0.62, 0.235], [0.445, 0.11], [0.1075, 0.105], [0.1075, 0.105], [0.4475, 0.105]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_room2() {
+      var names, sizes, xys;
+      names = ["shoes", "sofa", "star", "sun", "stuffed_toy", "sandwich", "everything_else"];
+      xys = [[0.14, (- 0.1925)], [0.0125, (- 0.0325)], [(- 0.105), 0.0825], [0.0025, 0.1175], [(- 0.33), (- 0.18)], [(- 0.0725), (- 0.1175)], [0.01, (- 0.035)]];
+      sizes = [[0.08, 0.08], [0.33, 0.105], [0.05, 0.055], [0.015, 0.015], [0.06, 0.14], [0.06, 0.06], [0.9, 0.47]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_animals() {
+      var dx, names, sizes, xys;
+      names = ["monkey", "goose"];
+      dx = 0.21;
+      xys = [[(- dx), (- 0.055)], [dx, (- 0.05)]];
+      sizes = [[0.25, 0.3], [0.33, 0.3]];
+      return make_boxes(names, xys, sizes);
+  }
+  function get_un() {
+      var dx, names, sizes, x0, xys, y0;
+      names = ["undo", "untie", "under"];
+      x0 = 0;
+      y0 = (- 0.275);
+      dx = 0.305;
+      xys = [[(x0 - dx), y0], [x0, y0], [(x0 + dx), y0]];
+      sizes = size_rep([0.2475, 0.08], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_moon() {
+      var dx, names, sizes, x0, xys, y0;
+      names = ["moondown", "moonset", "moonlight"];
+      x0 = 0;
+      y0 = (- 0.24);
+      dx = 0.285;
+      xys = [[(x0 - dx), y0], [x0, y0], [(x0 + dx), y0]];
+      sizes = size_rep([0.2475, 0.065], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_words() {
+      var names, sizes, x0, xys;
+      names = ["reheart", "rethink", "resmall"];
+      x0 = 0.12;
+      xys = [[x0, 0.1], [x0, (- 0.04)], [x0, (- 0.17)]];
+      sizes = size_rep([0.29, 0.09], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  function get_sand() {
+      var dx, names, sizes, x0, xys, y0;
+      names = ["sandy", "sandless", "sandful"];
+      x0 = 0.02;
+      y0 = (- 0.25);
+      dx = 0.2875;
+      xys = [[(x0 - dx), y0], [x0, y0], [(x0 + dx), y0]];
+      sizes = size_rep([0.2475, 0.08], names.length);
+      return make_boxes(names, xys, sizes);
+  }
+  
+  SHOW_DEBUG = true;
+  CLICK_BOX_OPACITY = (SHOW_DEBUG ? 0.25 : 0);
+  SLIDE_SIZE = [1.2, 0.675];
+  CONT_SIZE = [0.228, 0.1];
+  GLOBAL_CONT = new visual.ImageStim({"win": psychoJS.window, "name": "global_cont", "image": "imgs/continue.png", "pos": [0, (- 0.4)], "size": [0, 0]});
+  BLANK_IMG = make_box("_", [0, 0], 0);
+  RED_BOX = make_box("red_box", [0, 0], 1);
+  all_cimgs = {"02": get_6umbrellas, "03": get_6umbrellas, "04": get_6umbrellas, "05": get_1umbrella, "06": get_1umbrella, "07": get_1umbrella, "14": get_pattern1, "15": get_pattern2, "16": get_symmetry, "17": get_shapes, "18": get_cookies, "19": get_flowers, "20": get_yes_no, "23": get_9_6, "24": get_8_12, "25": get_5_8, "26": get_21_17, "27": get_popcorns, "30": get_apples, "31": get_farm, "36": get_trees, "37": get_vehicles, "38": get_hot, "39": get_speed, "40": get_weight, "41": get_weather, "42": get_tools, "43": get_carrots, "44": get_badminton, "45": get_lady, "46": get_prepositions, "47": get_prepositions, "48": get_room1, "51": get_swimmer, "52": get_shirt, "53": get_look, "54": get_mice, "55": get_cat, "56": get_sunshine, "57": get_box, "58": get_pen, "59": get_pen, "60": get_room2, "61": get_animals, "62": get_un, "63": get_moon, "64": get_words, "65": get_sand};
+  
+  beginSlide = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'beginSlide', units : undefined, 
+    image : 'imgs/slides/slide-01.png', mask : undefined,
+    ori : 0.0, pos : [0, 0], size : [1.2, 0.675],
+    color : new util.Color([1, 1, 1]), opacity : undefined,
+    flipHoriz : false, flipVert : false,
+    texRes : 128.0, interpolate : true, depth : -5.0 
+  });
+  beginCont = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'beginCont', units : undefined, 
+    image : 'imgs/transparent-box.png', mask : undefined,
+    ori : 0.0, pos : [0, (- 0.185)], size : [0.34, 0.085],
+    color : new util.Color([1, 1, 1]), opacity : CLICK_BOX_OPACITY,
+    flipHoriz : false, flipVert : false,
+    texRes : 128.0, interpolate : true, depth : -6.0 
+  });
+  beginMouse = new core.Mouse({
+    win: psychoJS.window,
+  });
+  beginMouse.mouseClock = new util.Clock();
   // Initialize components for Routine "gate"
   gateClock = new util.Clock();
   // Initialize components for Routine "trialChoice"
   trialChoiceClock = new util.Clock();
+  MAX_OPTIONS = 7;
   skip_next = false;
+  cimgs = [];
   cimg_names = [];
-  
-  trialChoiceText = new visual.TextStim({
-    win: psychoJS.window,
-    name: 'trialChoiceText',
-    text: '',
-    font: 'Open Sans',
-    units: undefined, 
-    pos: [0, 0.35], height: 0.04,  wrapWidth: undefined, ori: 0.0,
-    color: new util.Color('black'),  opacity: undefined,
-    depth: -1.0 
-  });
   
   trialChoiceMouse = new core.Mouse({
     win: psychoJS.window,
@@ -615,7 +686,7 @@ async function experimentInit() {
     units: undefined, 
     pos: [0.6, 0], height: 0.02,  wrapWidth: undefined, ori: 0.0,
     color: new util.Color('black'),  opacity: undefined,
-    depth: -3.0 
+    depth: -2.0 
   });
   
   // Initialize components for Routine "trialDrawing"
@@ -639,21 +710,6 @@ async function experimentInit() {
   xx = [];
   yy = [];
   
-  trialDrawingText = new visual.TextStim({
-    win: psychoJS.window,
-    name: 'trialDrawingText',
-    text: '',
-    font: 'Open Sans',
-    units: undefined, 
-    pos: [0, 0.35], height: 0.04,  wrapWidth: undefined, ori: 0.0,
-    color: new util.Color('black'),  opacity: undefined,
-    depth: -1.0 
-  });
-  
-  trialDrawingMouse = new core.Mouse({
-    win: psychoJS.window,
-  });
-  trialDrawingMouse.mouseClock = new util.Clock();
   trialDrawingBrush = {};
   gettrialDrawingBrush = function() {
     return ( new visual.ShapeStim({
@@ -683,6 +739,10 @@ async function experimentInit() {
   trialDrawingBrushPointer = new core.Mouse({win: psychoJS.window});
   trialDrawingBrushAtStartPoint = false;
   trialDrawingBrushShapes = [];
+  trialDrawingMouse = new core.Mouse({
+    win: psychoJS.window,
+  });
+  trialDrawingMouse.mouseClock = new util.Clock();
   trialDrawingDebug = new visual.TextStim({
     win: psychoJS.window,
     name: 'trialDrawingDebug',
@@ -691,29 +751,40 @@ async function experimentInit() {
     units: undefined, 
     pos: [0.6, 0], height: 0.02,  wrapWidth: undefined, ori: 0.0,
     color: new util.Color('black'),  opacity: undefined,
-    depth: -4.0 
+    depth: -3.0 
   });
   
-  // Initialize components for Routine "trialVerbal"
-  trialVerbalClock = new util.Clock();
-  trialVerbalText = new visual.TextStim({
+  // Initialize components for Routine "trialText"
+  trialTextClock = new util.Clock();
+  textbox_xys = {"21": [0.1025, (- 0.23)], "22": [0.1025, (- 0.2425)], "28": [0.14, 0.03], "29": [0.34, 0.015], "32": [0.1025, (- 0.255)], "33": [0.1025, (- 0.2125)], "34": [0.1025, (- 0.225)], "35": [0.1025, (- 0.2125)]};
+  textbox_sizes = {"21": [0.255, 0.07], "22": [0.255, 0.07], "28": [0.22, 0.14], "29": [0.22, 0.19], "32": [0.255, 0.07], "33": [0.255, 0.07], "34": [0.255, 0.07], "35": [0.255, 0.07]};
+  textbox_lhs = {"21": 0.045, "22": 0.045, "28": 0.11, "29": 0.15, "32": 0.045, "33": 0.045, "34": 0.045, "35": 0.045};
+  
+  trialTextTextbox = new visual.TextBox({
     win: psychoJS.window,
-    name: 'trialVerbalText',
+    name: 'trialTextTextbox',
     text: '',
     font: 'Open Sans',
-    units: undefined, 
-    pos: [0, 0.35], height: 0.04,  wrapWidth: undefined, ori: 0.0,
-    color: new util.Color('black'),  opacity: undefined,
+    pos: [0, 0], letterHeight: 0.045,
+    size: [0, 0],  units: undefined, 
+    color: 'black', colorSpace: 'rgb',
+    fillColor: undefined, borderColor: undefined,
+    bold: false, italic: false,
+    opacity: undefined,
+    padding: 0.01,
+    editable: true,
+    multiline: true,
+    anchor: 'center',
     depth: -1.0 
   });
   
-  trialVerbalMouse = new core.Mouse({
+  trialTextMouse = new core.Mouse({
     win: psychoJS.window,
   });
-  trialVerbalMouse.mouseClock = new util.Clock();
-  trialVerbalDebug = new visual.TextStim({
+  trialTextMouse.mouseClock = new util.Clock();
+  trialTextDebug = new visual.TextStim({
     win: psychoJS.window,
-    name: 'trialVerbalDebug',
+    name: 'trialTextDebug',
     text: '',
     font: 'Open Sans',
     units: undefined, 
@@ -724,6 +795,32 @@ async function experimentInit() {
   
   // Initialize components for Routine "wipe"
   wipeClock = new util.Clock();
+  // Initialize components for Routine "zeEnd"
+  zeEndClock = new util.Clock();
+  endSlide = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'endSlide', units : undefined, 
+    image : 'imgs/slides/slide-66.png', mask : undefined,
+    ori : 0.0, pos : [0, 0], size : [1.2, 0.675],
+    color : new util.Color([1, 1, 1]), opacity : undefined,
+    flipHoriz : false, flipVert : false,
+    texRes : 128.0, interpolate : true, depth : 0.0 
+  });
+  endCont = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'endCont', units : undefined, 
+    image : 'imgs/transparent-box.png', mask : undefined,
+    ori : 0.0, pos : [0, 0], size : [0.2, 0.2],
+    color : new util.Color([1, 1, 1]), opacity : CLICK_BOX_OPACITY,
+    flipHoriz : false, flipVert : false,
+    texRes : 128.0, interpolate : true, depth : -1.0 
+  });
+  endMouse = new core.Mouse({
+    win: psychoJS.window,
+  });
+  endMouse.mouseClock = new util.Clock();
+  endKeyResp = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
+  
   // Create some handy timers
   globalClock = new util.Clock();  // to track the time since experiment started
   routineTimer = new util.CountdownTimer();  // to track time remaining of each (non-slip) routine
@@ -735,6 +832,7 @@ async function experimentInit() {
 var t;
 var frameN;
 var continueRoutine;
+var gotValidClick;
 var beginComponents;
 function beginRoutineBegin(snapshot) {
   return async function () {
@@ -746,8 +844,14 @@ function beginRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
+    // setup some python lists for storing info about the beginMouse
+    beginMouse.clicked_name = [];
+    gotValidClick = false; // until a click is received
     // keep track of which components have finished
     beginComponents = [];
+    beginComponents.push(beginSlide);
+    beginComponents.push(beginCont);
+    beginComponents.push(beginMouse);
     
     for (const thisComponent of beginComponents)
       if ('status' in thisComponent)
@@ -757,6 +861,8 @@ function beginRoutineBegin(snapshot) {
 }
 
 
+var prevButtonState;
+var _mouseButtons;
 function beginRoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'begin'-------
@@ -764,6 +870,55 @@ function beginRoutineEachFrame() {
     t = beginClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
+    
+    // *beginSlide* updates
+    if (t >= 0.0 && beginSlide.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      beginSlide.tStart = t;  // (not accounting for frame time here)
+      beginSlide.frameNStart = frameN;  // exact frame index
+      
+      beginSlide.setAutoDraw(true);
+    }
+
+    
+    // *beginCont* updates
+    if (t >= 0.0 && beginCont.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      beginCont.tStart = t;  // (not accounting for frame time here)
+      beginCont.frameNStart = frameN;  // exact frame index
+      
+      beginCont.setAutoDraw(true);
+    }
+
+    // *beginMouse* updates
+    if (t >= 0.2 && beginMouse.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      beginMouse.tStart = t;  // (not accounting for frame time here)
+      beginMouse.frameNStart = frameN;  // exact frame index
+      
+      beginMouse.status = PsychoJS.Status.STARTED;
+      beginMouse.mouseClock.reset();
+      prevButtonState = beginMouse.getPressed();  // if button is down already this ISN'T a new click
+      }
+    if (beginMouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
+      _mouseButtons = beginMouse.getPressed();
+      if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
+        prevButtonState = _mouseButtons;
+        if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
+          // check if the mouse was inside our 'clickable' objects
+          gotValidClick = false;
+          for (const obj of [beginCont]) {
+            if (obj.contains(beginMouse)) {
+              gotValidClick = true;
+              beginMouse.clicked_name.push(obj.name)
+            }
+          }
+          if (gotValidClick === true) { // abort routine on response
+            continueRoutine = false;
+          }
+        }
+      }
+    }
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
       return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
@@ -799,6 +954,7 @@ function beginRoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     }
+    // store data for psychoJS.experiment (ExperimentHandler)
     // the Routine "begin" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
@@ -837,9 +993,9 @@ function trialsLoopBegin(trialsLoopScheduler, snapshot) {
       trialsLoopScheduler.add(trialDrawingRoutineBegin(snapshot));
       trialsLoopScheduler.add(trialDrawingRoutineEachFrame());
       trialsLoopScheduler.add(trialDrawingRoutineEnd());
-      trialsLoopScheduler.add(trialVerbalRoutineBegin(snapshot));
-      trialsLoopScheduler.add(trialVerbalRoutineEachFrame());
-      trialsLoopScheduler.add(trialVerbalRoutineEnd());
+      trialsLoopScheduler.add(trialTextRoutineBegin(snapshot));
+      trialsLoopScheduler.add(trialTextRoutineEachFrame());
+      trialsLoopScheduler.add(trialTextRoutineEnd());
       trialsLoopScheduler.add(wipeRoutineBegin(snapshot));
       trialsLoopScheduler.add(wipeRoutineEachFrame());
       trialsLoopScheduler.add(wipeRoutineEnd());
@@ -860,7 +1016,9 @@ async function trialsLoopEnd() {
 
 var is_choice;
 var is_drawing;
-var is_verbal;
+var is_text;
+var slide_num;
+var slide;
 var gateComponents;
 function gateRoutineBegin(snapshot) {
   return async function () {
@@ -874,11 +1032,13 @@ function gateRoutineBegin(snapshot) {
     // update component parameters for each repeat
     is_choice = (qnType === "choice");
     is_drawing = (qnType === "drawing");
-    is_verbal = (qnType === "verbal");
-    [imgs, img_sizes, cimgs, cimg_sizes] = cards[qnGroup];
-    for (var i, _pj_c = 0, _pj_a = util.range(imgs.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-        i = _pj_a[_pj_c];
-        unhide(imgs[i], img_sizes[i]);
+    is_text = (qnType === "text");
+    slide_num = ((slideNum < 10) ? `0${slideNum}` : slideNum);
+    if ((slideNum !== "NA")) {
+        slide = make_slide(slide_num);
+        slide.autoDraw = true;
+    } else {
+        slide = BLANK_IMG;
     }
     
     // keep track of which components have finished
@@ -942,7 +1102,6 @@ function gateRoutineEnd() {
 }
 
 
-var gotValidClick;
 var trialChoiceComponents;
 function trialChoiceRoutineBegin(snapshot) {
   return async function () {
@@ -960,41 +1119,31 @@ function trialChoiceRoutineBegin(snapshot) {
         if (skip_next) {
             skip_next = false;
             continueRoutine = false;
-        }
-        for (var i, _pj_c = 0, _pj_a = util.range(cimgs.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-            i = _pj_a[_pj_c];
-            unhide(cimgs[i], cimg_sizes[i]);
-        }
-        while ((cimgs.length < 6)) {
-            cimgs.push(BLANK_IMG);
-            cimg_sizes.push([0, 0]);
-        }
-        if (SHOW_DEBUG) {
-            cimg_names = [];
+        } else {
+            cimgs = all_cimgs[slide_num]();
             for (var cimg, _pj_c = 0, _pj_a = cimgs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
                 cimg = _pj_a[_pj_c];
-                cimg_names.push(cimg.name);
+                cimg.autoDraw = true;
             }
-            for (var i, _pj_c = 0, _pj_a = util.range(imgs.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-                i = _pj_a[_pj_c];
-                console.log(`imgs[${i}] = ${imgs[i]}`);
-                console.log(`img_sizes[${i}] = ${img_sizes[i]}`);
+            while ((cimgs.length < MAX_OPTIONS)) {
+                cimgs.push(BLANK_IMG);
             }
-            for (var i, _pj_c = 0, _pj_a = util.range(cimgs.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-                i = _pj_a[_pj_c];
-                console.log(`cimgs[${i}] = ${cimgs[i]}`);
-                console.log(`cimg_sizes[${i}] = ${cimg_sizes[i]}`);
+            if (SHOW_DEBUG) {
+                cimg_names = [];
+                for (var i, _pj_c = 0, _pj_a = util.range(cimgs.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+                    i = _pj_a[_pj_c];
+                    cimg_names.push(cimgs[i].name);
+                    console.log(`cimgs[${i}] = ${cimgs[i]}`);
+                }
             }
         }
     }
     
-    trialChoiceText.setText(prompt);
     // setup some python lists for storing info about the trialChoiceMouse
     trialChoiceMouse.clicked_name = [];
     gotValidClick = false; // until a click is received
     // keep track of which components have finished
     trialChoiceComponents = [];
-    trialChoiceComponents.push(trialChoiceText);
     trialChoiceComponents.push(trialChoiceMouse);
     trialChoiceComponents.push(trialChoiceDebug);
     
@@ -1006,8 +1155,6 @@ function trialChoiceRoutineBegin(snapshot) {
 }
 
 
-var prevButtonState;
-var _mouseButtons;
 function trialChoiceRoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'trialChoice'-------
@@ -1015,34 +1162,20 @@ function trialChoiceRoutineEachFrame() {
     t = trialChoiceClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    if ((! prompt)) {
-        trialChoiceText.text = "";
-    }
     if ((is_choice && SHOW_DEBUG)) {
         trialChoiceDebug.text = `trialChoice
     taskName = ${taskName}
-    qnGroup = ${qnGroup}
+    slideNum = ${slideNum}
     qnNum = ${qnNum}
     qnType = ${qnType}
-    redBox = ${redBox}
     corrAns = ${corrAns}
     cimg_names = ${cimg_names}
     t = ${round(t, 3)}`
     ;
     }
     
-    
-    // *trialChoiceText* updates
-    if (t >= 0.0 && trialChoiceText.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      trialChoiceText.tStart = t;  // (not accounting for frame time here)
-      trialChoiceText.frameNStart = frameN;  // exact frame index
-      
-      trialChoiceText.setAutoDraw(true);
-    }
-
     // *trialChoiceMouse* updates
-    if (t >= 0.0 && trialChoiceMouse.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.2 && trialChoiceMouse.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       trialChoiceMouse.tStart = t;  // (not accounting for frame time here)
       trialChoiceMouse.frameNStart = frameN;  // exact frame index
@@ -1058,7 +1191,7 @@ function trialChoiceRoutineEachFrame() {
         if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
           // check if the mouse was inside our 'clickable' objects
           gotValidClick = false;
-          for (const obj of [cimgs[0], cimgs[1], cimgs[2], cimgs[3], cimgs[4], cimgs[5]]) {
+          for (const obj of [cimgs[0], cimgs[1], cimgs[2], cimgs[3], cimgs[4], cimgs[5], cimgs[6]]) {
             if (obj.contains(trialChoiceMouse)) {
               gotValidClick = true;
               trialChoiceMouse.clicked_name.push(obj.name)
@@ -1116,12 +1249,18 @@ function trialChoiceRoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     }
-    if ((is_choice && (qnNum === "13a1"))) {
-        skip_next = (trialChoiceMouse.clicked_name.toString() === corrAns.toString());
+    if (is_choice) {
+        if ((qnNum === "13a1")) {
+            skip_next = (trialChoiceMouse.clicked_name.toString() === corrAns.toString());
+        }
         if (SHOW_DEBUG) {
             console.log(`trialChoiceMouse.clicked_name = ${trialChoiceMouse.clicked_name}`);
             console.log(`corrAns = ${corrAns}`);
             console.log(`skip_next = ${skip_next}`);
+        }
+        for (var cimg, _pj_c = 0, _pj_a = cimgs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+            cimg = _pj_a[_pj_c];
+            hide(cimg);
         }
     }
     
@@ -1157,22 +1296,19 @@ function trialDrawingRoutineBegin(snapshot) {
     if ((! is_drawing)) {
         continueRoutine = false;
     } else {
-        unhide(GLOBAL_CONT, CONT_SIZE);
         if (SHOW_DEBUG) {
             console.log(`trialDrawingMouse = ${trialDrawingMouse}`);
         }
     }
     
-    trialDrawingText.setText(prompt);
+    trialDrawingBrushReset();
     // setup some python lists for storing info about the trialDrawingMouse
     trialDrawingMouse.clicked_name = [];
     gotValidClick = false; // until a click is received
-    trialDrawingBrushReset();
     // keep track of which components have finished
     trialDrawingComponents = [];
-    trialDrawingComponents.push(trialDrawingText);
-    trialDrawingComponents.push(trialDrawingMouse);
     trialDrawingComponents.push(trialDrawingBrush);
+    trialDrawingComponents.push(trialDrawingMouse);
     trialDrawingComponents.push(trialDrawingDebug);
     
     for (const thisComponent of trialDrawingComponents)
@@ -1190,43 +1326,51 @@ function trialDrawingRoutineEachFrame() {
     t = trialDrawingClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    if (((is_drawing && (! GLOBAL_CONT.contains(trialDrawingMouse))) && (trialDrawingMouse.getPressed()[0] === 1))) {
-        [x, y] = trialDrawingMouse.getPos();
-        if (((xx.length > 0) && (yy.length > 0))) {
-            if ((dist_sq(xx.slice((- 1))[0], yy.slice((- 1))[0], x, y) > MIN_DIST_SQ)) {
+    if (is_drawing) {
+        if ((xx.length > 2)) {
+            unhide(GLOBAL_CONT, CONT_SIZE);
+        }
+        if (((trialDrawingMouse.getPressed()[0] === 1) && (t > 0.2))) {
+            [x, y] = trialDrawingMouse.getPos();
+            if (((xx.length > 0) && (yy.length > 0))) {
+                if ((dist_sq(xx.slice((- 1))[0], yy.slice((- 1))[0], x, y) > MIN_DIST_SQ)) {
+                    xx.push(round_dp(x));
+                    yy.push(round_dp(y));
+                }
+            } else {
                 xx.push(round_dp(x));
                 yy.push(round_dp(y));
             }
-        } else {
-            xx.push(round_dp(x));
-            yy.push(round_dp(y));
         }
-    }
-    if ((is_drawing && SHOW_DEBUG)) {
-        trialDrawingDebug.text = `trialDrawing
+        if (SHOW_DEBUG) {
+            trialDrawingDebug.text = `trialDrawing
     taskName = ${taskName}
-    qnGroup = ${qnGroup}
+    slideNum = ${slideNum}
     qnNum = ${qnNum}
     qnType = ${qnType}
-    redBox = ${redBox}
     corrAns = ${corrAns}
     t = ${round(t, 3)}
-    x, y = ${round(x, 3)}, ${round(y, 3)}`
+    x, y = ${round(x, 3)}, ${round(y, 3)}
+    len(xx) = ${xx.length}`
     ;
+        }
     }
     
-    
-    // *trialDrawingText* updates
-    if (t >= 0.0 && trialDrawingText.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      trialDrawingText.tStart = t;  // (not accounting for frame time here)
-      trialDrawingText.frameNStart = frameN;  // exact frame index
-      
-      trialDrawingText.setAutoDraw(true);
+    if (trialDrawingBrushPointer.getPressed()[0] === 1 && trialDrawingBrushAtStartPoint != true) {
+      trialDrawingBrushAtStartPoint = true;
+      trialDrawingBrushBrushPos = [];
+      trialDrawingBrushShapes.push(gettrialDrawingBrush());
+      trialDrawingBrushCurrentShape += 1;
+      trialDrawingBrushShapes[trialDrawingBrushCurrentShape].setAutoDraw(true);
     }
-
+    if (trialDrawingBrushPointer.getPressed()[0] === 1) {
+      trialDrawingBrushBrushPos.push(trialDrawingBrushPointer.getPos());
+      trialDrawingBrushShapes[trialDrawingBrushCurrentShape].setVertices(trialDrawingBrushBrushPos);
+    } else {
+      trialDrawingBrushAtStartPoint = false;
+    }
     // *trialDrawingMouse* updates
-    if (t >= 0.0 && trialDrawingMouse.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.2 && trialDrawingMouse.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       trialDrawingMouse.tStart = t;  // (not accounting for frame time here)
       trialDrawingMouse.frameNStart = frameN;  // exact frame index
@@ -1253,19 +1397,6 @@ function trialDrawingRoutineEachFrame() {
           }
         }
       }
-    }
-    if (trialDrawingBrushPointer.getPressed()[0] === 1 && trialDrawingBrushAtStartPoint != true) {
-      trialDrawingBrushAtStartPoint = true;
-      trialDrawingBrushBrushPos = [];
-      trialDrawingBrushShapes.push(gettrialDrawingBrush());
-      trialDrawingBrushCurrentShape += 1;
-      trialDrawingBrushShapes[trialDrawingBrushCurrentShape].setAutoDraw(true);
-    }
-    if (trialDrawingBrushPointer.getPressed()[0] === 1) {
-      trialDrawingBrushBrushPos.push(trialDrawingBrushPointer.getPos());
-      trialDrawingBrushShapes[trialDrawingBrushCurrentShape].setVertices(trialDrawingBrushBrushPos);
-    } else {
-      trialDrawingBrushAtStartPoint = false;
     }
     
     // *trialDrawingDebug* updates
@@ -1329,44 +1460,36 @@ function trialDrawingRoutineEnd() {
 }
 
 
-var trialVerbalComponents;
-function trialVerbalRoutineBegin(snapshot) {
+var trialTextComponents;
+function trialTextRoutineBegin(snapshot) {
   return async function () {
     TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
     
-    //------Prepare to start Routine 'trialVerbal'-------
+    //------Prepare to start Routine 'trialText'-------
     t = 0;
-    trialVerbalClock.reset(); // clock
+    trialTextClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    if ((! is_verbal)) {
+    if ((! is_text)) {
         continueRoutine = false;
     } else {
-        unhide(GLOBAL_CONT, CONT_SIZE);
-        if ((redBox !== "NA")) {
-            for (var i, _pj_c = 0, _pj_a = util.range(cimgs.length), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-                i = _pj_a[_pj_c];
-                if ((redBox === cimgs[i].name)) {
-                    RED_BOX.pos = cimgs[i].pos;
-                    unhide(RED_BOX, cimg_sizes[i]);
-                    break;
-                }
-            }
-        }
+        trialTextTextbox.pos = textbox_xys[slide_num];
+        trialTextTextbox.size = textbox_sizes[slide_num];
+        trialTextTextbox.letterHeight = textbox_lhs[slide_num];
     }
     
-    trialVerbalText.setText(prompt);
-    // setup some python lists for storing info about the trialVerbalMouse
-    trialVerbalMouse.clicked_name = [];
+    trialTextTextbox.setText('');
+    // setup some python lists for storing info about the trialTextMouse
+    trialTextMouse.clicked_name = [];
     gotValidClick = false; // until a click is received
     // keep track of which components have finished
-    trialVerbalComponents = [];
-    trialVerbalComponents.push(trialVerbalText);
-    trialVerbalComponents.push(trialVerbalMouse);
-    trialVerbalComponents.push(trialVerbalDebug);
+    trialTextComponents = [];
+    trialTextComponents.push(trialTextTextbox);
+    trialTextComponents.push(trialTextMouse);
+    trialTextComponents.push(trialTextDebug);
     
-    for (const thisComponent of trialVerbalComponents)
+    for (const thisComponent of trialTextComponents)
       if ('status' in thisComponent)
         thisComponent.status = PsychoJS.Status.NOT_STARTED;
     return Scheduler.Event.NEXT;
@@ -1374,59 +1497,90 @@ function trialVerbalRoutineBegin(snapshot) {
 }
 
 
-function trialVerbalRoutineEachFrame() {
+var textbox_content;
+function trialTextRoutineEachFrame() {
   return async function () {
-    //------Loop for each frame of Routine 'trialVerbal'-------
+    //------Loop for each frame of Routine 'trialText'-------
     // get current time
-    t = trialVerbalClock.getTime();
+    t = trialTextClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    if ((! prompt)) {
-        trialVerbalText.text = "";
+    var _pj;
+    function _pj_snippets(container) {
+        function in_es6(left, right) {
+            if (((right instanceof Array) || ((typeof right) === "string"))) {
+                return (right.indexOf(left) > (- 1));
+            } else {
+                if (((right instanceof Map) || (right instanceof Set) || (right instanceof WeakMap) || (right instanceof WeakSet))) {
+                    return right.has(left);
+                } else {
+                    return (left in right);
+                }
+            }
+        }
+        container["in_es6"] = in_es6;
+        return container;
     }
-    if ((is_verbal && SHOW_DEBUG)) {
-        trialVerbalDebug.text = `trialVerbal
+    _pj = {};
+    _pj_snippets(_pj);
+    if (is_text) {
+        textbox_content = "";
+        for (var ch, _pj_c = 0, _pj_a = trialTextTextbox.text, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+            ch = _pj_a[_pj_c];
+            if (_pj.in_es6(ch, "0123456789")) {
+                textbox_content += ch;
+            }
+        }
+        trialTextTextbox.text = textbox_content;
+        if ((trialTextTextbox.text.length > 0)) {
+            unhide(GLOBAL_CONT, CONT_SIZE);
+        } else {
+            hide(GLOBAL_CONT);
+        }
+        if (SHOW_DEBUG) {
+            trialTextDebug.text = `trialText
     taskName = ${taskName}
-    qnGroup = ${qnGroup}
+    slideNum = ${slideNum}
     qnNum = ${qnNum}
     qnType = ${qnType}
-    redBox = ${redBox}
     corrAns = ${corrAns}
+    trialTextTextbox.text = ${trialTextTextbox.text}
     t = ${round(t, 3)}`
     ;
+        }
     }
     
     
-    // *trialVerbalText* updates
-    if (t >= 0.0 && trialVerbalText.status === PsychoJS.Status.NOT_STARTED) {
+    // *trialTextTextbox* updates
+    if (t >= 0.0 && trialTextTextbox.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      trialVerbalText.tStart = t;  // (not accounting for frame time here)
-      trialVerbalText.frameNStart = frameN;  // exact frame index
+      trialTextTextbox.tStart = t;  // (not accounting for frame time here)
+      trialTextTextbox.frameNStart = frameN;  // exact frame index
       
-      trialVerbalText.setAutoDraw(true);
+      trialTextTextbox.setAutoDraw(true);
     }
 
-    // *trialVerbalMouse* updates
-    if (t >= 0.0 && trialVerbalMouse.status === PsychoJS.Status.NOT_STARTED) {
+    // *trialTextMouse* updates
+    if (t >= 0.2 && trialTextMouse.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      trialVerbalMouse.tStart = t;  // (not accounting for frame time here)
-      trialVerbalMouse.frameNStart = frameN;  // exact frame index
+      trialTextMouse.tStart = t;  // (not accounting for frame time here)
+      trialTextMouse.frameNStart = frameN;  // exact frame index
       
-      trialVerbalMouse.status = PsychoJS.Status.STARTED;
-      trialVerbalMouse.mouseClock.reset();
-      prevButtonState = trialVerbalMouse.getPressed();  // if button is down already this ISN'T a new click
+      trialTextMouse.status = PsychoJS.Status.STARTED;
+      trialTextMouse.mouseClock.reset();
+      prevButtonState = trialTextMouse.getPressed();  // if button is down already this ISN'T a new click
       }
-    if (trialVerbalMouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
-      _mouseButtons = trialVerbalMouse.getPressed();
+    if (trialTextMouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
+      _mouseButtons = trialTextMouse.getPressed();
       if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
         prevButtonState = _mouseButtons;
         if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
           // check if the mouse was inside our 'clickable' objects
           gotValidClick = false;
           for (const obj of [GLOBAL_CONT]) {
-            if (obj.contains(trialVerbalMouse)) {
+            if (obj.contains(trialTextMouse)) {
               gotValidClick = true;
-              trialVerbalMouse.clicked_name.push(obj.name)
+              trialTextMouse.clicked_name.push(obj.name)
             }
           }
           if (gotValidClick === true) { // abort routine on response
@@ -1436,13 +1590,13 @@ function trialVerbalRoutineEachFrame() {
       }
     }
     
-    // *trialVerbalDebug* updates
-    if (t >= 0.0 && trialVerbalDebug.status === PsychoJS.Status.NOT_STARTED) {
+    // *trialTextDebug* updates
+    if (t >= 0.0 && trialTextDebug.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      trialVerbalDebug.tStart = t;  // (not accounting for frame time here)
-      trialVerbalDebug.frameNStart = frameN;  // exact frame index
+      trialTextDebug.tStart = t;  // (not accounting for frame time here)
+      trialTextDebug.frameNStart = frameN;  // exact frame index
       
-      trialVerbalDebug.setAutoDraw(true);
+      trialTextDebug.setAutoDraw(true);
     }
 
     // check for quit (typically the Esc key)
@@ -1456,7 +1610,7 @@ function trialVerbalRoutineEachFrame() {
     }
     
     continueRoutine = false;  // reverts to True if at least one component still running
-    for (const thisComponent of trialVerbalComponents)
+    for (const thisComponent of trialTextComponents)
       if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
         continueRoutine = true;
         break;
@@ -1472,16 +1626,19 @@ function trialVerbalRoutineEachFrame() {
 }
 
 
-function trialVerbalRoutineEnd() {
+function trialTextRoutineEnd() {
   return async function () {
-    //------Ending Routine 'trialVerbal'-------
-    for (const thisComponent of trialVerbalComponents) {
+    //------Ending Routine 'trialText'-------
+    for (const thisComponent of trialTextComponents) {
       if (typeof thisComponent.setAutoDraw === 'function') {
         thisComponent.setAutoDraw(false);
       }
     }
+    hide(trialTextTextbox);
+    
+    psychoJS.experiment.addData('trialTextTextbox.text',trialTextTextbox.text)
     // store data for psychoJS.experiment (ExperimentHandler)
-    // the Routine "trialVerbal" was not non-slip safe, so reset the non-slip timer
+    // the Routine "trialText" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
     return Scheduler.Event.NEXT;
@@ -1545,10 +1702,6 @@ function wipeRoutineEachFrame() {
 }
 
 
-var imgs;
-var img_sizes;
-var cimgs;
-var cimg_sizes;
 function wipeRoutineEnd() {
   return async function () {
     //------Ending Routine 'wipe'-------
@@ -1557,22 +1710,169 @@ function wipeRoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     }
-    for (var img, _pj_c = 0, _pj_a = imgs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-        img = _pj_a[_pj_c];
-        hide(img);
-    }
-    for (var cimg, _pj_c = 0, _pj_a = cimgs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-        cimg = _pj_a[_pj_c];
-        hide(cimg);
-    }
+    hide(slide);
     hide(GLOBAL_CONT);
     hide(RED_BOX);
-    imgs = null;
-    img_sizes = null;
-    cimgs = null;
-    cimg_sizes = null;
     
     // the Routine "wipe" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset();
+    
+    return Scheduler.Event.NEXT;
+  };
+}
+
+
+var _endKeyResp_allKeys;
+var zeEndComponents;
+function zeEndRoutineBegin(snapshot) {
+  return async function () {
+    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
+    
+    //------Prepare to start Routine 'zeEnd'-------
+    t = 0;
+    zeEndClock.reset(); // clock
+    frameN = -1;
+    continueRoutine = true; // until we're told otherwise
+    // update component parameters for each repeat
+    // setup some python lists for storing info about the endMouse
+    endMouse.clicked_name = [];
+    gotValidClick = false; // until a click is received
+    endKeyResp.keys = undefined;
+    endKeyResp.rt = undefined;
+    _endKeyResp_allKeys = [];
+    // keep track of which components have finished
+    zeEndComponents = [];
+    zeEndComponents.push(endSlide);
+    zeEndComponents.push(endCont);
+    zeEndComponents.push(endMouse);
+    zeEndComponents.push(endKeyResp);
+    
+    for (const thisComponent of zeEndComponents)
+      if ('status' in thisComponent)
+        thisComponent.status = PsychoJS.Status.NOT_STARTED;
+    return Scheduler.Event.NEXT;
+  }
+}
+
+
+function zeEndRoutineEachFrame() {
+  return async function () {
+    //------Loop for each frame of Routine 'zeEnd'-------
+    // get current time
+    t = zeEndClock.getTime();
+    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
+    // update/draw components on each frame
+    
+    // *endSlide* updates
+    if (t >= 0.0 && endSlide.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      endSlide.tStart = t;  // (not accounting for frame time here)
+      endSlide.frameNStart = frameN;  // exact frame index
+      
+      endSlide.setAutoDraw(true);
+    }
+
+    
+    // *endCont* updates
+    if (t >= 0.0 && endCont.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      endCont.tStart = t;  // (not accounting for frame time here)
+      endCont.frameNStart = frameN;  // exact frame index
+      
+      endCont.setAutoDraw(true);
+    }
+
+    // *endMouse* updates
+    if (t >= 0.2 && endMouse.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      endMouse.tStart = t;  // (not accounting for frame time here)
+      endMouse.frameNStart = frameN;  // exact frame index
+      
+      endMouse.status = PsychoJS.Status.STARTED;
+      endMouse.mouseClock.reset();
+      prevButtonState = endMouse.getPressed();  // if button is down already this ISN'T a new click
+      }
+    if (endMouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
+      _mouseButtons = endMouse.getPressed();
+      if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
+        prevButtonState = _mouseButtons;
+        if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
+          // check if the mouse was inside our 'clickable' objects
+          gotValidClick = false;
+          for (const obj of [endCont]) {
+            if (obj.contains(endMouse)) {
+              gotValidClick = true;
+              endMouse.clicked_name.push(obj.name)
+            }
+          }
+          if (gotValidClick === true) { // abort routine on response
+            continueRoutine = false;
+          }
+        }
+      }
+    }
+    
+    // *endKeyResp* updates
+    if (t >= 0.2 && endKeyResp.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      endKeyResp.tStart = t;  // (not accounting for frame time here)
+      endKeyResp.frameNStart = frameN;  // exact frame index
+      
+      // keyboard checking is just starting
+      endKeyResp.clock.reset();
+      endKeyResp.start();
+      endKeyResp.clearEvents();
+    }
+
+    if (endKeyResp.status === PsychoJS.Status.STARTED) {
+      let theseKeys = endKeyResp.getKeys({keyList: [], waitRelease: false});
+      _endKeyResp_allKeys = _endKeyResp_allKeys.concat(theseKeys);
+      if (_endKeyResp_allKeys.length > 0) {
+        endKeyResp.keys = _endKeyResp_allKeys[_endKeyResp_allKeys.length - 1].name;  // just the last key pressed
+        endKeyResp.rt = _endKeyResp_allKeys[_endKeyResp_allKeys.length - 1].rt;
+        // a response ends the routine
+        continueRoutine = false;
+      }
+    }
+    
+    // check for quit (typically the Esc key)
+    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
+      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
+    }
+    
+    // check if the Routine should terminate
+    if (!continueRoutine) {  // a component has requested a forced-end of Routine
+      return Scheduler.Event.NEXT;
+    }
+    
+    continueRoutine = false;  // reverts to True if at least one component still running
+    for (const thisComponent of zeEndComponents)
+      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
+        continueRoutine = true;
+        break;
+      }
+    
+    // refresh the screen if continuing
+    if (continueRoutine) {
+      return Scheduler.Event.FLIP_REPEAT;
+    } else {
+      return Scheduler.Event.NEXT;
+    }
+  };
+}
+
+
+function zeEndRoutineEnd() {
+  return async function () {
+    //------Ending Routine 'zeEnd'-------
+    for (const thisComponent of zeEndComponents) {
+      if (typeof thisComponent.setAutoDraw === 'function') {
+        thisComponent.setAutoDraw(false);
+      }
+    }
+    // store data for psychoJS.experiment (ExperimentHandler)
+    endKeyResp.stop();
+    // the Routine "zeEnd" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
     return Scheduler.Event.NEXT;
@@ -1616,6 +1916,12 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
+  
+  
+  
+  
+  
+  
   
   
   

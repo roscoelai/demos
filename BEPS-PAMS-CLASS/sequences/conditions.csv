@@ -1,64 +1,64 @@
-taskName,qnGroup,qnNum,qnType,redBox,corrAns,prompt,remarks
-BEPS,pre_umbrellas,NA,verbal,NA,NA,"Now, we are going to play a game where I will show you some pictures and ask you some questions.",
-BEPS,umbrellas,NA,verbal,NA,NA,Here is a picture. Do you know what they are?,
-BEPS,umbrellas,1,choice,NA,white,Show me the white umbrella.,
-BEPS,umbrellas,2,choice,NA,yellow,Show me the yellow umbrella.,
-BEPS,umbrellas,3,choice,NA,red,Show me the red umbrella.,
-BEPS,umbrellas,4,verbal,black,NA,What colour is this umbrella?,
-BEPS,umbrellas,5,verbal,orange,NA,What colour is this umbrella?,
-BEPS,umbrellas,6,verbal,blue,NA,What colour is this umbrella?,
-BEPS,draw_square,7,drawing,NA,NA,Do you see the square? Draw a square just like this one. Draw it here,
-BEPS,draw_triangle,8,drawing,NA,NA,Do you see the triangle? Draw a triangle just like this one. Draw it here,
-BEPS,writing,9,drawing,NA,NA,Can you write an upper-case A here?,
-BEPS,writing,10,drawing,NA,NA,Can you write an upper-case B here?,
-BEPS,writing,11,drawing,NA,NA,Can you write an upper-case C here?,
-BEPS,writing,12,drawing,NA,NA,Can you write your name here? It's the name that people call you by.,
-BEPS,patterns_1,13a1,choice,NA,watermelon,Look at this pattern right here. Which one of these should go here?,
-BEPS,patterns_1,13a2,choice,NA,watermelon,"Let's try again. This is a pattern. Watermelon - star - watermelon - star. So, the next one should be a watermelon.",
-BEPS,patterns_2,13b,choice,NA,car,Which one of these should go here?,
-BEPS,symmetry,14,choice,NA,sun,"Here are some pictures. If I cut each picture along the line, which picture will have two sides that looks the same?",
-BEPS,shapes,15,choice,NA,rectangle,Point to the rectangle.,
-BEPS,sizes,16,choice,NA,cookie3,Which cookie is the biggest?,
-PAMS,count_choose,1,choice,NA,flowers4,Point to the picture that has this many flowers.,
-PAMS,count_compare,2,verbal,NA,NA,Look at this picture. Are there more people here than rabbits?,
-PAMS,count_exhaustive,3,verbal,NA,NA,Here are some apples. Count the number of apples here.,
-PAMS,count_interference,4,verbal,NA,NA,How many apples are there?,
-PAMS,numeric_compare_1,5,choice,NA,nine,"Which number is bigger, 9 or 6?",
-PAMS,numeric_compare_2,6,choice,NA,twelve,"Which number is bigger, 8 or 12?",
-PAMS,numeric_compare_3,7,choice,NA,five,"Which number is smaller, 5 or 8?",
-PAMS,numeric_compare_4,8,choice,NA,seventeen,"Which number is smaller, 21 or 17?",
-PAMS,estimate_compare,9,choice,NA,popcorns_left,"Here are some popcorns. Without counting, which side has more?",
-PAMS,sequences_1,10,verbal,NA,NA,Here are some numbers. What number goes in the blank?,
-PAMS,sequences_2,11,verbal,NA,NA,What number goes in the blank?,
-PAMS,ratios,12,verbal,NA,NA,Here is a pencil. We can see that the big pencil is 6 apples long. How many apples long is the small pencil?,
-PAMS,bar_chart,13,verbal,NA,NA,"Look at the picture here. On this side, it shows the number of animals. On the bottom, there are chickens, cows, horses, and sheep on the farm. How many horses are there?",
-PAMS,add_concrete,14,verbal,NA,NA,"There are 4 cows here on the field. If 2 more cows come to the field, how many cows are there altogether?",
-PAMS,add_abstract,15,verbal,NA,NA,What is 2 plus 2?,
-PAMS,subtract_concrete,16,verbal,NA,NA,Ali has 5 sweets. He gave 2 of them away to his brother. How many sweets does he have left?,
-PAMS,subtract_abstract,17,verbal,NA,NA,What is 3 minus 1?,
-CLASS,class_1,1,choice,NA,tree1,,"CLASS cards already contain prompts, so don't add any"
-CLASS,class_2,2,choice,NA,ball,,
-CLASS,class_3,3,choice,NA,ice_cream,,
-CLASS,class_4,4,verbal,NA,NA,,
-CLASS,class_5,5,verbal,NA,NA,,
-CLASS,class_6,6,choice,NA,sunny,,
-CLASS,class_7,7,choice,NA,tweezers,,
-CLASS,class_8,8,choice,NA,sally_carrots,,
-CLASS,class_9,9,choice,NA,jack_played,,
-CLASS,class_10,10,verbal,NA,NA,,
-CLASS,class_11,11,verbal,NA,NA,,
-CLASS,class_12,12,choice,NA,boy_is,,
-CLASS,class_13,13,choice,NA,smelly,,
-CLASS,class_14,14,choice,NA,leaf,,
-CLASS,class_15,15,choice,NA,map,,
-CLASS,class_16,16,choice,NA,mat,,
-CLASS,class_17,17,verbal,NA,NA,,
-CLASS,class_18,18,verbal,NA,NA,,
-CLASS,class_19,19,verbal,NA,NA,,
-CLASS,class_20,20,verbal,NA,NA,,
-CLASS,class_21,21,verbal,NA,NA,,
-CLASS,class_22,22,choice,NA,monkey,,
-CLASS,class_23,23,verbal,NA,NA,,
-CLASS,class_24,24,verbal,NA,NA,,
-CLASS,class_25,25,choice,NA,rethink,,
-CLASS,class_26,26,verbal,NA,NA,,
+taskName,slideNum,qnNum,qnType,corrAns
+BEPS,02,1,choice,white
+BEPS,03,2,choice,yellow
+BEPS,04,3,choice,red
+BEPS,05,4,choice,black
+BEPS,06,5,choice,orange
+BEPS,07,6,choice,blue
+BEPS,08,7,drawing,NA
+BEPS,09,8,drawing,NA
+BEPS,NA,9,drawing,NA
+BEPS,NA,10,drawing,NA
+BEPS,NA,11,drawing,NA
+BEPS,13,12,drawing,NA
+BEPS,14,13a1,choice,watermelon
+BEPS,14,13a2,choice,watermelon
+BEPS,15,13b,choice,car
+BEPS,16,14,choice,sun
+BEPS,17,15,choice,rectangle
+BEPS,18,16,choice,cookie3
+PAMS,19,1,choice,flowers4
+PAMS,20,2,choice,no
+PAMS,21,3,text,10
+PAMS,22,4,text,9
+PAMS,23,5,choice,nine
+PAMS,24,6,choice,twelve
+PAMS,25,7,choice,five
+PAMS,26,8,choice,seventeen
+PAMS,27,9,choice,popcorns_left
+PAMS,28,10,text,10
+PAMS,29,11,text,8
+PAMS,30,12,choice,3
+PAMS,31,13,choice,2
+PAMS,32,14,text,6
+PAMS,33,15,text,4
+PAMS,34,16,text,3
+PAMS,35,17,text,2
+CLASS,36,1,choice,tree1
+CLASS,37,2,choice,ball
+CLASS,38,3,choice,ice_cream
+CLASS,39,4,choice,slow
+CLASS,40,5,choice,heavy
+CLASS,41,6,choice,sunny
+CLASS,42,7,choice,tweezers
+CLASS,43,8,choice,she
+CLASS,44,9,choice,played
+CLASS,45,10,choice,and
+CLASS,46,11a,choice,on
+CLASS,47,11b,choice,under
+CLASS,48,11c,choice,cup
+CLASS,51,12,choice,boy_is
+CLASS,52,13,choice,smelly
+CLASS,53,14,choice,leaf
+CLASS,54,15,choice,map
+CLASS,55,16,choice,mat
+CLASS,56,17,choice,shine
+CLASS,57,18,choice,ox
+CLASS,58,19,choice,P
+CLASS,59,20,choice,N
+CLASS,60,21,choice,SPECIAL_CASE
+CLASS,61,22,choice,monkey
+CLASS,62,23,choice,untie
+CLASS,63,24,choice,moonset
+CLASS,64,25,choice,rethink
+CLASS,65,26,choice,sandless
