@@ -132,6 +132,7 @@ psychoJS.start({
     {'name': 'aud/mp3/28_PAMS-10-pattern1.mp3', 'path': 'aud/mp3/28_PAMS-10-pattern1.mp3'},
     {'name': 'imgs/slides/slide-36.png', 'path': 'imgs/slides/slide-36.png'},
     {'name': 'imgs/slides/slide-42.png', 'path': 'imgs/slides/slide-42.png'},
+    {'name': 'aud/mp3/51_CLASS-12-boyswim.mp3', 'path': 'aud/mp3/51_CLASS-12-boyswim.mp3'},
     {'name': 'imgs/slides/slide-58.png', 'path': 'imgs/slides/slide-58.png'},
     {'name': 'aud/mp3/24_PAMS-6-8or12.mp3', 'path': 'aud/mp3/24_PAMS-6-8or12.mp3'},
     {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
@@ -139,6 +140,7 @@ psychoJS.start({
     {'name': 'imgs/slides/slide-48.png', 'path': 'imgs/slides/slide-48.png'},
     {'name': 'aud/mp3/33_PAMS-15-plus.mp3', 'path': 'aud/mp3/33_PAMS-15-plus.mp3'},
     {'name': 'imgs/slides/slide-15.png', 'path': 'imgs/slides/slide-15.png'},
+    {'name': 'aud/mp3/52_CLASS-13-shirt.mp3', 'path': 'aud/mp3/52_CLASS-13-shirt.mp3'},
     {'name': 'imgs/slides/slide-45.png', 'path': 'imgs/slides/slide-45.png'},
     {'name': 'aud/mp3/41_CLASS-6-beach.mp3', 'path': 'aud/mp3/41_CLASS-6-beach.mp3'},
     {'name': 'imgs/slides/slide-22.png', 'path': 'imgs/slides/slide-22.png'},
@@ -214,6 +216,7 @@ var _pj;
 var hide;
 var unhide;
 var make_slide;
+var make_box;
 var SHOW_DEBUG;
 var USE_AUDIO;
 var CLICK_BOX_OPACITY;
@@ -221,7 +224,6 @@ var SLIDE_SIZE;
 var CONT_SIZE;
 var GLOBAL_CONT;
 var BLANK_IMG;
-var RED_BOX;
 var all_cimgs;
 var beginSlide;
 var beginCont;
@@ -230,9 +232,16 @@ var beginSound;
 var gateClock;
 var trialChoiceClock;
 var MAX_OPTIONS;
+var ALL_REDBOX_TARGETS;
+var ALL_REDBOX_TIMES;
 var skip_next;
 var cimgs;
 var cimg_names;
+var redbox_targets;
+var redbox_times;
+var redbox_target;
+var redbox_time;
+var red_box;
 var trialChoiceMouse;
 var trialChoiceDebug;
 var trialDrawingClock;
@@ -309,9 +318,10 @@ async function experimentInit() {
       return new visual.ImageStim({"win": psychoJS.window, "name": name, "image": `imgs/slides/slide-${slide_num}.png`, "pos": pos, "size": slide_size});
   }
   make_slide = _make_slide;
-  function make_box(name, pos, size, opacity = CLICK_BOX_OPACITY) {
+  function _make_box(name, pos, size, opacity = CLICK_BOX_OPACITY) {
       return new visual.ImageStim({"win": psychoJS.window, "name": name, "image": `imgs/transparent-box.png`, "pos": pos, "size": size, "opacity": opacity});
   }
+  make_box = _make_box;
   function size_rep(size, n) {
       var sizes;
       sizes = [];
@@ -701,7 +711,6 @@ async function experimentInit() {
   CONT_SIZE = [0.228, 0.1];
   GLOBAL_CONT = new visual.ImageStim({"win": psychoJS.window, "name": "global_cont", "image": "imgs/continue.png", "pos": [0, (- 0.4)], "size": [0, 0]});
   BLANK_IMG = make_box("_", [0, 0], 0);
-  RED_BOX = make_box("red_box", [0, 0], 1);
   all_cimgs = {"02": get_6umbrellas, "03": get_6umbrellas, "04": get_6umbrellas, "05": get_1umbrella, "06": get_1umbrella, "07": get_1umbrella, "14": get_pattern1, "15": get_pattern2, "16": get_symmetry, "17": get_shapes, "18": get_cookies, "19": get_flowers, "20": get_yes_no, "23": get_9or6, "24": get_8or12, "25": get_5or8, "26": get_21or17, "27": get_popcorns, "30": get_apples, "31": get_farm, "36": get_trees, "37": get_vehicles, "38": get_hot, "39": get_speed, "40": get_weight, "41": get_weather, "42": get_tools, "43": get_carrots, "44": get_badminton, "45": get_lady, "46": get_prepositions, "47": get_prepositions, "48": get_room1, "51": get_swimmer, "52": get_shirt, "53": get_look, "54": get_mice, "55": get_cat, "56": get_sunshine, "57": get_box, "58": get_pen, "59": get_pen, "60": get_room2, "61": get_animals, "62": get_un, "63": get_moon, "64": get_words, "65": get_sand};
   
   beginSlide = new visual.ImageStim({
@@ -737,9 +746,16 @@ async function experimentInit() {
   // Initialize components for Routine "trialChoice"
   trialChoiceClock = new util.Clock();
   MAX_OPTIONS = 7;
+  ALL_REDBOX_TARGETS = {"39": ["heavy", "happy", "slow"], "40": ["big", "dark", "heavy"], "44": ["played", "playing", "play"], "45": ["or", "and", "with"], "46": ["underneath", "below", "on", "under", "beside", "at", "above"], "48": ["cup", "duck", "apple", "vase"], "51": ["boy_is", "boys_are"], "52": ["smell", "smelly"], "53": ["leaf", "cup", "book"], "54": ["dice", "map", "rice"], "55": ["car", "house", "mat"], "56": ["sunshine", "shine", "sun"], "57": ["bow", "ox", "box"], "61": ["goose", "monkey"], "62": ["under", "untie", "undo"], "63": ["moonset", "moonlight", "moondown"], "64": ["resmall", "rethink", "reheart"], "65": ["sandless", "sandful", "sandy"]};
+  ALL_REDBOX_TIMES = {"39": [5.2, 4.3, 3.7, 3.0], "40": [4.8, 4.0, 3.2, 2.5], "44": [14.0, 11.0, 7.4, 4.3], "45": [13.0, 10.9, 8.0, 5.0], "46": [9.8, 8.8, 8.0, 7.2, 6.5, 5.8, 5.0, 4.2], "48": [7.7, 7.0, 6.3, 5.2, 4.3], "51": [8.6, 7.1, 4.3], "52": [8.2, 6.6, 4.1], "53": [6.4, 5.4, 4.4, 3.4], "54": [6.6, 5.6, 4.6, 3.6], "55": [6.5, 5.5, 4.5, 3.5], "56": [8.6, 7.6, 6.6, 5.6], "57": [6.3, 5.5, 4.7, 3.8], "61": [6.0, 5.1, 4.0], "62": [11.0, 10.3, 9.5, 8.5], "63": [9.8, 8.8, 7.8, 6.8], "64": [8.5, 7.7, 6.8, 5.8], "65": [8.1, 7.2, 6.3, 5.3]};
   skip_next = false;
   cimgs = [];
   cimg_names = [];
+  redbox_targets = [];
+  redbox_times = [];
+  redbox_target = null;
+  redbox_time = null;
+  red_box = null;
   
   trialChoiceMouse = new core.Mouse({
     win: psychoJS.window,
@@ -1208,6 +1224,24 @@ function trialChoiceRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
+    var _pj;
+    function _pj_snippets(container) {
+        function in_es6(left, right) {
+            if (((right instanceof Array) || ((typeof right) === "string"))) {
+                return (right.indexOf(left) > (- 1));
+            } else {
+                if (((right instanceof Map) || (right instanceof Set) || (right instanceof WeakMap) || (right instanceof WeakSet))) {
+                    return right.has(left);
+                } else {
+                    return (left in right);
+                }
+            }
+        }
+        container["in_es6"] = in_es6;
+        return container;
+    }
+    _pj = {};
+    _pj_snippets(_pj);
     if ((! is_choice)) {
         continueRoutine = false;
     } else {
@@ -1222,6 +1256,15 @@ function trialChoiceRoutineBegin(snapshot) {
             }
             while ((cimgs.length < MAX_OPTIONS)) {
                 cimgs.push(BLANK_IMG);
+            }
+            if (USE_AUDIO) {
+                if (_pj.in_es6(slide_num, ALL_REDBOX_TARGETS)) {
+                    redbox_targets = ALL_REDBOX_TARGETS[slide_num];
+                    redbox_times = ALL_REDBOX_TIMES[slide_num];
+                    redbox_target = redbox_targets.pop();
+                    redbox_time = redbox_times.pop();
+                }
+                red_box = make_box("red_box", [0, 0], [0, 0], 1);
             }
             if (SHOW_DEBUG) {
                 cimg_names = [];
@@ -1256,8 +1299,43 @@ function trialChoiceRoutineEachFrame() {
     t = trialChoiceClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    if ((is_choice && SHOW_DEBUG)) {
-        trialChoiceDebug.text = `trialChoice
+    if (is_choice) {
+        if (USE_AUDIO) {
+            if ((redbox_targets.length > 0)) {
+                if ((t >= redbox_time)) {
+                    for (var cimg, _pj_c = 0, _pj_a = cimgs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+                        cimg = _pj_a[_pj_c];
+                        if ((cimg.name === redbox_target)) {
+                            red_box.pos = cimg.pos;
+                            unhide(red_box, cimg.size);
+                            break;
+                        }
+                    }
+                    redbox_target = redbox_targets.pop();
+                    redbox_time = redbox_times.pop();
+                }
+            } else {
+                if ((redbox_times.length > 0)) {
+                    if ((t >= redbox_time)) {
+                        for (var cimg, _pj_c = 0, _pj_a = cimgs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+                            cimg = _pj_a[_pj_c];
+                            if ((cimg.name === redbox_target)) {
+                                red_box.pos = cimg.pos;
+                                unhide(red_box, cimg.size);
+                                break;
+                            }
+                        }
+                        redbox_time = redbox_times.pop();
+                    }
+                } else {
+                    if ((t >= redbox_time)) {
+                        hide(red_box);
+                    }
+                }
+            }
+        }
+        if (SHOW_DEBUG) {
+            trialChoiceDebug.text = `trialChoice
     taskName = ${taskName}
     audFile = ${audFile}
     slide_num = ${slide_num}
@@ -1267,6 +1345,7 @@ function trialChoiceRoutineEachFrame() {
     cimg_names = ${cimg_names}
     t = ${round(t, 3)}`
     ;
+        }
     }
     
     // *trialChoiceMouse* updates
@@ -1817,7 +1896,6 @@ function wipeRoutineEnd() {
     }
     hide(slide);
     hide(GLOBAL_CONT);
-    hide(RED_BOX);
     
     // the Routine "wipe" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();

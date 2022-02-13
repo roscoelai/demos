@@ -47,8 +47,8 @@ CLASS,45,10,choice,and,45_CLASS-10-lady
 CLASS,46,11a,choice,on,46_CLASS-11a-cat
 CLASS,47,11b,choice,under,47_CLASS-11b-bear
 CLASS,48,11c,choice,cup,48_CLASS-11c-cup
-CLASS,51,12,choice,boy_is,
-CLASS,52,13,choice,smelly,
+CLASS,51,12,choice,boy_is,51_CLASS-12-boyswim
+CLASS,52,13,choice,smelly,52_CLASS-13-shirt
 CLASS,53,14,choice,leaf,53_CLASS-14-look
 CLASS,54,15,choice,map,54_CLASS-15-mice
 CLASS,55,16,choice,mat,55_CLASS-16-cat
