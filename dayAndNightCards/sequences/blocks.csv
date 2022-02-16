@@ -10,4 +10,4 @@ block,blockName,tryNumber,fileName,maxScore,isPractice
 9,Practice 3,1,sequences/practice-3.csv,8,1
 10,Practice 3,2,sequences/practice-3.csv,8,1
 11,Practice 3,3,sequences/practice-3.csv,8,1
-12,Rule 3,1,sequences/rule-3.csv,16,0
+12,Rule 3,1,sequences/rule-3.csv,32,0
