@@ -12,7 +12,7 @@ BEPS,NA,10,drawing,NA,11_BEPS-10-letterB
 BEPS,NA,11,drawing,NA,12_BEPS-11-letterC
 BEPS,13,12,drawing,NA,13_BEPS-12-name
 BEPS,14,13a1,choice,watermelon,14_BEPS-13a-pattern1
-BEPS,14,13a2,choice,watermelon,14_BEPS-13a-pattern1
+BEPS,14,13a2,choice,watermelon,14_BEPS-13a-pattern1-rep
 BEPS,15,13b,choice,car,15_BEPS-13b-pattern2
 BEPS,16,14,choice,sun,16_BEPS-14-symmetry
 BEPS,17,15,choice,rectangle,17_BEPS-15-rectangle
@@ -36,7 +36,7 @@ PAMS,34,16,text,3,34_PAMS-16-sweets
 PAMS,35,17,text,2,35_PAMS-17-minus
 CLASS,36,1,choice,tree1,36_CLASS-1-tree
 CLASS,37,2,choice,ball,"37_CLASS-2,3-belong"
-CLASS,38,3,choice,ice_cream,"37_CLASS-2,3-belong"
+CLASS,38,3,choice,ice_cream,"37_CLASS-2,3-belong-rep"
 CLASS,39,4,choice,slow,39_CLASS-4-tortoise
 CLASS,40,5,choice,heavy,40_CLASS-5-rock
 CLASS,41,6,choice,sunny,41_CLASS-6-beach
@@ -57,7 +57,7 @@ CLASS,57,18,choice,ox,57_CLASS-18-box
 CLASS,58,19,choice,P,58_CLASS-19-pen1
 CLASS,59,20,choice,N,59_CLASS-20-pen2
 CLASS,60,21_1,choice,SPECIAL_CASE,60_CLASS-21-findS
-CLASS,60,21_2,choice,SPECIAL_CASE,60_CLASS-21-findS
+CLASS,60,21_2,choice,SPECIAL_CASE,60_CLASS-21-findS-rep
 CLASS,61,22,choice,monkey,61_CLASS-22-monkey
 CLASS,62,23,choice,untie,62_CLASS-23-untie
 CLASS,63,24,choice,moonset,63_CLASS-24-moon
