@@ -109,31 +109,36 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'sequences/blocks.csv', 'path': 'sequences/blocks.csv'},
-    {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
-    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
     {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
-    {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
-    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
-    {'name': 'sequences/practice-3.csv', 'path': 'sequences/practice-3.csv'},
-    {'name': 'sequences/rule-2.csv', 'path': 'sequences/rule-2.csv'},
-    {'name': 'sequences/rule-1.csv', 'path': 'sequences/rule-1.csv'},
-    {'name': 'sequences/practice-1.csv', 'path': 'sequences/practice-1.csv'},
-    {'name': 'imgs/slides/slide-10.png', 'path': 'imgs/slides/slide-10.png'},
-    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
-    {'name': 'sequences/rule-3.csv', 'path': 'sequences/rule-3.csv'},
     {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
-    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
-    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
-    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
+    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
+    {'name': 'imgs/slides/slide-10.png', 'path': 'imgs/slides/slide-10.png'},
+    {'name': 'aud/mp3/DN_rule1.mp3', 'path': 'aud/mp3/DN_rule1.mp3'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'sequences/rule-1.csv', 'path': 'sequences/rule-1.csv'},
+    {'name': 'aud/mp3/DN_rule3.mp3', 'path': 'aud/mp3/DN_rule3.mp3'},
     {'name': 'sequences/practice-2.csv', 'path': 'sequences/practice-2.csv'},
-    {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
+    {'name': 'sequences/rule-2.csv', 'path': 'sequences/rule-2.csv'},
+    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
+    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
+    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
+    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
+    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
+    {'name': 'sequences/blocks.csv', 'path': 'sequences/blocks.csv'},
+    {'name': 'aud/mp3/DN_intro.mp3', 'path': 'aud/mp3/DN_intro.mp3'},
+    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
+    {'name': 'aud/mp3/DN_aftprac.mp3', 'path': 'aud/mp3/DN_aftprac.mp3'},
+    {'name': 'sequences/rule-3.csv', 'path': 'sequences/rule-3.csv'},
+    {'name': 'aud/mp3/DN_rule2.mp3', 'path': 'aud/mp3/DN_rule2.mp3'},
+    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
     {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
     {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
-    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
-    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
-    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'}
+    {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
+    {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
+    {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
+    {'name': 'sequences/practice-3.csv', 'path': 'sequences/practice-3.csv'},
+    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'},
+    {'name': 'sequences/practice-1.csv', 'path': 'sequences/practice-1.csv'}
   ]
 });
 
@@ -173,8 +178,6 @@ var CARD_SIZE;
 var NEW_CARD_POS;
 var BOX_SIZE;
 var PICTURE_DELAY;
-var FEEDBACK_DELAY_CORRECT;
-var FEEDBACK_DELAY_INCORRECT;
 var SLIDE_FILE_NUMS;
 var GLOBAL_CONT;
 var terminate_experiment;
@@ -184,10 +187,13 @@ var slide;
 var s1;
 var s2;
 var s3;
+var introSound;
 var begin1Mouse;
 var begin2Clock;
+var explainSound;
 var begin2Mouse;
 var begin3Clock;
+var readySound;
 var begin3Mouse;
 var gateClock;
 var DRAG_MOUSE;
@@ -215,9 +221,7 @@ async function experimentInit() {
   NEW_CARD_POS = [0.011, (- 0.309)];
   BOX_SIZE = [0.3375, 0.2775];
   PICTURE_DELAY = 0.1;
-  FEEDBACK_DELAY_CORRECT = 0.5;
-  FEEDBACK_DELAY_INCORRECT = 1.0;
-  SLIDE_FILE_NUMS = {"1": ["01", "02", "03"], "2": ["NA", "NA", "03"], "3": ["NA", "NA", "03"], "4": ["NA", "NA", "04"], "5": ["05", "NA", "06"], "6": ["NA", "NA", "06"], "7": ["NA", "NA", "06"], "8": ["NA", "NA", "07"], "9": ["08", "NA", "09"], "10": ["NA", "NA", "09"], "11": ["NA", "NA", "09"], "12": ["NA", "NA", "10"]};
+  SLIDE_FILE_NUMS = {"1": ["01", "02", "03"], "2": ["NA", "NA", "03"], "3": ["NA", "NA", "03"], "4": ["NA", "NA", "04"], "5": ["NA", "05", "06"], "6": ["NA", "NA", "06"], "7": ["NA", "NA", "06"], "8": ["NA", "NA", "07"], "9": ["NA", "08", "09"], "10": ["NA", "NA", "09"], "11": ["NA", "NA", "09"], "12": ["NA", "NA", "10"]};
   GLOBAL_CONT = make_img("GLOBAL_CONT", "imgs/continue.png", CONTINUE_POS, CONTINUE_SIZE);
   terminate_experiment = false;
   practice_passed = false;
@@ -226,6 +230,7 @@ async function experimentInit() {
   s1 = null;
   s2 = null;
   s3 = null;
+  introSound = null;
   
   begin1Mouse = new core.Mouse({
     win: psychoJS.window,
@@ -233,12 +238,16 @@ async function experimentInit() {
   begin1Mouse.mouseClock = new util.Clock();
   // Initialize components for Routine "begin2"
   begin2Clock = new util.Clock();
+  explainSound = null;
+  
   begin2Mouse = new core.Mouse({
     win: psychoJS.window,
   });
   begin2Mouse.mouseClock = new util.Clock();
   // Initialize components for Routine "begin3"
   begin3Clock = new util.Clock();
+  readySound = null;
+  
   begin3Mouse = new core.Mouse({
     win: psychoJS.window,
   });
@@ -409,6 +418,11 @@ function begin1RoutineBegin(snapshot) {
     } else {
         slide = make_slide(s1);
         unhide(GLOBAL_CONT, CONTINUE_SIZE);
+        if (USE_AUDIO) {
+            introSound = new sound.Sound({"win": psychoJS.window, "value": "aud/mp3/DN_intro.mp3", "secs": (- 1), "stereo": true, "hamming": true, "name": "introSound"});
+            introSound.setVolume(1.0);
+            introSound.play();
+        }
     }
     
     // setup some python lists for storing info about the begin1Mouse
@@ -502,6 +516,9 @@ function begin1RoutineEnd() {
     if ((s1 !== "NA")) {
         hide(slide);
         hide(GLOBAL_CONT);
+        if (USE_AUDIO) {
+            introSound.stop();
+        }
     }
     
     // store data for psychoJS.experiment (ExperimentHandler)
@@ -529,6 +546,11 @@ function begin2RoutineBegin(snapshot) {
     } else {
         slide = make_slide(s2);
         unhide(GLOBAL_CONT, CONTINUE_SIZE);
+        if (USE_AUDIO) {
+            explainSound = new sound.Sound({"win": psychoJS.window, "value": `aud/mp3/DN_rule${blockName.slice((- 1))[0]}.mp3`, "secs": (- 1), "stereo": true, "hamming": true, "name": "explainSound"});
+            explainSound.setVolume(1.0);
+            explainSound.play();
+        }
     }
     
     // setup some python lists for storing info about the begin2Mouse
@@ -620,6 +642,9 @@ function begin2RoutineEnd() {
     if ((s2 !== "NA")) {
         hide(slide);
         hide(GLOBAL_CONT);
+        if (USE_AUDIO) {
+            explainSound.stop();
+        }
     }
     
     // store data for psychoJS.experiment (ExperimentHandler)
@@ -647,6 +672,11 @@ function begin3RoutineBegin(snapshot) {
     } else {
         slide = make_slide(s3);
         unhide(GLOBAL_CONT, CONTINUE_SIZE);
+        if ((USE_AUDIO && (isPractice === 0))) {
+            readySound = new sound.Sound({"win": psychoJS.window, "value": "aud/mp3/DN_aftprac.mp3", "secs": (- 1), "stereo": true, "hamming": true, "name": "readySound"});
+            readySound.setVolume(1.0);
+            readySound.play();
+        }
     }
     
     // setup some python lists for storing info about the begin3Mouse
@@ -738,6 +768,9 @@ function begin3RoutineEnd() {
     if ((s3 !== "NA")) {
         hide(slide);
         hide(GLOBAL_CONT);
+        if ((USE_AUDIO && (isPractice === 0))) {
+            readySound.stop();
+        }
     }
     
     // store data for psychoJS.experiment (ExperimentHandler)
@@ -904,9 +937,9 @@ function trialRoutineEachFrame() {
         }
     }
     if ((feedback_delay_start !== null)) {
-        feedback_delay = FEEDBACK_DELAY_CORRECT;
-        if ((correct === 0)) {
-            feedback_delay = FEEDBACK_DELAY_INCORRECT;
+        feedback_delay = 0.5;
+        if ((show_feedback && (correct === 0))) {
+            feedback_delay = 1.0;
         }
         if (((t - feedback_delay_start) > feedback_delay)) {
             continueRoutine = false;
