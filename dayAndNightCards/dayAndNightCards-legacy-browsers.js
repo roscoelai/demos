@@ -5,7 +5,7 @@
 
 // store info about the experiment session:
 let expName = 'dayAndNightCards';  // from the Builder filename that created this script
-let expInfo = {'participant': '', 'use_audio [y/n]': 'y', 'debug [y/n]': 'y'};
+let expInfo = {'participant': '', 'use_audio [y/n]': 'y', 'demo [y/n]': 'y', 'debug [y/n]': 'y'};
 
 // Start code blocks for 'Before Experiment'
 
@@ -59,8 +59,15 @@ function make_img(name, file_path, pos = [0, 0], size = [0, 0]) {
     return img;
 }
 
-function make_slide(num, name = "slide", pos = [0, 0], size = SLIDE_SIZE) {
-    return make_img(`${name}-${num}`, `imgs/slides/slide-${num}.png`, pos, size);
+function make_slide(filename, pos = [0, 0], size = SLIDE_SIZE) {
+    return make_img(filename, `imgs/slides/${filename}.png`, pos, size);
+}
+
+function make_sound(value, name = "sound") {
+    var snd;
+    [snd] = [new sound.Sound({"win": psychoJS.window, "value": value, "secs": (- 1), "stereo": true, "hamming": true, "name": name})];
+    snd.setVolume(1.0);
+    return snd;
 }
 
 // init psychoJS:
@@ -88,10 +95,10 @@ psychoJS.scheduleCondition(function() { return (psychoJS.gui.dialogComponent.but
 // flowScheduler gets run if the participants presses OK
 flowScheduler.add(updateInfo); // add timeStamp
 flowScheduler.add(experimentInit);
-const blocksLoopScheduler = new Scheduler(psychoJS);
-flowScheduler.add(blocksLoopBegin(blocksLoopScheduler));
-flowScheduler.add(blocksLoopScheduler);
-flowScheduler.add(blocksLoopEnd);
+const trialsLoopScheduler = new Scheduler(psychoJS);
+flowScheduler.add(trialsLoopBegin(trialsLoopScheduler));
+flowScheduler.add(trialsLoopScheduler);
+flowScheduler.add(trialsLoopEnd);
 flowScheduler.add(quitPsychoJS, '', true);
 
 // quit if user presses Cancel in dialog box:
@@ -101,36 +108,30 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
-    {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
-    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
-    {'name': 'imgs/slides/slide-10.png', 'path': 'imgs/slides/slide-10.png'},
-    {'name': 'aud/mp3/DN_rule1.mp3', 'path': 'aud/mp3/DN_rule1.mp3'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
-    {'name': 'sequences/rule-1.csv', 'path': 'sequences/rule-1.csv'},
-    {'name': 'aud/mp3/DN_rule3.mp3', 'path': 'aud/mp3/DN_rule3.mp3'},
-    {'name': 'sequences/practice-2.csv', 'path': 'sequences/practice-2.csv'},
-    {'name': 'sequences/rule-2.csv', 'path': 'sequences/rule-2.csv'},
-    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
-    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
-    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
-    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
-    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
-    {'name': 'sequences/blocks.csv', 'path': 'sequences/blocks.csv'},
-    {'name': 'aud/mp3/DN_intro.mp3', 'path': 'aud/mp3/DN_intro.mp3'},
-    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
-    {'name': 'aud/mp3/DN_aftprac.mp3', 'path': 'aud/mp3/DN_aftprac.mp3'},
-    {'name': 'sequences/rule-3.csv', 'path': 'sequences/rule-3.csv'},
-    {'name': 'aud/mp3/DN_rule2.mp3', 'path': 'aud/mp3/DN_rule2.mp3'},
-    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
-    {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
     {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
-    {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
     {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
     {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
-    {'name': 'sequences/practice-3.csv', 'path': 'sequences/practice-3.csv'},
+    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
+    {'name': 'sequences/all-conditions.csv', 'path': 'sequences/all-conditions.csv'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'imgs/slides/slide-10.png', 'path': 'imgs/slides/slide-10.png'},
+    {'name': 'aud/mp3/DN_rule3.mp3', 'path': 'aud/mp3/DN_rule3.mp3'},
+    {'name': 'aud/mp3/DN_aftprac.mp3', 'path': 'aud/mp3/DN_aftprac.mp3'},
+    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
+    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
+    {'name': 'aud/mp3/DN_rule2.mp3', 'path': 'aud/mp3/DN_rule2.mp3'},
+    {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
+    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
+    {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
+    {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
+    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
+    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
+    {'name': 'aud/mp3/DN_intro.mp3', 'path': 'aud/mp3/DN_intro.mp3'},
+    {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
     {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'},
-    {'name': 'sequences/practice-1.csv', 'path': 'sequences/practice-1.csv'}
+    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
+    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
+    {'name': 'aud/mp3/DN_rule1.mp3', 'path': 'aud/mp3/DN_rule1.mp3'}
   ]
 });
 
@@ -159,9 +160,11 @@ async function updateInfo() {
 
 
 var begin1Clock;
-var SHOW_DEBUG;
 var USE_AUDIO;
+var SHOW_DEMO;
+var SHOW_DEBUG;
 var EXIT_3_PRAC;
+var PICTURE_DELAY;
 var SLIDE_SIZE;
 var CONTINUE_SIZE;
 var CONTINUE_POS;
@@ -169,42 +172,38 @@ var DECK_SIZE;
 var CARD_SIZE;
 var NEW_CARD_POS;
 var BOX_SIZE;
-var PICTURE_DELAY;
-var SLIDE_FILE_NUMS;
 var GLOBAL_CONT;
 var terminate_experiment;
 var practice_passed;
-var cumulative_time;
-var slide;
-var s1;
-var s2;
-var s3;
-var introSound;
+var inst_slide;
+var inst_sound;
 var begin1Mouse;
 var begin2Clock;
-var explainSound;
 var begin2Mouse;
 var begin3Clock;
-var readySound;
 var begin3Mouse;
-var gateClock;
+var demoText;
+var trialClock;
 var DRAG_MOUSE;
 var DAY_BOX;
 var NIGHT_BOX;
 var CARD_STACK;
-var trialClock;
-var header;
-var feedback;
-var debug;
-var trialsEndClock;
+var cumulative_time;
+var score;
+var trialHeader;
+var trialFeedback;
+var trialDebug;
+var wiperClock;
 var globalClock;
 var routineTimer;
 async function experimentInit() {
   // Initialize components for Routine "begin1"
   begin1Clock = new util.Clock();
-  SHOW_DEBUG = ((expInfo["debug [y/n]"][0] === "y") || (expInfo["debug [y/n]"][0] === "Y"));
   USE_AUDIO = ((expInfo["use_audio [y/n]"][0] === "y") || (expInfo["use_audio [y/n]"][0] === "Y"));
+  SHOW_DEMO = ((expInfo["demo [y/n]"][0] === "y") || (expInfo["demo [y/n]"][0] === "Y"));
+  SHOW_DEBUG = ((expInfo["debug [y/n]"][0] === "y") || (expInfo["debug [y/n]"][0] === "Y"));
   EXIT_3_PRAC = false;
+  PICTURE_DELAY = 0.1;
   SLIDE_SIZE = [1.0, 0.562438];
   CONTINUE_SIZE = [0.228, 0.1];
   CONTINUE_POS = [0, (- 0.4)];
@@ -212,17 +211,11 @@ async function experimentInit() {
   CARD_SIZE = [0.18, 0.26];
   NEW_CARD_POS = [0.011, (- 0.309)];
   BOX_SIZE = [0.3375, 0.2775];
-  PICTURE_DELAY = 0.1;
-  SLIDE_FILE_NUMS = {"1": ["01", "02", "03"], "2": ["NA", "NA", "03"], "3": ["NA", "NA", "03"], "4": ["NA", "NA", "04"], "5": ["NA", "05", "06"], "6": ["NA", "NA", "06"], "7": ["NA", "NA", "06"], "8": ["NA", "NA", "07"], "9": ["NA", "08", "09"], "10": ["NA", "NA", "09"], "11": ["NA", "NA", "09"], "12": ["NA", "NA", "10"]};
   GLOBAL_CONT = make_img("GLOBAL_CONT", "imgs/continue.png", CONTINUE_POS, CONTINUE_SIZE);
   terminate_experiment = false;
   practice_passed = false;
-  cumulative_time = 0.0;
-  slide = null;
-  s1 = null;
-  s2 = null;
-  s3 = null;
-  introSound = null;
+  inst_slide = null;
+  inst_sound = null;
   
   begin1Mouse = new core.Mouse({
     win: psychoJS.window,
@@ -230,32 +223,39 @@ async function experimentInit() {
   begin1Mouse.mouseClock = new util.Clock();
   // Initialize components for Routine "begin2"
   begin2Clock = new util.Clock();
-  explainSound = null;
-  
   begin2Mouse = new core.Mouse({
     win: psychoJS.window,
   });
   begin2Mouse.mouseClock = new util.Clock();
   // Initialize components for Routine "begin3"
   begin3Clock = new util.Clock();
-  readySound = null;
-  
   begin3Mouse = new core.Mouse({
     win: psychoJS.window,
   });
   begin3Mouse.mouseClock = new util.Clock();
-  // Initialize components for Routine "gate"
-  gateClock = new util.Clock();
-  DRAG_MOUSE = new core.Mouse({"win": psychoJS.window});
-  DAY_BOX = make_img("day_box", "imgs/day-box.png", [(- 0.4), 0.15], [0, 0]);
-  NIGHT_BOX = make_img("night_box", "imgs/night-box.png", [0.4, 0.15], [0, 0]);
-  CARD_STACK = make_img("card_stack", "imgs/deck.png", [0, (- 0.3)], [0, 0]);
+  demoText = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'demoText',
+    text: 'Now, I am going to show you how the game is played and then it will be your turn',
+    font: 'Open Sans',
+    units: undefined, 
+    pos: [0, 0], height: 0.05,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -2.0 
+  });
   
   // Initialize components for Routine "trial"
   trialClock = new util.Clock();
-  header = new visual.TextStim({
+  DRAG_MOUSE = new core.Mouse({"win": psychoJS.window});
+  DAY_BOX = make_img("day_box", "imgs/day-box.png", [(- 0.4), 0.15]);
+  NIGHT_BOX = make_img("night_box", "imgs/night-box.png", [0.4, 0.15]);
+  CARD_STACK = make_img("card_stack", "imgs/deck.png", [0, (- 0.3)]);
+  cumulative_time = 0.0;
+  score = 0;
+  
+  trialHeader = new visual.TextStim({
     win: psychoJS.window,
-    name: 'header',
+    name: 'trialHeader',
     text: '',
     font: 'Open Sans',
     units: undefined, 
@@ -264,9 +264,9 @@ async function experimentInit() {
     depth: -1.0 
   });
   
-  feedback = new visual.TextStim({
+  trialFeedback = new visual.TextStim({
     win: psychoJS.window,
-    name: 'feedback',
+    name: 'trialFeedback',
     text: '',
     font: 'Open Sans',
     units: undefined, 
@@ -275,9 +275,9 @@ async function experimentInit() {
     depth: -2.0 
   });
   
-  debug = new visual.TextStim({
+  trialDebug = new visual.TextStim({
     win: psychoJS.window,
-    name: 'debug',
+    name: 'trialDebug',
     text: '',
     font: 'Open Sans',
     units: undefined, 
@@ -286,8 +286,8 @@ async function experimentInit() {
     depth: -3.0 
   });
   
-  // Initialize components for Routine "trialsEnd"
-  trialsEndClock = new util.Clock();
+  // Initialize components for Routine "wiper"
+  wiperClock = new util.Clock();
   // Create some handy timers
   globalClock = new util.Clock();  // to track the time since experiment started
   routineTimer = new util.CountdownTimer();  // to track time remaining of each (non-slip) routine
@@ -296,56 +296,8 @@ async function experimentInit() {
 }
 
 
-var blocks;
-var currentLoop;
-function blocksLoopBegin(blocksLoopScheduler, snapshot) {
-  return async function() {
-    TrialHandler.fromSnapshot(snapshot); // update internal variables (.thisN etc) of the loop
-    
-    // set up handler to look after randomisation of conditions etc
-    blocks = new TrialHandler({
-      psychoJS: psychoJS,
-      nReps: 1, method: TrialHandler.Method.SEQUENTIAL,
-      extraInfo: expInfo, originPath: undefined,
-      trialList: 'sequences/blocks.csv',
-      seed: undefined, name: 'blocks'
-    });
-    psychoJS.experiment.addLoop(blocks); // add the loop to the experiment
-    currentLoop = blocks;  // we're now the current loop
-    
-    // Schedule all the trials in the trialList:
-    blocks.forEach(function() {
-      const snapshot = blocks.getSnapshot();
-    
-      blocksLoopScheduler.add(importConditions(snapshot));
-      blocksLoopScheduler.add(begin1RoutineBegin(snapshot));
-      blocksLoopScheduler.add(begin1RoutineEachFrame());
-      blocksLoopScheduler.add(begin1RoutineEnd());
-      blocksLoopScheduler.add(begin2RoutineBegin(snapshot));
-      blocksLoopScheduler.add(begin2RoutineEachFrame());
-      blocksLoopScheduler.add(begin2RoutineEnd());
-      blocksLoopScheduler.add(begin3RoutineBegin(snapshot));
-      blocksLoopScheduler.add(begin3RoutineEachFrame());
-      blocksLoopScheduler.add(begin3RoutineEnd());
-      blocksLoopScheduler.add(gateRoutineBegin(snapshot));
-      blocksLoopScheduler.add(gateRoutineEachFrame());
-      blocksLoopScheduler.add(gateRoutineEnd());
-      const trialsLoopScheduler = new Scheduler(psychoJS);
-      blocksLoopScheduler.add(trialsLoopBegin(trialsLoopScheduler, snapshot));
-      blocksLoopScheduler.add(trialsLoopScheduler);
-      blocksLoopScheduler.add(trialsLoopEnd);
-      blocksLoopScheduler.add(trialsEndRoutineBegin(snapshot));
-      blocksLoopScheduler.add(trialsEndRoutineEachFrame());
-      blocksLoopScheduler.add(trialsEndRoutineEnd());
-      blocksLoopScheduler.add(endLoopIteration(blocksLoopScheduler, snapshot));
-    });
-    
-    return Scheduler.Event.NEXT;
-  }
-}
-
-
 var trials;
+var currentLoop;
 function trialsLoopBegin(trialsLoopScheduler, snapshot) {
   return async function() {
     TrialHandler.fromSnapshot(snapshot); // update internal variables (.thisN etc) of the loop
@@ -355,7 +307,7 @@ function trialsLoopBegin(trialsLoopScheduler, snapshot) {
       psychoJS: psychoJS,
       nReps: 1, method: TrialHandler.Method.SEQUENTIAL,
       extraInfo: expInfo, originPath: undefined,
-      trialList: fileName,
+      trialList: 'sequences/all-conditions.csv',
       seed: undefined, name: 'trials'
     });
     psychoJS.experiment.addLoop(trials); // add the loop to the experiment
@@ -366,9 +318,21 @@ function trialsLoopBegin(trialsLoopScheduler, snapshot) {
       const snapshot = trials.getSnapshot();
     
       trialsLoopScheduler.add(importConditions(snapshot));
+      trialsLoopScheduler.add(begin1RoutineBegin(snapshot));
+      trialsLoopScheduler.add(begin1RoutineEachFrame());
+      trialsLoopScheduler.add(begin1RoutineEnd());
+      trialsLoopScheduler.add(begin2RoutineBegin(snapshot));
+      trialsLoopScheduler.add(begin2RoutineEachFrame());
+      trialsLoopScheduler.add(begin2RoutineEnd());
+      trialsLoopScheduler.add(begin3RoutineBegin(snapshot));
+      trialsLoopScheduler.add(begin3RoutineEachFrame());
+      trialsLoopScheduler.add(begin3RoutineEnd());
       trialsLoopScheduler.add(trialRoutineBegin(snapshot));
       trialsLoopScheduler.add(trialRoutineEachFrame());
       trialsLoopScheduler.add(trialRoutineEnd());
+      trialsLoopScheduler.add(wiperRoutineBegin(snapshot));
+      trialsLoopScheduler.add(wiperRoutineEachFrame());
+      trialsLoopScheduler.add(wiperRoutineEnd());
       trialsLoopScheduler.add(endLoopIteration(trialsLoopScheduler, snapshot));
     });
     
@@ -384,16 +348,10 @@ async function trialsLoopEnd() {
 }
 
 
-async function blocksLoopEnd() {
-  psychoJS.experiment.removeLoop(blocks);
-
-  return Scheduler.Event.NEXT;
-}
-
-
 var t;
 var frameN;
 var continueRoutine;
+var is_practice;
 var gotValidClick;
 var begin1Components;
 function begin1RoutineBegin(snapshot) {
@@ -406,16 +364,15 @@ function begin1RoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    [s1, s2, s3] = SLIDE_FILE_NUMS[block];
-    if (((terminate_experiment || practice_passed) || (s1 === "NA"))) {
+    is_practice = (pracNum !== "NA");
+    if ((((slideFile1 === "NA") || practice_passed) || terminate_experiment)) {
         continueRoutine = false;
     } else {
-        slide = make_slide(s1);
+        inst_slide = make_slide(slideFile1);
         unhide(GLOBAL_CONT, CONTINUE_SIZE);
         if (USE_AUDIO) {
-            introSound = new sound.Sound({"win": psychoJS.window, "value": "aud/mp3/DN_intro.mp3", "secs": (- 1), "stereo": true, "hamming": true, "name": "introSound"});
-            introSound.setVolume(1.0);
-            introSound.play();
+            inst_sound = make_sound("aud/mp3/DN_intro.mp3");
+            inst_sound.play();
         }
     }
     
@@ -445,7 +402,7 @@ function begin1RoutineEachFrame() {
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
     // *begin1Mouse* updates
-    if (t >= 0.0 && begin1Mouse.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.2 && begin1Mouse.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       begin1Mouse.tStart = t;  // (not accounting for frame time here)
       begin1Mouse.frameNStart = frameN;  // exact frame index
@@ -508,11 +465,11 @@ function begin1RoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     });
-    if ((s1 !== "NA")) {
-        hide(slide);
+    if ((slideFile1 !== "NA")) {
+        hide(inst_slide);
         hide(GLOBAL_CONT);
         if (USE_AUDIO) {
-            introSound.stop();
+            inst_sound.stop();
         }
     }
     
@@ -536,15 +493,14 @@ function begin2RoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    if (((terminate_experiment || practice_passed) || (s2 === "NA"))) {
+    if ((((slideFile2 === "NA") || practice_passed) || terminate_experiment)) {
         continueRoutine = false;
     } else {
-        slide = make_slide(s2);
+        inst_slide = make_slide(slideFile2);
         unhide(GLOBAL_CONT, CONTINUE_SIZE);
         if (USE_AUDIO) {
-            explainSound = new sound.Sound({"win": psychoJS.window, "value": `aud/mp3/DN_rule${blockName.slice((- 1))[0]}.mp3`, "secs": (- 1), "stereo": true, "hamming": true, "name": "explainSound"});
-            explainSound.setVolume(1.0);
-            explainSound.play();
+            inst_sound = make_sound(`aud/mp3/DN_rule${pracNum}.mp3`);
+            inst_sound.play();
         }
     }
     
@@ -572,7 +528,7 @@ function begin2RoutineEachFrame() {
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
     // *begin2Mouse* updates
-    if (t >= 0.0 && begin2Mouse.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.2 && begin2Mouse.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       begin2Mouse.tStart = t;  // (not accounting for frame time here)
       begin2Mouse.frameNStart = frameN;  // exact frame index
@@ -635,11 +591,11 @@ function begin2RoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     });
-    if ((s2 !== "NA")) {
-        hide(slide);
+    if ((slideFile2 !== "NA")) {
+        hide(inst_slide);
         hide(GLOBAL_CONT);
         if (USE_AUDIO) {
-            explainSound.stop();
+            inst_sound.stop();
         }
     }
     
@@ -663,15 +619,18 @@ function begin3RoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    if (((terminate_experiment || practice_passed) || (s3 === "NA"))) {
+    if (((((slideFile3 === "NA") || practice_passed) || terminate_experiment) || ((! SHOW_DEMO) && (blockName === "Demo")))) {
         continueRoutine = false;
     } else {
-        slide = make_slide(s3);
-        unhide(GLOBAL_CONT, CONTINUE_SIZE);
-        if ((USE_AUDIO && (isPractice === 0))) {
-            readySound = new sound.Sound({"win": psychoJS.window, "value": "aud/mp3/DN_aftprac.mp3", "secs": (- 1), "stereo": true, "hamming": true, "name": "readySound"});
-            readySound.setVolume(1.0);
-            readySound.play();
+        if ((slideFile3 === "DEMO")) {
+            unhide(GLOBAL_CONT, CONTINUE_SIZE);
+        } else {
+            inst_slide = make_slide(slideFile3);
+            unhide(GLOBAL_CONT, CONTINUE_SIZE);
+            if ((USE_AUDIO && (! is_practice))) {
+                inst_sound = make_sound("aud/mp3/DN_aftprac.mp3");
+                inst_sound.play();
+            }
         }
     }
     
@@ -681,6 +640,7 @@ function begin3RoutineBegin(snapshot) {
     // keep track of which components have finished
     begin3Components = [];
     begin3Components.push(begin3Mouse);
+    begin3Components.push(demoText);
     
     begin3Components.forEach( function(thisComponent) {
       if ('status' in thisComponent)
@@ -699,7 +659,7 @@ function begin3RoutineEachFrame() {
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
     // *begin3Mouse* updates
-    if (t >= 0.0 && begin3Mouse.status === PsychoJS.Status.NOT_STARTED) {
+    if (t >= 0.2 && begin3Mouse.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
       begin3Mouse.tStart = t;  // (not accounting for frame time here)
       begin3Mouse.frameNStart = frameN;  // exact frame index
@@ -727,6 +687,16 @@ function begin3RoutineEachFrame() {
         }
       }
     }
+    
+    // *demoText* updates
+    if (((slideFile3 == 'DEMO')) && demoText.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      demoText.tStart = t;  // (not accounting for frame time here)
+      demoText.frameNStart = frameN;  // exact frame index
+      
+      demoText.setAutoDraw(true);
+    }
+
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
       return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
@@ -762,101 +732,21 @@ function begin3RoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     });
-    if ((s3 !== "NA")) {
-        hide(slide);
+    if ((slideFile3 === "DEMO")) {
+        demoText.text = "";
         hide(GLOBAL_CONT);
-        if ((USE_AUDIO && (isPractice === 0))) {
-            readySound.stop();
+    } else {
+        if ((slideFile3 !== "NA")) {
+            hide(inst_slide);
+            hide(GLOBAL_CONT);
+            if ((USE_AUDIO && (! is_practice))) {
+                inst_sound.stop();
+            }
         }
     }
     
     // store data for psychoJS.experiment (ExperimentHandler)
     // the Routine "begin3" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
-    
-    return Scheduler.Event.NEXT;
-  };
-}
-
-
-var show_feedback;
-var score;
-var gateComponents;
-function gateRoutineBegin(snapshot) {
-  return async function () {
-    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
-    
-    //------Prepare to start Routine 'gate'-------
-    t = 0;
-    gateClock.reset(); // clock
-    frameN = -1;
-    continueRoutine = true; // until we're told otherwise
-    // update component parameters for each repeat
-    if ((terminate_experiment || practice_passed)) {
-        continueRoutine = false;
-    } else {
-        unhide(DAY_BOX, BOX_SIZE);
-        unhide(NIGHT_BOX, BOX_SIZE);
-        unhide(CARD_STACK, DECK_SIZE);
-    }
-    show_feedback = (isPractice === 1);
-    score = 0;
-    
-    // keep track of which components have finished
-    gateComponents = [];
-    
-    gateComponents.forEach( function(thisComponent) {
-      if ('status' in thisComponent)
-        thisComponent.status = PsychoJS.Status.NOT_STARTED;
-       });
-    return Scheduler.Event.NEXT;
-  }
-}
-
-
-function gateRoutineEachFrame() {
-  return async function () {
-    //------Loop for each frame of Routine 'gate'-------
-    // get current time
-    t = gateClock.getTime();
-    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
-    // update/draw components on each frame
-    // check for quit (typically the Esc key)
-    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
-      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
-    }
-    
-    // check if the Routine should terminate
-    if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      return Scheduler.Event.NEXT;
-    }
-    
-    continueRoutine = false;  // reverts to True if at least one component still running
-    gateComponents.forEach( function(thisComponent) {
-      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
-        continueRoutine = true;
-      }
-    });
-    
-    // refresh the screen if continuing
-    if (continueRoutine) {
-      return Scheduler.Event.FLIP_REPEAT;
-    } else {
-      return Scheduler.Event.NEXT;
-    }
-  };
-}
-
-
-function gateRoutineEnd() {
-  return async function () {
-    //------Ending Routine 'gate'-------
-    gateComponents.forEach( function(thisComponent) {
-      if (typeof thisComponent.setAutoDraw === 'function') {
-        thisComponent.setAutoDraw(false);
-      }
-    });
-    // the Routine "gate" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
     return Scheduler.Event.NEXT;
@@ -884,10 +774,16 @@ function trialRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    if ((terminate_experiment || practice_passed)) {
+    if (((practice_passed || terminate_experiment) || ((! SHOW_DEMO) && (blockName === "Demo")))) {
         continueRoutine = false;
+    } else {
+        if ((trialNum === 1)) {
+            unhide(DAY_BOX, BOX_SIZE);
+            unhide(NIGHT_BOX, BOX_SIZE);
+            unhide(CARD_STACK, DECK_SIZE);
+        }
     }
-    dormant_card = make_img(stimulus, `imgs/${stimulus}.png`, NEW_CARD_POS, [0, 0]);
+    dormant_card = make_img(stimulus, `imgs/${stimulus}.png`, NEW_CARD_POS);
     active_card = null;
     moving_card = null;
     drag_in_process = false;
@@ -897,12 +793,12 @@ function trialRoutineBegin(snapshot) {
     correct = null;
     trial_time = null;
     
-    header.setText(blockName);
+    trialHeader.setText(blockName);
     // keep track of which components have finished
     trialComponents = [];
-    trialComponents.push(header);
-    trialComponents.push(feedback);
-    trialComponents.push(debug);
+    trialComponents.push(trialHeader);
+    trialComponents.push(trialFeedback);
+    trialComponents.push(trialDebug);
     
     trialComponents.forEach( function(thisComponent) {
       if ('status' in thisComponent)
@@ -922,14 +818,14 @@ function trialRoutineEachFrame() {
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
     if (SHOW_DEBUG) {
-        debug.text = `tryNumber = ${tryNumber}
-    trial = ${trial} (out of ${maxScore})
+        trialDebug.text = `tryNum = ${tryNum}
+    trialNum = ${trialNum} (out of ${maxScore})
     score = ${score} (out of ${maxScore})
     globalClock = ${round(globalClock.getTime(), 3)}
     t = ${round(t, 3)}`
     ;
         if ((moving_card !== null)) {
-            debug.text += `
+            trialDebug.text += `
     moving_card.name = ${moving_card.name}
     pos = (${round(moving_card.pos[0], 3)}, ${round(moving_card.pos[1], 3)})`
     ;
@@ -937,7 +833,7 @@ function trialRoutineEachFrame() {
     }
     if ((feedback_delay_start !== null)) {
         feedback_delay = 0.5;
-        if ((show_feedback && (correct === 0))) {
+        if ((is_practice && (correct === 0))) {
             feedback_delay = 1.0;
         }
         if (((t - feedback_delay_start) > feedback_delay)) {
@@ -984,11 +880,11 @@ function trialRoutineEachFrame() {
                 feedback_delay_start = t;
                 if ((choice === corrAns)) {
                     correct = 1;
-                    feedback.text = "Correct!";
+                    trialFeedback.text = "Correct!";
                     score += 1;
                 } else {
                     correct = 0;
-                    feedback.text = "Let's think again";
+                    trialFeedback.text = "Let's think again";
                 }
             }
             moving_card = null;
@@ -996,33 +892,33 @@ function trialRoutineEachFrame() {
     }
     
     
-    // *header* updates
-    if (t >= 0.0 && header.status === PsychoJS.Status.NOT_STARTED) {
+    // *trialHeader* updates
+    if (t >= 0.0 && trialHeader.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      header.tStart = t;  // (not accounting for frame time here)
-      header.frameNStart = frameN;  // exact frame index
+      trialHeader.tStart = t;  // (not accounting for frame time here)
+      trialHeader.frameNStart = frameN;  // exact frame index
       
-      header.setAutoDraw(true);
+      trialHeader.setAutoDraw(true);
     }
 
     
-    // *feedback* updates
-    if ((show_feedback) && feedback.status === PsychoJS.Status.NOT_STARTED) {
+    // *trialFeedback* updates
+    if ((is_practice) && trialFeedback.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      feedback.tStart = t;  // (not accounting for frame time here)
-      feedback.frameNStart = frameN;  // exact frame index
+      trialFeedback.tStart = t;  // (not accounting for frame time here)
+      trialFeedback.frameNStart = frameN;  // exact frame index
       
-      feedback.setAutoDraw(true);
+      trialFeedback.setAutoDraw(true);
     }
 
     
-    // *debug* updates
-    if ((SHOW_DEBUG) && debug.status === PsychoJS.Status.NOT_STARTED) {
+    // *trialDebug* updates
+    if ((SHOW_DEBUG) && trialDebug.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      debug.tStart = t;  // (not accounting for frame time here)
-      debug.frameNStart = frameN;  // exact frame index
+      trialDebug.tStart = t;  // (not accounting for frame time here)
+      trialDebug.frameNStart = frameN;  // exact frame index
       
-      debug.setAutoDraw(true);
+      trialDebug.setAutoDraw(true);
     }
 
     // check for quit (typically the Esc key)
@@ -1060,7 +956,7 @@ function trialRoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     });
-    feedback.text = "";
+    trialFeedback.text = "";
     psychoJS.experiment.addData("choice", choice);
     psychoJS.experiment.addData("correct", correct);
     psychoJS.experiment.addData("trial_time", trial_time);
@@ -1074,21 +970,21 @@ function trialRoutineEnd() {
 }
 
 
-var trialsEndComponents;
-function trialsEndRoutineBegin(snapshot) {
+var wiperComponents;
+function wiperRoutineBegin(snapshot) {
   return async function () {
     TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
     
-    //------Prepare to start Routine 'trialsEnd'-------
+    //------Prepare to start Routine 'wiper'-------
     t = 0;
-    trialsEndClock.reset(); // clock
+    wiperClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
     // keep track of which components have finished
-    trialsEndComponents = [];
+    wiperComponents = [];
     
-    trialsEndComponents.forEach( function(thisComponent) {
+    wiperComponents.forEach( function(thisComponent) {
       if ('status' in thisComponent)
         thisComponent.status = PsychoJS.Status.NOT_STARTED;
        });
@@ -1097,11 +993,11 @@ function trialsEndRoutineBegin(snapshot) {
 }
 
 
-function trialsEndRoutineEachFrame() {
+function wiperRoutineEachFrame() {
   return async function () {
-    //------Loop for each frame of Routine 'trialsEnd'-------
+    //------Loop for each frame of Routine 'wiper'-------
     // get current time
-    t = trialsEndClock.getTime();
+    t = wiperClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
     // check for quit (typically the Esc key)
@@ -1115,7 +1011,7 @@ function trialsEndRoutineEachFrame() {
     }
     
     continueRoutine = false;  // reverts to True if at least one component still running
-    trialsEndComponents.forEach( function(thisComponent) {
+    wiperComponents.forEach( function(thisComponent) {
       if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
         continueRoutine = true;
       }
@@ -1131,29 +1027,32 @@ function trialsEndRoutineEachFrame() {
 }
 
 
-function trialsEndRoutineEnd() {
+function wiperRoutineEnd() {
   return async function () {
-    //------Ending Routine 'trialsEnd'-------
-    trialsEndComponents.forEach( function(thisComponent) {
+    //------Ending Routine 'wiper'-------
+    wiperComponents.forEach( function(thisComponent) {
       if (typeof thisComponent.setAutoDraw === 'function') {
         thisComponent.setAutoDraw(false);
       }
     });
-    hide(DAY_BOX);
-    hide(NIGHT_BOX);
-    hide(CARD_STACK);
-    if ((tryNumber === 3)) {
-        if (((EXIT_3_PRAC && (! practice_passed)) && (score < maxScore))) {
-            terminate_experiment = true;
+    if ((trialNum === maxScore)) {
+        hide(DAY_BOX);
+        hide(NIGHT_BOX);
+        hide(CARD_STACK);
+        if ((tryNum === 3)) {
+            if ((EXIT_3_PRAC && (score < maxScore))) {
+                terminate_experiment = true;
+            }
+            practice_passed = false;
+        } else {
+            if ((is_practice && (score === maxScore))) {
+                practice_passed = true;
+            }
         }
-        practice_passed = false;
-    } else {
-        if (((score === maxScore) && (((blockName === "Practice 1") || (blockName === "Practice 2")) || (blockName === "Practice 3")))) {
-            practice_passed = true;
-        }
+        score = 0;
     }
     
-    // the Routine "trialsEnd" was not non-slip safe, so reset the non-slip timer
+    // the Routine "wiper" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
     return Scheduler.Event.NEXT;
@@ -1197,10 +1096,6 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
-  
-  
-  
-  
   
   
   
