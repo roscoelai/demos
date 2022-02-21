@@ -116,30 +116,30 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
-    {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
     {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
+    {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
+    {'name': 'aud/mp3/DN_intro.mp3', 'path': 'aud/mp3/DN_intro.mp3'},
+    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'},
+    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
+    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
+    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
+    {'name': 'aud/mp3/DN_aftprac.mp3', 'path': 'aud/mp3/DN_aftprac.mp3'},
     {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
-    {'name': 'sequences/all-conditions.csv', 'path': 'sequences/all-conditions.csv'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
+    {'name': 'aud/mp3/DN_rule2.mp3', 'path': 'aud/mp3/DN_rule2.mp3'},
+    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
     {'name': 'imgs/slides/slide-10.png', 'path': 'imgs/slides/slide-10.png'},
     {'name': 'aud/mp3/DN_rule3.mp3', 'path': 'aud/mp3/DN_rule3.mp3'},
-    {'name': 'aud/mp3/DN_aftprac.mp3', 'path': 'aud/mp3/DN_aftprac.mp3'},
-    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
-    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
-    {'name': 'aud/mp3/DN_rule2.mp3', 'path': 'aud/mp3/DN_rule2.mp3'},
     {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
     {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
-    {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
+    {'name': 'aud/mp3/DN_rule1.mp3', 'path': 'aud/mp3/DN_rule1.mp3'},
+    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
     {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
-    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
-    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
-    {'name': 'aud/mp3/DN_intro.mp3', 'path': 'aud/mp3/DN_intro.mp3'},
     {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
-    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'},
-    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
-    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
-    {'name': 'aud/mp3/DN_rule1.mp3', 'path': 'aud/mp3/DN_rule1.mp3'}
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
+    {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
+    {'name': 'sequences/all-conditions.csv', 'path': 'sequences/all-conditions.csv'}
   ]
 });
 
@@ -207,6 +207,9 @@ var routineTimer;
 async function experimentInit() {
   // Initialize components for Routine "begin1"
   begin1Clock = new util.Clock();
+  // expInfo["use_audio [y/n]"] = "y";
+  // expInfo["demo [y/n]"] = "n";
+  // expInfo["debug [y/n]"] = "n";
   USE_AUDIO = ((expInfo["use_audio [y/n]"][0] === "y") || (expInfo["use_audio [y/n]"][0] === "Y"));
   SHOW_DEMO = ((expInfo["demo [y/n]"][0] === "y") || (expInfo["demo [y/n]"][0] === "Y"));
   SHOW_DEBUG = ((expInfo["debug [y/n]"][0] === "y") || (expInfo["debug [y/n]"][0] === "Y"));
@@ -244,7 +247,7 @@ async function experimentInit() {
   demoText = new visual.TextStim({
     win: psychoJS.window,
     name: 'demoText',
-    text: 'Now, I am going to show you how the game is played and then it will be your turn',
+    text: '',
     font: 'Open Sans',
     units: undefined, 
     pos: [0, 0], height: 0.05,  wrapWidth: undefined, ori: 0.0,
@@ -358,6 +361,7 @@ async function trialsLoopEnd() {
 var t;
 var frameN;
 var continueRoutine;
+var is_demo;
 var is_practice;
 var gotValidClick;
 var begin1Components;
@@ -371,6 +375,7 @@ function begin1RoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
+    is_demo = (tryNum === 0);
     is_practice = (pracNum !== "NA");
     if ((((slideFile1 === "NA") || practice_passed) || terminate_experiment)) {
         continueRoutine = false;
@@ -624,10 +629,11 @@ function begin3RoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    if (((((slideFile3 === "NA") || practice_passed) || terminate_experiment) || ((! SHOW_DEMO) && (blockName === "Demo")))) {
+    if (((((slideFile3 === "NA") || practice_passed) || terminate_experiment) || ((! SHOW_DEMO) && is_demo))) {
         continueRoutine = false;
     } else {
         if ((slideFile3 === "DEMO")) {
+            demoText.text = "Now, I am going to show you how the game is played and then it will be your turn";
             unhide(GLOBAL_CONT, CONTINUE_SIZE);
         } else {
             inst_slide = make_slide(slideFile3);
@@ -778,7 +784,7 @@ function trialRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    if (((practice_passed || terminate_experiment) || ((! SHOW_DEMO) && (blockName === "Demo")))) {
+    if (((practice_passed || terminate_experiment) || ((! SHOW_DEMO) && is_demo))) {
         continueRoutine = false;
     } else {
         if ((trialNum === 1)) {
