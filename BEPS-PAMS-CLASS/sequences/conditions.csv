@@ -5,12 +5,6 @@ BEPS,04,3,choice,red,04_BEPS-3-red
 BEPS,05,4,choice,black,"05_BEPS-4,5,6-color"
 BEPS,06,5,choice,orange,"05_BEPS-4,5,6-color"
 BEPS,07,6,choice,blue,"05_BEPS-4,5,6-color"
-BEPS,08,7,drawing,NA,08_BEPS-7-square
-BEPS,09,8,drawing,NA,09_BEPS-8-triangle
-BEPS,NA,9,drawing,NA,10_BEPS-9-letterA
-BEPS,NA,10,drawing,NA,11_BEPS-10-letterB
-BEPS,NA,11,drawing,NA,12_BEPS-11-letterC
-BEPS,13,12,drawing,NA,13_BEPS-12-name
 BEPS,14,13a1,choice,watermelon,14_BEPS-13a-pattern1
 BEPS,14,13a2,choice,watermelon,14_BEPS-13a-pattern1-rep
 BEPS,15,13b,choice,car,15_BEPS-13b-pattern2
