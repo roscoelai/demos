@@ -78,6 +78,19 @@ function make_sound(value, name = "sound") {
     return snd;
 }
 
+
+function dist_sq(x1, y1, x2, y2) {
+    var dx, dy;
+    [dx, dy] = [(x2 - x1), (y2 - y1)];
+    return ((dx * dx) + (dy * dy));
+}
+
+function round_dp(x, dp = 5) {
+    var num;
+    [num] = [Math.pow(10, dp)];
+    return (Math.round((x * num)) / num);
+}
+
 // init psychoJS:
 const psychoJS = new PsychoJS({
   debug: true
@@ -116,30 +129,30 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
-    {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
-    {'name': 'aud/mp3/DN_intro.mp3', 'path': 'aud/mp3/DN_intro.mp3'},
-    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'},
-    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
-    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
-    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
-    {'name': 'aud/mp3/DN_aftprac.mp3', 'path': 'aud/mp3/DN_aftprac.mp3'},
-    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
-    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
-    {'name': 'aud/mp3/DN_rule2.mp3', 'path': 'aud/mp3/DN_rule2.mp3'},
-    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
-    {'name': 'imgs/slides/slide-10.png', 'path': 'imgs/slides/slide-10.png'},
     {'name': 'aud/mp3/DN_rule3.mp3', 'path': 'aud/mp3/DN_rule3.mp3'},
-    {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
-    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
-    {'name': 'aud/mp3/DN_rule1.mp3', 'path': 'aud/mp3/DN_rule1.mp3'},
-    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
-    {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
+    {'name': 'aud/mp3/DN_rule2.mp3', 'path': 'aud/mp3/DN_rule2.mp3'},
+    {'name': 'sequences/all-conditions.csv', 'path': 'sequences/all-conditions.csv'},
+    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
     {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
+    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
+    {'name': 'aud/mp3/DN_rule1.mp3', 'path': 'aud/mp3/DN_rule1.mp3'},
+    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
+    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
+    {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
+    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
+    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
+    {'name': 'aud/mp3/DN_intro.mp3', 'path': 'aud/mp3/DN_intro.mp3'},
+    {'name': 'aud/mp3/DN_aftprac.mp3', 'path': 'aud/mp3/DN_aftprac.mp3'},
     {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
+    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
+    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
+    {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
+    {'name': 'imgs/slides/slide-10.png', 'path': 'imgs/slides/slide-10.png'},
+    {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
     {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
     {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
-    {'name': 'sequences/all-conditions.csv', 'path': 'sequences/all-conditions.csv'}
+    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'}
   ]
 });
 
@@ -192,6 +205,7 @@ var begin3Clock;
 var begin3Mouse;
 var demoText;
 var trialClock;
+var MIN_DIST_SQ;
 var DRAG_MOUSE;
 var DAY_BOX;
 var NIGHT_BOX;
@@ -257,6 +271,7 @@ async function experimentInit() {
   
   // Initialize components for Routine "trial"
   trialClock = new util.Clock();
+  MIN_DIST_SQ = (0.005 * 0.005);
   DRAG_MOUSE = new core.Mouse({"win": psychoJS.window});
   DAY_BOX = make_img("day_box", "imgs/day-box.png", [(- 0.4), 0.15]);
   NIGHT_BOX = make_img("night_box", "imgs/night-box.png", [0.4, 0.15]);
@@ -773,6 +788,11 @@ var picture_delay_start;
 var choice;
 var correct;
 var trial_time;
+var x;
+var y;
+var coords_x;
+var coords_y;
+var coords_t;
 var trialComponents;
 function trialRoutineBegin(snapshot) {
   return async function () {
@@ -802,6 +822,11 @@ function trialRoutineBegin(snapshot) {
     choice = null;
     correct = null;
     trial_time = null;
+    x = 0;
+    y = 0;
+    coords_x = [];
+    coords_y = [];
+    coords_t = [];
     
     trialHeader.setText(blockName);
     // keep track of which components have finished
@@ -867,9 +892,20 @@ function trialRoutineEachFrame() {
             }
         }
     }
-    if ((util.sum(DRAG_MOUSE.getPressed()) > 0)) {
+    if ((DRAG_MOUSE.getPressed()[0] === 1)) {
         if (drag_in_process) {
-            moving_card.pos = DRAG_MOUSE.getPos();
+            [x, y] = moving_card.pos = DRAG_MOUSE.getPos();
+            if ((coords_x.length > 0)) {
+                if ((dist_sq(coords_x.slice((- 1))[0], coords_y.slice((- 1))[0], x, y) > MIN_DIST_SQ)) {
+                    coords_x.push(round_dp(x));
+                    coords_y.push(round_dp(y));
+                    coords_t.push(round_dp(t));
+                }
+            } else {
+                coords_x.push(round_dp(x));
+                coords_y.push(round_dp(y));
+                coords_t.push(round_dp(t));
+            }
         }
     } else {
         drag_in_process = false;
@@ -970,6 +1006,9 @@ function trialRoutineEnd() {
     psychoJS.experiment.addData("correct", correct);
     psychoJS.experiment.addData("trial_time", trial_time);
     psychoJS.experiment.addData("cumulative_time", cumulative_time);
+    psychoJS.experiment.addData("coords_x", coords_x);
+    psychoJS.experiment.addData("coords_y", coords_y);
+    psychoJS.experiment.addData("coords_t", coords_t);
     
     // the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
