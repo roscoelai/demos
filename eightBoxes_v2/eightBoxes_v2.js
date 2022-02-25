@@ -16,6 +16,40 @@ let expName = 'eightBoxes_v2';  // from the Builder filename that created this s
 let expInfo = {'participant': '', 'use_audio [y/n]': 'y', 'debug [y/n]': 'n'};
 
 // Start code blocks for 'Before Experiment'
+
+function within_box(obj, box) {
+    /*
+    Determine if object is within box
+    - Squared difference in x (and y) coordinates
+    should be less than the square of half the
+    box width (and height)
+    - That would mean the center of the object is
+    within the box boundaries
+    */
+    var box_h, box_w, box_x, box_y, dx, dy, hh, hw, obj_x, obj_y;
+    [obj_x, obj_y] = obj.pos;
+    [box_x, box_y] = box.pos;
+    [box_w, box_h] = box.size;
+    [dx, dy] = [(obj_x - box_x), (obj_y - box_y)];
+    [hw, hh] = [(box_w / 2), (box_h / 2)];
+    return (((dx * dx) < (hw * hw)) && ((dy * dy) < (hh * hh)));
+}
+
+function snapped(obj1, obj2, func = within_box) {
+    /*
+    Determine if obj1 snapped to center of obj2
+    - Check if obj1 is 'near' obj2, based on func
+    - If yes, set the obj1's position to be
+    equal to obj2's position and return True
+    - Otherwise, do nothing and return False
+    */
+    if (func(obj1, obj2)) {
+        obj1.pos = obj2.pos;
+        return true;
+    }
+    return false;
+}
+
 // init psychoJS:
 const psychoJS = new PsychoJS({
   debug: true
@@ -41,9 +75,12 @@ psychoJS.scheduleCondition(function() { return (psychoJS.gui.dialogComponent.but
 // flowScheduler gets run if the participants presses OK
 flowScheduler.add(updateInfo); // add timeStamp
 flowScheduler.add(experimentInit);
-flowScheduler.add(instRoutineBegin());
-flowScheduler.add(instRoutineEachFrame());
-flowScheduler.add(instRoutineEnd());
+flowScheduler.add(beginRoutineBegin());
+flowScheduler.add(beginRoutineEachFrame());
+flowScheduler.add(beginRoutineEnd());
+flowScheduler.add(begin2RoutineBegin());
+flowScheduler.add(begin2RoutineEachFrame());
+flowScheduler.add(begin2RoutineEnd());
 const trialsLoopScheduler = new Scheduler(psychoJS);
 flowScheduler.add(trialsLoopBegin(trialsLoopScheduler));
 flowScheduler.add(trialsLoopScheduler);
@@ -57,18 +94,18 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/cherries.png', 'path': 'imgs/cherries.png'},
-    {'name': 'imgs/grapes.png', 'path': 'imgs/grapes.png'},
-    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'conditions_v2.csv', 'path': 'conditions_v2.csv'},
     {'name': 'imgs/strawberry.png', 'path': 'imgs/strawberry.png'},
-    {'name': 'imgs/box.png', 'path': 'imgs/box.png'},
-    {'name': 'imgs/apple.png', 'path': 'imgs/apple.png'},
     {'name': 'imgs/watermelon.png', 'path': 'imgs/watermelon.png'},
-    {'name': 'aud/8boxes.mp3', 'path': 'aud/8boxes.mp3'},
-    {'name': 'imgs/banana.png', 'path': 'imgs/banana.png'},
     {'name': 'imgs/orange.png', 'path': 'imgs/orange.png'},
-    {'name': 'conditions_v2.csv', 'path': 'conditions_v2.csv'}
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'aud/8boxes.mp3', 'path': 'aud/8boxes.mp3'},
+    {'name': 'imgs/cherries.png', 'path': 'imgs/cherries.png'},
+    {'name': 'imgs/banana.png', 'path': 'imgs/banana.png'},
+    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
+    {'name': 'imgs/grapes.png', 'path': 'imgs/grapes.png'},
+    {'name': 'imgs/apple.png', 'path': 'imgs/apple.png'},
+    {'name': 'imgs/box.png', 'path': 'imgs/box.png'}
   ]
 });
 
@@ -96,16 +133,13 @@ async function updateInfo() {
 }
 
 
-var instClock;
-var snapped;
+var beginClock;
 var _pj;
 var SHOW_DEBUG;
 var USE_AUDIO;
 var RANDOMIZE_FRUITS;
 var RANDOMIZE_POSITIONS;
 var SKIP_PART_1;
-var integerPart;
-var decimalPart;
 var N_FRUITS;
 var N_BOXES;
 var NCOL;
@@ -121,12 +155,15 @@ var BOXES_XY;
 var boxes;
 var IMG_NAMES;
 var fruit_basket;
-var inst_text;
-var inst_cont;
-var inst_mouse;
-var inst_sound;
-var part0Clock;
-var text0;
+var beginInst3;
+var beginCont;
+var beginMouse;
+var begin2Clock;
+var begin2Inst;
+var begin2Cont;
+var begin2Mouse;
+var gateClock;
+var gateText;
 var part1Clock;
 var text1;
 var mouse1;
@@ -138,24 +175,8 @@ var debug2;
 var globalClock;
 var routineTimer;
 async function experimentInit() {
-  // Initialize components for Routine "inst"
-  instClock = new util.Clock();
-  function _snapped(clicked_obj, box) {
-      var bx, by, dx, dy, ox, oy, thresh_x2, thresh_y2;
-      [ox, oy] = clicked_obj.pos;
-      [bx, by] = box.pos;
-      dx = (ox - bx);
-      dy = (oy - by);
-      thresh_x2 = ((box.size[0] * box.size[0]) / 4);
-      thresh_y2 = ((box.size[1] * box.size[1]) / 4);
-      if ((((dx * dx) < thresh_x2) && ((dy * dy) < thresh_y2))) {
-          clicked_obj.pos = box.pos;
-          return true;
-      }
-      return false;
-  }
-  snapped = _snapped;
-  
+  // Initialize components for Routine "begin"
+  beginClock = new util.Clock();
   var _pj;
   function _pj_snippets(container) {
       function _assert(comp, msg) {
@@ -180,15 +201,13 @@ async function experimentInit() {
   }
   _pj = {};
   _pj_snippets(_pj);
+  // expInfo["debug [y/n]"] = "n";
+  // expInfo["use_audio [y/n]"] = "y";
   SHOW_DEBUG = ((expInfo["debug [y/n]"][0] === "y") || (expInfo["debug [y/n]"][0] === "Y"));
   USE_AUDIO = ((expInfo["use_audio [y/n]"][0] === "y") || (expInfo["use_audio [y/n]"][0] === "Y"));
   RANDOMIZE_FRUITS = true;
   RANDOMIZE_POSITIONS = false;
   SKIP_PART_1 = true;
-  if (SHOW_DEBUG) {
-      integerPart = null;
-      decimalPart = null;
-  }
   N_FRUITS = 7;
   N_BOXES = 8;
   NCOL = 4;
@@ -222,41 +241,61 @@ async function experimentInit() {
       fruit_basket.push(new visual.ImageStim({"win": psychoJS.window, "name": IMG_NAMES[i], "image": `imgs/${IMG_NAMES[i]}.png`, "pos": [0, 0], "size": OBJ_SIZE}));
   }
   
-  inst_text = new visual.TextStim({
+  beginInst3 = new visual.TextStim({
     win: psychoJS.window,
-    name: 'inst_text',
-    text: "Instructions:\n\nThere will be 8 boxes on the screen. Some will contain a fruit, some will be empty.\n\nAt the start of each trial, the positions of all the fruits will be revealed for a short period of time. The fruits will then appear above the boxes.\n\nYou may then click and drag each fruit back into their original boxes to complete the trial.\n\nThere will be 1 practice trial, followed by 10 trials.\n\nWhenever you are ready, click/tap on 'continue' and the next trial will begin.",
+    name: 'beginInst3',
+    text: '1st Practice! \nRemember the place of the fruit!',
     font: 'Open Sans',
-    units: 'height', 
-    pos: [0, 0], height: 0.025,  wrapWidth: 0.98, ori: 0.0,
-    color: new util.Color('white'),  opacity: 1.0,
-    depth: -2.0 
+    units: undefined, 
+    pos: [0, 0.25], height: 0.05,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -1.0 
   });
   
-  inst_cont = new visual.ImageStim({
+  beginCont = new visual.ImageStim({
     win : psychoJS.window,
-    name : 'inst_cont', units : 'height', 
+    name : 'beginCont', units : 'height', 
     image : 'imgs/continue.png', mask : undefined,
     ori : 0.0, pos : [0, (- 0.4)], size : [0.32, 0.112],
     color : new util.Color([1, 1, 1]), opacity : 1.0,
     flipHoriz : false, flipVert : false,
-    texRes : 128.0, interpolate : true, depth : -3.0 
+    texRes : 128.0, interpolate : true, depth : -2.0 
   });
-  inst_mouse = new core.Mouse({
+  beginMouse = new core.Mouse({
     win: psychoJS.window,
   });
-  inst_mouse.mouseClock = new util.Clock();
-  inst_sound = new sound.Sound({
+  beginMouse.mouseClock = new util.Clock();
+  // Initialize components for Routine "begin2"
+  begin2Clock = new util.Clock();
+  begin2Inst = new visual.TextStim({
     win: psychoJS.window,
-    value: 'aud/8boxes.mp3',
-    secs: (- 1),
-    });
-  inst_sound.setVolume(1.0);
-  // Initialize components for Routine "part0"
-  part0Clock = new util.Clock();
-  text0 = new visual.TextStim({
+    name: 'begin2Inst',
+    text: 'Put the fruits back in their original boxes!',
+    font: 'Open Sans',
+    units: undefined, 
+    pos: [0, 0.35], height: 0.05,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -1.0 
+  });
+  
+  begin2Cont = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'begin2Cont', units : 'height', 
+    image : 'imgs/continue.png', mask : undefined,
+    ori : 0.0, pos : [0, (- 0.4)], size : [0.32, 0.112],
+    color : new util.Color([1, 1, 1]), opacity : 1.0,
+    flipHoriz : false, flipVert : false,
+    texRes : 128.0, interpolate : true, depth : -2.0 
+  });
+  begin2Mouse = new core.Mouse({
     win: psychoJS.window,
-    name: 'text0',
+  });
+  begin2Mouse.mouseClock = new util.Clock();
+  // Initialize components for Routine "gate"
+  gateClock = new util.Clock();
+  gateText = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'gateText',
     text: '',
     font: 'Open Sans',
     units: undefined, 
@@ -330,30 +369,41 @@ async function experimentInit() {
 var t;
 var frameN;
 var continueRoutine;
+var fruit1;
+var fruit2;
 var gotValidClick;
-var instComponents;
-function instRoutineBegin(snapshot) {
+var beginComponents;
+function beginRoutineBegin(snapshot) {
   return async function () {
     TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
     
-    //------Prepare to start Routine 'inst'-------
+    //------Prepare to start Routine 'begin'-------
     t = 0;
-    instClock.reset(); // clock
+    beginClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    // setup some python lists for storing info about the inst_mouse
-    inst_mouse.clicked_name = [];
-    gotValidClick = false; // until a click is received
-    inst_sound.setVolume(1.0);
-    // keep track of which components have finished
-    instComponents = [];
-    instComponents.push(inst_text);
-    instComponents.push(inst_cont);
-    instComponents.push(inst_mouse);
-    instComponents.push(inst_sound);
+    for (var i, _pj_c = 0, _pj_a = util.range(N_BOXES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        i = _pj_a[_pj_c];
+        boxes[i].autoDraw = true;
+    }
+    fruit1 = fruit_basket[0];
+    fruit1.pos = BOXES_XY[0];
+    fruit1.autoDraw = true;
+    fruit2 = fruit_basket[1];
+    fruit2.pos = BOXES_XY[7];
+    fruit2.autoDraw = true;
     
-    for (const thisComponent of instComponents)
+    // setup some python lists for storing info about the beginMouse
+    beginMouse.clicked_name = [];
+    gotValidClick = false; // until a click is received
+    // keep track of which components have finished
+    beginComponents = [];
+    beginComponents.push(beginInst3);
+    beginComponents.push(beginCont);
+    beginComponents.push(beginMouse);
+    
+    for (const thisComponent of beginComponents)
       if ('status' in thisComponent)
         thisComponent.status = PsychoJS.Status.NOT_STARTED;
     return Scheduler.Event.NEXT;
@@ -363,54 +413,54 @@ function instRoutineBegin(snapshot) {
 
 var prevButtonState;
 var _mouseButtons;
-function instRoutineEachFrame() {
+function beginRoutineEachFrame() {
   return async function () {
-    //------Loop for each frame of Routine 'inst'-------
+    //------Loop for each frame of Routine 'begin'-------
     // get current time
-    t = instClock.getTime();
+    t = beginClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
     
-    // *inst_text* updates
-    if (t >= 0.0 && inst_text.status === PsychoJS.Status.NOT_STARTED) {
+    // *beginInst3* updates
+    if (t >= 0.0 && beginInst3.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      inst_text.tStart = t;  // (not accounting for frame time here)
-      inst_text.frameNStart = frameN;  // exact frame index
+      beginInst3.tStart = t;  // (not accounting for frame time here)
+      beginInst3.frameNStart = frameN;  // exact frame index
       
-      inst_text.setAutoDraw(true);
+      beginInst3.setAutoDraw(true);
     }
 
     
-    // *inst_cont* updates
-    if (t >= 0.0 && inst_cont.status === PsychoJS.Status.NOT_STARTED) {
+    // *beginCont* updates
+    if (t >= 0.0 && beginCont.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      inst_cont.tStart = t;  // (not accounting for frame time here)
-      inst_cont.frameNStart = frameN;  // exact frame index
+      beginCont.tStart = t;  // (not accounting for frame time here)
+      beginCont.frameNStart = frameN;  // exact frame index
       
-      inst_cont.setAutoDraw(true);
+      beginCont.setAutoDraw(true);
     }
 
-    // *inst_mouse* updates
-    if (t >= 0.0 && inst_mouse.status === PsychoJS.Status.NOT_STARTED) {
+    // *beginMouse* updates
+    if (t >= 0.0 && beginMouse.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      inst_mouse.tStart = t;  // (not accounting for frame time here)
-      inst_mouse.frameNStart = frameN;  // exact frame index
+      beginMouse.tStart = t;  // (not accounting for frame time here)
+      beginMouse.frameNStart = frameN;  // exact frame index
       
-      inst_mouse.status = PsychoJS.Status.STARTED;
-      inst_mouse.mouseClock.reset();
-      prevButtonState = inst_mouse.getPressed();  // if button is down already this ISN'T a new click
+      beginMouse.status = PsychoJS.Status.STARTED;
+      beginMouse.mouseClock.reset();
+      prevButtonState = beginMouse.getPressed();  // if button is down already this ISN'T a new click
       }
-    if (inst_mouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
-      _mouseButtons = inst_mouse.getPressed();
+    if (beginMouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
+      _mouseButtons = beginMouse.getPressed();
       if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
         prevButtonState = _mouseButtons;
         if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
           // check if the mouse was inside our 'clickable' objects
           gotValidClick = false;
-          for (const obj of [inst_cont]) {
-            if (obj.contains(inst_mouse)) {
+          for (const obj of [beginCont]) {
+            if (obj.contains(beginMouse)) {
               gotValidClick = true;
-              inst_mouse.clicked_name.push(obj.name)
+              beginMouse.clicked_name.push(obj.name)
             }
           }
           if (gotValidClick === true) { // abort routine on response
@@ -418,19 +468,6 @@ function instRoutineEachFrame() {
           }
         }
       }
-    }
-    // start/stop inst_sound
-    if ((USE_AUDIO) && inst_sound.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      inst_sound.tStart = t;  // (not accounting for frame time here)
-      inst_sound.frameNStart = frameN;  // exact frame index
-      
-      psychoJS.window.callOnFlip(function(){ inst_sound.play(); });  // screen flip
-      inst_sound.status = PsychoJS.Status.STARTED;
-    }
-    if (t >= (inst_sound.getDuration() + inst_sound.tStart)     && inst_sound.status === PsychoJS.Status.STARTED) {
-      inst_sound.stop();  // stop the sound (if longer than duration)
-      inst_sound.status = PsychoJS.Status.FINISHED;
     }
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
@@ -443,7 +480,7 @@ function instRoutineEachFrame() {
     }
     
     continueRoutine = false;  // reverts to True if at least one component still running
-    for (const thisComponent of instComponents)
+    for (const thisComponent of beginComponents)
       if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
         continueRoutine = true;
         break;
@@ -459,17 +496,195 @@ function instRoutineEachFrame() {
 }
 
 
-function instRoutineEnd() {
+function beginRoutineEnd() {
   return async function () {
-    //------Ending Routine 'inst'-------
-    for (const thisComponent of instComponents) {
+    //------Ending Routine 'begin'-------
+    for (const thisComponent of beginComponents) {
       if (typeof thisComponent.setAutoDraw === 'function') {
         thisComponent.setAutoDraw(false);
       }
     }
     // store data for psychoJS.experiment (ExperimentHandler)
-    inst_sound.stop();  // ensure sound has stopped at end of routine
-    // the Routine "inst" was not non-slip safe, so reset the non-slip timer
+    // the Routine "begin" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset();
+    
+    return Scheduler.Event.NEXT;
+  };
+}
+
+
+var N_FRAMES;
+var HN_FRAMES;
+var fruit1_start;
+var fruit1_end;
+var fruit2_start;
+var fruit2_end;
+var xx1;
+var yy1;
+var xx2;
+var yy2;
+var idx;
+var begin2Components;
+function begin2RoutineBegin(snapshot) {
+  return async function () {
+    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
+    
+    //------Prepare to start Routine 'begin2'-------
+    t = 0;
+    begin2Clock.reset(); // clock
+    frameN = -1;
+    continueRoutine = true; // until we're told otherwise
+    // update component parameters for each repeat
+    N_FRAMES = Number.parseInt((1 / frameDur));
+    HN_FRAMES = Number.parseInt((N_FRAMES / 2));
+    fruit1_start = ABOVE_BOXES_XY[0];
+    fruit1_end = fruit1.pos;
+    fruit2_start = ABOVE_BOXES_XY[1];
+    fruit2_end = fruit2.pos;
+    xx1 = [];
+    yy1 = [];
+    xx2 = [];
+    yy2 = [];
+    for (var i, _pj_c = 0, _pj_a = util.range(HN_FRAMES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        i = _pj_a[_pj_c];
+        xx1.push((fruit1_start[0] + (((fruit1_end[0] - fruit1_start[0]) / HN_FRAMES) * i)));
+        yy1.push((fruit1_start[1] + (((fruit1_end[1] - fruit1_start[1]) / HN_FRAMES) * i)));
+        xx2.push(fruit2_start[0]);
+        yy2.push(fruit2_start[1]);
+    }
+    for (var i, _pj_c = 0, _pj_a = util.range(N_FRAMES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        i = _pj_a[_pj_c];
+        xx1.push(fruit1_end[0]);
+        yy1.push(fruit1_end[1]);
+        xx2.push((fruit2_start[0] + (((fruit2_end[0] - fruit2_start[0]) / N_FRAMES) * i)));
+        yy2.push((fruit2_start[1] + (((fruit2_end[1] - fruit2_start[1]) / N_FRAMES) * i)));
+    }
+    for (var i, _pj_c = 0, _pj_a = util.range(HN_FRAMES), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        i = _pj_a[_pj_c];
+        xx1.push(fruit1_end[0]);
+        yy1.push(fruit1_end[1]);
+        xx2.push(fruit2_end[0]);
+        yy2.push(fruit2_end[1]);
+    }
+    idx = 0;
+    
+    // setup some python lists for storing info about the begin2Mouse
+    begin2Mouse.clicked_name = [];
+    gotValidClick = false; // until a click is received
+    // keep track of which components have finished
+    begin2Components = [];
+    begin2Components.push(begin2Inst);
+    begin2Components.push(begin2Cont);
+    begin2Components.push(begin2Mouse);
+    
+    for (const thisComponent of begin2Components)
+      if ('status' in thisComponent)
+        thisComponent.status = PsychoJS.Status.NOT_STARTED;
+    return Scheduler.Event.NEXT;
+  }
+}
+
+
+function begin2RoutineEachFrame() {
+  return async function () {
+    //------Loop for each frame of Routine 'begin2'-------
+    // get current time
+    t = begin2Clock.getTime();
+    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
+    // update/draw components on each frame
+    idx = (frameN % ((2 * HN_FRAMES) + N_FRAMES));
+    fruit1.pos = [xx1[idx], yy1[idx]];
+    fruit2.pos = [xx2[idx], yy2[idx]];
+    
+    
+    // *begin2Inst* updates
+    if (t >= 0.0 && begin2Inst.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      begin2Inst.tStart = t;  // (not accounting for frame time here)
+      begin2Inst.frameNStart = frameN;  // exact frame index
+      
+      begin2Inst.setAutoDraw(true);
+    }
+
+    
+    // *begin2Cont* updates
+    if (t >= 0.0 && begin2Cont.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      begin2Cont.tStart = t;  // (not accounting for frame time here)
+      begin2Cont.frameNStart = frameN;  // exact frame index
+      
+      begin2Cont.setAutoDraw(true);
+    }
+
+    // *begin2Mouse* updates
+    if (t >= 0.0 && begin2Mouse.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      begin2Mouse.tStart = t;  // (not accounting for frame time here)
+      begin2Mouse.frameNStart = frameN;  // exact frame index
+      
+      begin2Mouse.status = PsychoJS.Status.STARTED;
+      begin2Mouse.mouseClock.reset();
+      prevButtonState = begin2Mouse.getPressed();  // if button is down already this ISN'T a new click
+      }
+    if (begin2Mouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
+      _mouseButtons = begin2Mouse.getPressed();
+      if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
+        prevButtonState = _mouseButtons;
+        if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
+          // check if the mouse was inside our 'clickable' objects
+          gotValidClick = false;
+          for (const obj of [beginCont]) {
+            if (obj.contains(begin2Mouse)) {
+              gotValidClick = true;
+              begin2Mouse.clicked_name.push(obj.name)
+            }
+          }
+          if (gotValidClick === true) { // abort routine on response
+            continueRoutine = false;
+          }
+        }
+      }
+    }
+    // check for quit (typically the Esc key)
+    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
+      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
+    }
+    
+    // check if the Routine should terminate
+    if (!continueRoutine) {  // a component has requested a forced-end of Routine
+      return Scheduler.Event.NEXT;
+    }
+    
+    continueRoutine = false;  // reverts to True if at least one component still running
+    for (const thisComponent of begin2Components)
+      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
+        continueRoutine = true;
+        break;
+      }
+    
+    // refresh the screen if continuing
+    if (continueRoutine) {
+      return Scheduler.Event.FLIP_REPEAT;
+    } else {
+      return Scheduler.Event.NEXT;
+    }
+  };
+}
+
+
+function begin2RoutineEnd() {
+  return async function () {
+    //------Ending Routine 'begin2'-------
+    for (const thisComponent of begin2Components) {
+      if (typeof thisComponent.setAutoDraw === 'function') {
+        thisComponent.setAutoDraw(false);
+      }
+    }
+    fruit1.autoDraw = false;
+    fruit2.autoDraw = false;
+    
+    // store data for psychoJS.experiment (ExperimentHandler)
+    // the Routine "begin2" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
     return Scheduler.Event.NEXT;
@@ -498,9 +713,9 @@ function trialsLoopBegin(trialsLoopScheduler, snapshot) {
     for (const thisTrial of trials) {
       const snapshot = trials.getSnapshot();
       trialsLoopScheduler.add(importConditions(snapshot));
-      trialsLoopScheduler.add(part0RoutineBegin(snapshot));
-      trialsLoopScheduler.add(part0RoutineEachFrame());
-      trialsLoopScheduler.add(part0RoutineEnd());
+      trialsLoopScheduler.add(gateRoutineBegin(snapshot));
+      trialsLoopScheduler.add(gateRoutineEachFrame());
+      trialsLoopScheduler.add(gateRoutineEnd());
       trialsLoopScheduler.add(part1RoutineBegin(snapshot));
       trialsLoopScheduler.add(part1RoutineEachFrame());
       trialsLoopScheduler.add(part1RoutineEnd());
@@ -526,14 +741,14 @@ var objs;
 var correct_choices;
 var box_idxs;
 var idxs;
-var part0Components;
-function part0RoutineBegin(snapshot) {
+var gateComponents;
+function gateRoutineBegin(snapshot) {
   return async function () {
     TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
     
-    //------Prepare to start Routine 'part0'-------
+    //------Prepare to start Routine 'gate'-------
     t = 0;
-    part0Clock.reset(); // clock
+    gateClock.reset(); // clock
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
@@ -548,10 +763,11 @@ function part0RoutineBegin(snapshot) {
     if (RANDOMIZE_POSITIONS) {
         box_idxs = util.range(N_BOXES);
         util.shuffle(box_idxs);
-        idxs = box_idxs.slice(0, n_fruits);
+        idxs = box_idxs;
     } else {
-        idxs = [pos1, pos2, pos3, pos4, pos5, pos6].slice(0, n_fruits);
+        idxs = [pos1, pos2, pos3, pos4, pos5, pos6];
     }
+    idxs = idxs.slice(0, n_fruits);
     if (RANDOMIZE_FRUITS) {
         util.shuffle(fruit_basket);
     }
@@ -563,12 +779,12 @@ function part0RoutineBegin(snapshot) {
         objs[idxs[i]].autoDraw = true;
     }
     
-    text0.setText(trial_name);
+    gateText.setText(trial_name);
     // keep track of which components have finished
-    part0Components = [];
-    part0Components.push(text0);
+    gateComponents = [];
+    gateComponents.push(gateText);
     
-    for (const thisComponent of part0Components)
+    for (const thisComponent of gateComponents)
       if ('status' in thisComponent)
         thisComponent.status = PsychoJS.Status.NOT_STARTED;
     return Scheduler.Event.NEXT;
@@ -577,26 +793,26 @@ function part0RoutineBegin(snapshot) {
 
 
 var frameRemains;
-function part0RoutineEachFrame() {
+function gateRoutineEachFrame() {
   return async function () {
-    //------Loop for each frame of Routine 'part0'-------
+    //------Loop for each frame of Routine 'gate'-------
     // get current time
-    t = part0Clock.getTime();
+    t = gateClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
     
-    // *text0* updates
-    if (t >= 0.0 && text0.status === PsychoJS.Status.NOT_STARTED) {
+    // *gateText* updates
+    if (t >= 0.0 && gateText.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
-      text0.tStart = t;  // (not accounting for frame time here)
-      text0.frameNStart = frameN;  // exact frame index
+      gateText.tStart = t;  // (not accounting for frame time here)
+      gateText.frameNStart = frameN;  // exact frame index
       
-      text0.setAutoDraw(true);
+      gateText.setAutoDraw(true);
     }
 
     frameRemains = 0.0 + reveal_seconds - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
-    if (text0.status === PsychoJS.Status.STARTED && t >= frameRemains) {
-      text0.setAutoDraw(false);
+    if (gateText.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+      gateText.setAutoDraw(false);
     }
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
@@ -609,7 +825,7 @@ function part0RoutineEachFrame() {
     }
     
     continueRoutine = false;  // reverts to True if at least one component still running
-    for (const thisComponent of part0Components)
+    for (const thisComponent of gateComponents)
       if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
         continueRoutine = true;
         break;
@@ -625,10 +841,10 @@ function part0RoutineEachFrame() {
 }
 
 
-function part0RoutineEnd() {
+function gateRoutineEnd() {
   return async function () {
-    //------Ending Routine 'part0'-------
-    for (const thisComponent of part0Components) {
+    //------Ending Routine 'gate'-------
+    for (const thisComponent of gateComponents) {
       if (typeof thisComponent.setAutoDraw === 'function') {
         thisComponent.setAutoDraw(false);
       }
@@ -640,7 +856,7 @@ function part0RoutineEnd() {
         }
     }
     
-    // the Routine "part0" was not non-slip safe, so reset the non-slip timer
+    // the Routine "gate" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
     return Scheduler.Event.NEXT;
