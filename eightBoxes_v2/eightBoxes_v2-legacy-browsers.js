@@ -86,18 +86,18 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'conditions_v2.csv', 'path': 'conditions_v2.csv'},
-    {'name': 'imgs/strawberry.png', 'path': 'imgs/strawberry.png'},
-    {'name': 'imgs/watermelon.png', 'path': 'imgs/watermelon.png'},
-    {'name': 'imgs/orange.png', 'path': 'imgs/orange.png'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
-    {'name': 'aud/8boxes.mp3', 'path': 'aud/8boxes.mp3'},
-    {'name': 'imgs/cherries.png', 'path': 'imgs/cherries.png'},
-    {'name': 'imgs/banana.png', 'path': 'imgs/banana.png'},
-    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
     {'name': 'imgs/grapes.png', 'path': 'imgs/grapes.png'},
     {'name': 'imgs/apple.png', 'path': 'imgs/apple.png'},
-    {'name': 'imgs/box.png', 'path': 'imgs/box.png'}
+    {'name': 'conditions_v2.csv', 'path': 'conditions_v2.csv'},
+    {'name': 'imgs/orange.png', 'path': 'imgs/orange.png'},
+    {'name': 'imgs/cherries.png', 'path': 'imgs/cherries.png'},
+    {'name': 'imgs/banana.png', 'path': 'imgs/banana.png'},
+    {'name': 'imgs/watermelon.png', 'path': 'imgs/watermelon.png'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'aud/8boxes.mp3', 'path': 'aud/8boxes.mp3'},
+    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
+    {'name': 'imgs/box.png', 'path': 'imgs/box.png'},
+    {'name': 'imgs/strawberry.png', 'path': 'imgs/strawberry.png'}
   ]
 });
 
@@ -150,6 +150,7 @@ var fruit_basket;
 var beginInst3;
 var beginCont;
 var beginMouse;
+var beginDebug;
 var begin2Clock;
 var begin2Inst;
 var begin2Cont;
@@ -257,6 +258,17 @@ async function experimentInit() {
     win: psychoJS.window,
   });
   beginMouse.mouseClock = new util.Clock();
+  beginDebug = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'beginDebug',
+    text: '',
+    font: 'Open Sans',
+    units: undefined, 
+    pos: [0.6, 0], height: 0.02,  wrapWidth: undefined, ori: 0.0,
+    color: new util.Color('white'),  opacity: undefined,
+    depth: -4.0 
+  });
+  
   // Initialize components for Routine "begin2"
   begin2Clock = new util.Clock();
   begin2Inst = new visual.TextStim({
@@ -363,6 +375,7 @@ var frameN;
 var continueRoutine;
 var fruit1;
 var fruit2;
+var beginSound;
 var gotValidClick;
 var beginComponents;
 function beginRoutineBegin(snapshot) {
@@ -385,6 +398,11 @@ function beginRoutineBegin(snapshot) {
     fruit2 = fruit_basket[1];
     fruit2.pos = BOXES_XY[7];
     fruit2.autoDraw = true;
+    if (USE_AUDIO) {
+        beginSound = new sound.Sound({"win": psychoJS.window, "value": "aud/8boxes.mp3", "secs": (- 1), "stereo": true, "hamming": true, "name": "beginSound"});
+        beginSound.setVolume(1.0);
+        beginSound.play();
+    }
     
     // setup some python lists for storing info about the beginMouse
     beginMouse.clicked_name = [];
@@ -394,6 +412,7 @@ function beginRoutineBegin(snapshot) {
     beginComponents.push(beginInst3);
     beginComponents.push(beginCont);
     beginComponents.push(beginMouse);
+    beginComponents.push(beginDebug);
     
     beginComponents.forEach( function(thisComponent) {
       if ('status' in thisComponent)
@@ -413,6 +432,16 @@ function beginRoutineEachFrame() {
     t = beginClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
+    if ((USE_AUDIO && (t > 12.5))) {
+        continueRoutine = false;
+    }
+    if (SHOW_DEBUG) {
+        beginDebug.text = `
+    util.MonotonicClock.getDateStr() = ${util.MonotonicClock.getDateStr()}
+    t = ${round(t, 3)}`
+    ;
+    }
+    
     
     // *beginInst3* updates
     if (t >= 0.0 && beginInst3.status === PsychoJS.Status.NOT_STARTED) {
@@ -462,6 +491,16 @@ function beginRoutineEachFrame() {
         }
       }
     }
+    
+    // *beginDebug* updates
+    if (t >= 0.0 && beginDebug.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      beginDebug.tStart = t;  // (not accounting for frame time here)
+      beginDebug.frameNStart = frameN;  // exact frame index
+      
+      beginDebug.setAutoDraw(true);
+    }
+
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
       return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
@@ -676,6 +715,9 @@ function begin2RoutineEnd() {
     });
     fruit1.autoDraw = false;
     fruit2.autoDraw = false;
+    if (USE_AUDIO) {
+        beginSound.stop();
+    }
     
     // store data for psychoJS.experiment (ExperimentHandler)
     // the Routine "begin2" was not non-slip safe, so reset the non-slip timer
@@ -1330,6 +1372,8 @@ function part2RoutineEnd() {
         found_fruit = _pj_a[_pj_c];
         found_fruit.autoDraw = false;
     }
+    psychoJS.experiment.addData("end_timestamp", util.MonotonicClock.getDateStr());
+    psychoJS.experiment.addData("total_seconds", globalClock.getTime());
     
     // store data for psychoJS.experiment (ExperimentHandler)
     // the Routine "part2" was not non-slip safe, so reset the non-slip timer
