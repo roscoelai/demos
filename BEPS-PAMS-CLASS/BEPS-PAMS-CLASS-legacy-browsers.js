@@ -87,6 +87,19 @@ function make_boxes(names, xys, sizes, opacity = CLICK_BOX_OPACITY) {
     return cimgs;
 }
 
+
+function dist_sq(x1, y1, x2, y2) {
+    var dx, dy;
+    [dx, dy] = [(x2 - x1), (y2 - y1)];
+    return ((dx * dx) + (dy * dy));
+}
+
+function round_dp(x, dp = 5) {
+    var num;
+    [num] = [Math.pow(10, dp)];
+    return (Math.round((x * num)) / num);
+}
+
 // init psychoJS:
 const psychoJS = new PsychoJS({
   debug: true
@@ -131,135 +144,135 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'aud/silence.mp3', 'path': 'aud/silence.mp3'},
-    {'name': 'aud/mp3/19_PAMS-1-flower.mp3', 'path': 'aud/mp3/19_PAMS-1-flower.mp3'},
-    {'name': 'aud/mp3/42_CLASS-7-pluck.mp3', 'path': 'aud/mp3/42_CLASS-7-pluck.mp3'},
-    {'name': 'imgs/slides/slide-43.png', 'path': 'imgs/slides/slide-43.png'},
-    {'name': 'imgs/slides/slide-56.png', 'path': 'imgs/slides/slide-56.png'},
-    {'name': 'aud/mp3/23_PAMS-5-9or6.mp3', 'path': 'aud/mp3/23_PAMS-5-9or6.mp3'},
-    {'name': 'aud/mp3/48_CLASS-11c-cup.mp3', 'path': 'aud/mp3/48_CLASS-11c-cup.mp3'},
+    {'name': 'aud/mp3/36_CLASS-1-tree.mp3', 'path': 'aud/mp3/36_CLASS-1-tree.mp3'},
+    {'name': 'imgs/slides/slide-38.png', 'path': 'imgs/slides/slide-38.png'},
+    {'name': 'aud/mp3/24_PAMS-6-8or12.mp3', 'path': 'aud/mp3/24_PAMS-6-8or12.mp3'},
     {'name': 'imgs/slides/slide-63.png', 'path': 'imgs/slides/slide-63.png'},
-    {'name': 'aud/mp3/02_BEPS-1-white.mp3', 'path': 'aud/mp3/02_BEPS-1-white.mp3'},
-    {'name': 'aud/mp3/21_PAMS-3-apple1.mp3', 'path': 'aud/mp3/21_PAMS-3-apple1.mp3'},
-    {'name': 'imgs/slides/slide-35.png', 'path': 'imgs/slides/slide-35.png'},
-    {'name': 'imgs/slides/slide-36.png', 'path': 'imgs/slides/slide-36.png'},
-    {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
-    {'name': 'imgs/slides/slide-51.png', 'path': 'imgs/slides/slide-51.png'},
-    {'name': 'imgs/slides/slide-28.png', 'path': 'imgs/slides/slide-28.png'},
-    {'name': 'imgs/slides/slide-30.png', 'path': 'imgs/slides/slide-30.png'},
+    {'name': 'imgs/slides/slide-41.png', 'path': 'imgs/slides/slide-41.png'},
+    {'name': 'imgs/slides/slide-62.png', 'path': 'imgs/slides/slide-62.png'},
     {'name': 'imgs/slides/slide-58.png', 'path': 'imgs/slides/slide-58.png'},
     {'name': 'imgs/slides/slide-45.png', 'path': 'imgs/slides/slide-45.png'},
-    {'name': 'imgs/transparent-box-1to5.png', 'path': 'imgs/transparent-box-1to5.png'},
-    {'name': 'aud/mp3/54_CLASS-15-mice.mp3', 'path': 'aud/mp3/54_CLASS-15-mice.mp3'},
-    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'},
-    {'name': 'imgs/slides/slide-40.png', 'path': 'imgs/slides/slide-40.png'},
-    {'name': 'imgs/slides/slide-13.png', 'path': 'imgs/slides/slide-13.png'},
-    {'name': 'aud/mp3/35_PAMS-17-minus.mp3', 'path': 'aud/mp3/35_PAMS-17-minus.mp3'},
-    {'name': 'imgs/slides/slide-48.png', 'path': 'imgs/slides/slide-48.png'},
-    {'name': 'aud/mp3/09_BEPS-8-triangle.mp3', 'path': 'aud/mp3/09_BEPS-8-triangle.mp3'},
-    {'name': 'imgs/slides/slide-61.png', 'path': 'imgs/slides/slide-61.png'},
-    {'name': 'imgs/slides/slide-38.png', 'path': 'imgs/slides/slide-38.png'},
-    {'name': 'aud/mp3/64_CLASS-25-redo.mp3', 'path': 'aud/mp3/64_CLASS-25-redo.mp3'},
-    {'name': 'imgs/slides/slide-19.png', 'path': 'imgs/slides/slide-19.png'},
-    {'name': 'sequences/conditions.csv', 'path': 'sequences/conditions.csv'},
-    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
-    {'name': 'imgs/slides/slide-26.png', 'path': 'imgs/slides/slide-26.png'},
-    {'name': 'aud/mp3/31_PAMS-13-horse.mp3', 'path': 'aud/mp3/31_PAMS-13-horse.mp3'},
-    {'name': 'imgs/slides/slide-47.png', 'path': 'imgs/slides/slide-47.png'},
-    {'name': 'aud/mp3/03_BEPS-2-yellow.mp3', 'path': 'aud/mp3/03_BEPS-2-yellow.mp3'},
-    {'name': 'aud/mp3/60_CLASS-21-findS-rep.mp3', 'path': 'aud/mp3/60_CLASS-21-findS-rep.mp3'},
-    {'name': 'aud/mp3/27_PAMS-9-popcorn.mp3', 'path': 'aud/mp3/27_PAMS-9-popcorn.mp3'},
-    {'name': 'imgs/slides/slide-53.png', 'path': 'imgs/slides/slide-53.png'},
-    {'name': 'imgs/slides/slide-25.png', 'path': 'imgs/slides/slide-25.png'},
-    {'name': 'imgs/slides/slide-60.png', 'path': 'imgs/slides/slide-60.png'},
-    {'name': 'aud/mp3/46_CLASS-11a-cat.mp3', 'path': 'aud/mp3/46_CLASS-11a-cat.mp3'},
-    {'name': 'aud/mp3/65_CLASS-26-sand.mp3', 'path': 'aud/mp3/65_CLASS-26-sand.mp3'},
-    {'name': 'imgs/slides/slide-31.png', 'path': 'imgs/slides/slide-31.png'},
-    {'name': 'aud/mp3/51_CLASS-12-boyswim.mp3', 'path': 'aud/mp3/51_CLASS-12-boyswim.mp3'},
-    {'name': 'aud/mp3/15_BEPS-13b-pattern2.mp3', 'path': 'aud/mp3/15_BEPS-13b-pattern2.mp3'},
-    {'name': 'aud/mp3/45_CLASS-10-lady.mp3', 'path': 'aud/mp3/45_CLASS-10-lady.mp3'},
-    {'name': 'imgs/slides/slide-27.png', 'path': 'imgs/slides/slide-27.png'},
     {'name': 'imgs/slides/slide-32.png', 'path': 'imgs/slides/slide-32.png'},
-    {'name': 'imgs/slides/slide-57.png', 'path': 'imgs/slides/slide-57.png'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
-    {'name': 'aud/mp3/39_CLASS-4-tortoise.mp3', 'path': 'aud/mp3/39_CLASS-4-tortoise.mp3'},
-    {'name': 'imgs/slides/slide-59.png', 'path': 'imgs/slides/slide-59.png'},
-    {'name': 'aud/mp3/62_CLASS-23-untie.mp3', 'path': 'aud/mp3/62_CLASS-23-untie.mp3'},
-    {'name': 'imgs/slides/slide-55.png', 'path': 'imgs/slides/slide-55.png'},
-    {'name': 'aud/mp3/26_PAMS-8-21or17.mp3', 'path': 'aud/mp3/26_PAMS-8-21or17.mp3'},
-    {'name': 'imgs/transparent-box.png', 'path': 'imgs/transparent-box.png'},
     {'name': 'aud/mp3/11_BEPS-10-letterB.mp3', 'path': 'aud/mp3/11_BEPS-10-letterB.mp3'},
-    {'name': 'aud/mp3/20_PAMS-2-human.mp3', 'path': 'aud/mp3/20_PAMS-2-human.mp3'},
-    {'name': 'aud/mp3/13_BEPS-12-name.mp3', 'path': 'aud/mp3/13_BEPS-12-name.mp3'},
-    {'name': 'imgs/slides/slide-15.png', 'path': 'imgs/slides/slide-15.png'},
-    {'name': 'imgs/slides/slide-42.png', 'path': 'imgs/slides/slide-42.png'},
-    {'name': 'imgs/slides/slide-24.png', 'path': 'imgs/slides/slide-24.png'},
-    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
-    {'name': 'aud/mp3/41_CLASS-6-beach.mp3', 'path': 'aud/mp3/41_CLASS-6-beach.mp3'},
-    {'name': 'aud/mp3/25_PAMS-7-5or8.mp3', 'path': 'aud/mp3/25_PAMS-7-5or8.mp3'},
-    {'name': 'aud/mp3/56_CLASS-17-sunshine.mp3', 'path': 'aud/mp3/56_CLASS-17-sunshine.mp3'},
-    {'name': 'aud/mp3/58_CLASS-19-pen1.mp3', 'path': 'aud/mp3/58_CLASS-19-pen1.mp3'},
-    {'name': 'aud/mp3/08_BEPS-7-square.mp3', 'path': 'aud/mp3/08_BEPS-7-square.mp3'},
-    {'name': 'imgs/slides/slide-34.png', 'path': 'imgs/slides/slide-34.png'},
-    {'name': 'aud/mp3/57_CLASS-18-box.mp3', 'path': 'aud/mp3/57_CLASS-18-box.mp3'},
-    {'name': 'aud/mp3/24_PAMS-6-8or12.mp3', 'path': 'aud/mp3/24_PAMS-6-8or12.mp3'},
-    {'name': 'imgs/slides/slide-17.png', 'path': 'imgs/slides/slide-17.png'},
-    {'name': 'aud/mp3/37_CLASS-2,3-belong.mp3', 'path': 'aud/mp3/37_CLASS-2,3-belong.mp3'},
-    {'name': 'imgs/slides/slide-21.png', 'path': 'imgs/slides/slide-21.png'},
-    {'name': 'imgs/slides/slide-18.png', 'path': 'imgs/slides/slide-18.png'},
-    {'name': 'imgs/slides/slide-16.png', 'path': 'imgs/slides/slide-16.png'},
-    {'name': 'imgs/slides/slide-52.png', 'path': 'imgs/slides/slide-52.png'},
-    {'name': 'aud/mp3/29_PAMS-11-pattern2.mp3', 'path': 'aud/mp3/29_PAMS-11-pattern2.mp3'},
-    {'name': 'aud/mp3/53_CLASS-14-look.mp3', 'path': 'aud/mp3/53_CLASS-14-look.mp3'},
-    {'name': 'aud/mp3/63_CLASS-24-moon.mp3', 'path': 'aud/mp3/63_CLASS-24-moon.mp3'},
-    {'name': 'imgs/slides/slide-46.png', 'path': 'imgs/slides/slide-46.png'},
-    {'name': 'aud/mp3/52_CLASS-13-shirt.mp3', 'path': 'aud/mp3/52_CLASS-13-shirt.mp3'},
     {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
-    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
-    {'name': 'imgs/slides/slide-66.png', 'path': 'imgs/slides/slide-66.png'},
-    {'name': 'imgs/slides/slide-29.png', 'path': 'imgs/slides/slide-29.png'},
-    {'name': 'aud/mp3/34_PAMS-16-sweets.mp3', 'path': 'aud/mp3/34_PAMS-16-sweets.mp3'},
-    {'name': 'imgs/slides/slide-39.png', 'path': 'imgs/slides/slide-39.png'},
-    {'name': 'aud/mp3/04_BEPS-3-red.mp3', 'path': 'aud/mp3/04_BEPS-3-red.mp3'},
-    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
-    {'name': 'aud/mp3/47_CLASS-11b-bear.mp3', 'path': 'aud/mp3/47_CLASS-11b-bear.mp3'},
-    {'name': 'aud/mp3/30_PAMS-12-pencil.mp3', 'path': 'aud/mp3/30_PAMS-12-pencil.mp3'},
-    {'name': 'aud/mp3/05_BEPS-4,5,6-color.mp3', 'path': 'aud/mp3/05_BEPS-4,5,6-color.mp3'},
-    {'name': 'aud/mp3/17_BEPS-15-rectangle.mp3', 'path': 'aud/mp3/17_BEPS-15-rectangle.mp3'},
-    {'name': 'aud/mp3/22_PAMS-4-apple2.mp3', 'path': 'aud/mp3/22_PAMS-4-apple2.mp3'},
-    {'name': 'imgs/slides/slide-14.png', 'path': 'imgs/slides/slide-14.png'},
-    {'name': 'aud/mp3/44_CLASS-9-badminton.mp3', 'path': 'aud/mp3/44_CLASS-9-badminton.mp3'},
-    {'name': 'aud/mp3/60_CLASS-21-findS.mp3', 'path': 'aud/mp3/60_CLASS-21-findS.mp3'},
-    {'name': 'imgs/slides/slide-64.png', 'path': 'imgs/slides/slide-64.png'},
-    {'name': 'imgs/slides/slide-20.png', 'path': 'imgs/slides/slide-20.png'},
-    {'name': 'imgs/slides/slide-37.png', 'path': 'imgs/slides/slide-37.png'},
-    {'name': 'imgs/slides/slide-41.png', 'path': 'imgs/slides/slide-41.png'},
-    {'name': 'aud/mp3/55_CLASS-16-cat.mp3', 'path': 'aud/mp3/55_CLASS-16-cat.mp3'},
-    {'name': 'aud/mp3/14_BEPS-13a-pattern1-rep.mp3', 'path': 'aud/mp3/14_BEPS-13a-pattern1-rep.mp3'},
-    {'name': 'aud/mp3/12_BEPS-11-letterC.mp3', 'path': 'aud/mp3/12_BEPS-11-letterC.mp3'},
-    {'name': 'imgs/slides/slide-33.png', 'path': 'imgs/slides/slide-33.png'},
-    {'name': 'imgs/slides/slide-65.png', 'path': 'imgs/slides/slide-65.png'},
-    {'name': 'aud/mp3/28_PAMS-10-pattern1.mp3', 'path': 'aud/mp3/28_PAMS-10-pattern1.mp3'},
-    {'name': 'aud/mp3/43_CLASS-8-carrots.mp3', 'path': 'aud/mp3/43_CLASS-8-carrots.mp3'},
-    {'name': 'aud/mp3/37_CLASS-2,3-belong-rep.mp3', 'path': 'aud/mp3/37_CLASS-2,3-belong-rep.mp3'},
-    {'name': 'aud/mp3/59_CLASS-20-pen2.mp3', 'path': 'aud/mp3/59_CLASS-20-pen2.mp3'},
-    {'name': 'aud/mp3/40_CLASS-5-rock.mp3', 'path': 'aud/mp3/40_CLASS-5-rock.mp3'},
-    {'name': 'aud/mp3/33_PAMS-15-plus.mp3', 'path': 'aud/mp3/33_PAMS-15-plus.mp3'},
-    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
-    {'name': 'aud/mp3/16_BEPS-14-symmetry.mp3', 'path': 'aud/mp3/16_BEPS-14-symmetry.mp3'},
-    {'name': 'aud/mp3/18_BEPS-16-cookie.mp3', 'path': 'aud/mp3/18_BEPS-16-cookie.mp3'},
-    {'name': 'imgs/slides/slide-54.png', 'path': 'imgs/slides/slide-54.png'},
-    {'name': 'aud/mp3/10_BEPS-9-letterA.mp3', 'path': 'aud/mp3/10_BEPS-9-letterA.mp3'},
-    {'name': 'aud/mp3/61_CLASS-22-monkey.mp3', 'path': 'aud/mp3/61_CLASS-22-monkey.mp3'},
-    {'name': 'aud/mp3/36_CLASS-1-tree.mp3', 'path': 'aud/mp3/36_CLASS-1-tree.mp3'},
-    {'name': 'imgs/slides/slide-23.png', 'path': 'imgs/slides/slide-23.png'},
-    {'name': 'aud/mp3/32_PAMS-14-cows.mp3', 'path': 'aud/mp3/32_PAMS-14-cows.mp3'},
+    {'name': 'aud/mp3/26_PAMS-8-21or17.mp3', 'path': 'aud/mp3/26_PAMS-8-21or17.mp3'},
+    {'name': 'aud/mp3/52_CLASS-13-shirt.mp3', 'path': 'aud/mp3/52_CLASS-13-shirt.mp3'},
     {'name': 'aud/mp3/01_intro.mp3', 'path': 'aud/mp3/01_intro.mp3'},
-    {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
-    {'name': 'aud/mp3/14_BEPS-13a-pattern1.mp3', 'path': 'aud/mp3/14_BEPS-13a-pattern1.mp3'},
-    {'name': 'imgs/slides/slide-62.png', 'path': 'imgs/slides/slide-62.png'},
+    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'},
+    {'name': 'imgs/slides/slide-16.png', 'path': 'imgs/slides/slide-16.png'},
+    {'name': 'imgs/slides/slide-54.png', 'path': 'imgs/slides/slide-54.png'},
+    {'name': 'imgs/slides/slide-57.png', 'path': 'imgs/slides/slide-57.png'},
+    {'name': 'imgs/slides/slide-33.png', 'path': 'imgs/slides/slide-33.png'},
+    {'name': 'aud/mp3/03_BEPS-2-yellow.mp3', 'path': 'aud/mp3/03_BEPS-2-yellow.mp3'},
+    {'name': 'aud/mp3/41_CLASS-6-beach.mp3', 'path': 'aud/mp3/41_CLASS-6-beach.mp3'},
     {'name': 'imgs/slides/slide-22.png', 'path': 'imgs/slides/slide-22.png'},
-    {'name': 'imgs/slides/slide-44.png', 'path': 'imgs/slides/slide-44.png'}
+    {'name': 'imgs/slides/slide-51.png', 'path': 'imgs/slides/slide-51.png'},
+    {'name': 'aud/mp3/57_CLASS-18-box.mp3', 'path': 'aud/mp3/57_CLASS-18-box.mp3'},
+    {'name': 'aud/mp3/46_CLASS-11a-cat.mp3', 'path': 'aud/mp3/46_CLASS-11a-cat.mp3'},
+    {'name': 'aud/mp3/60_CLASS-21-findS.mp3', 'path': 'aud/mp3/60_CLASS-21-findS.mp3'},
+    {'name': 'imgs/slides/slide-61.png', 'path': 'imgs/slides/slide-61.png'},
+    {'name': 'imgs/slides/slide-21.png', 'path': 'imgs/slides/slide-21.png'},
+    {'name': 'imgs/slides/slide-36.png', 'path': 'imgs/slides/slide-36.png'},
+    {'name': 'aud/mp3/05_BEPS-4,5,6-color.mp3', 'path': 'aud/mp3/05_BEPS-4,5,6-color.mp3'},
+    {'name': 'imgs/slides/slide-53.png', 'path': 'imgs/slides/slide-53.png'},
+    {'name': 'aud/mp3/12_BEPS-11-letterC.mp3', 'path': 'aud/mp3/12_BEPS-11-letterC.mp3'},
+    {'name': 'imgs/slides/slide-46.png', 'path': 'imgs/slides/slide-46.png'},
+    {'name': 'aud/mp3/59_CLASS-20-pen2.mp3', 'path': 'aud/mp3/59_CLASS-20-pen2.mp3'},
+    {'name': 'imgs/slides/slide-23.png', 'path': 'imgs/slides/slide-23.png'},
+    {'name': 'aud/mp3/28_PAMS-10-pattern1.mp3', 'path': 'aud/mp3/28_PAMS-10-pattern1.mp3'},
+    {'name': 'sequences/conditions.csv', 'path': 'sequences/conditions.csv'},
+    {'name': 'aud/mp3/21_PAMS-3-apple1.mp3', 'path': 'aud/mp3/21_PAMS-3-apple1.mp3'},
+    {'name': 'aud/mp3/20_PAMS-2-human.mp3', 'path': 'aud/mp3/20_PAMS-2-human.mp3'},
+    {'name': 'imgs/slides/slide-42.png', 'path': 'imgs/slides/slide-42.png'},
+    {'name': 'aud/mp3/44_CLASS-9-badminton.mp3', 'path': 'aud/mp3/44_CLASS-9-badminton.mp3'},
+    {'name': 'imgs/slides/slide-40.png', 'path': 'imgs/slides/slide-40.png'},
+    {'name': 'aud/mp3/32_PAMS-14-cows.mp3', 'path': 'aud/mp3/32_PAMS-14-cows.mp3'},
+    {'name': 'aud/mp3/29_PAMS-11-pattern2.mp3', 'path': 'aud/mp3/29_PAMS-11-pattern2.mp3'},
+    {'name': 'aud/mp3/47_CLASS-11b-bear.mp3', 'path': 'aud/mp3/47_CLASS-11b-bear.mp3'},
+    {'name': 'aud/mp3/51_CLASS-12-boyswim.mp3', 'path': 'aud/mp3/51_CLASS-12-boyswim.mp3'},
+    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
+    {'name': 'imgs/slides/slide-20.png', 'path': 'imgs/slides/slide-20.png'},
+    {'name': 'imgs/slides/slide-60.png', 'path': 'imgs/slides/slide-60.png'},
+    {'name': 'aud/mp3/10_BEPS-9-letterA.mp3', 'path': 'aud/mp3/10_BEPS-9-letterA.mp3'},
+    {'name': 'aud/mp3/56_CLASS-17-sunshine.mp3', 'path': 'aud/mp3/56_CLASS-17-sunshine.mp3'},
+    {'name': 'aud/mp3/43_CLASS-8-carrots.mp3', 'path': 'aud/mp3/43_CLASS-8-carrots.mp3'},
+    {'name': 'imgs/slides/slide-27.png', 'path': 'imgs/slides/slide-27.png'},
+    {'name': 'imgs/slides/slide-56.png', 'path': 'imgs/slides/slide-56.png'},
+    {'name': 'imgs/slides/slide-14.png', 'path': 'imgs/slides/slide-14.png'},
+    {'name': 'aud/mp3/31_PAMS-13-horse.mp3', 'path': 'aud/mp3/31_PAMS-13-horse.mp3'},
+    {'name': 'imgs/slides/slide-35.png', 'path': 'imgs/slides/slide-35.png'},
+    {'name': 'imgs/slides/slide-59.png', 'path': 'imgs/slides/slide-59.png'},
+    {'name': 'aud/mp3/25_PAMS-7-5or8.mp3', 'path': 'aud/mp3/25_PAMS-7-5or8.mp3'},
+    {'name': 'aud/mp3/13_BEPS-12-name.mp3', 'path': 'aud/mp3/13_BEPS-12-name.mp3'},
+    {'name': 'aud/mp3/65_CLASS-26-sand.mp3', 'path': 'aud/mp3/65_CLASS-26-sand.mp3'},
+    {'name': 'aud/mp3/37_CLASS-2,3-belong-rep.mp3', 'path': 'aud/mp3/37_CLASS-2,3-belong-rep.mp3'},
+    {'name': 'aud/mp3/35_PAMS-17-minus.mp3', 'path': 'aud/mp3/35_PAMS-17-minus.mp3'},
+    {'name': 'imgs/slides/slide-31.png', 'path': 'imgs/slides/slide-31.png'},
+    {'name': 'aud/mp3/33_PAMS-15-plus.mp3', 'path': 'aud/mp3/33_PAMS-15-plus.mp3'},
+    {'name': 'imgs/slides/slide-55.png', 'path': 'imgs/slides/slide-55.png'},
+    {'name': 'imgs/slides/slide-25.png', 'path': 'imgs/slides/slide-25.png'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'aud/mp3/42_CLASS-7-pluck.mp3', 'path': 'aud/mp3/42_CLASS-7-pluck.mp3'},
+    {'name': 'imgs/slides/slide-43.png', 'path': 'imgs/slides/slide-43.png'},
+    {'name': 'aud/mp3/45_CLASS-10-lady.mp3', 'path': 'aud/mp3/45_CLASS-10-lady.mp3'},
+    {'name': 'imgs/slides/slide-47.png', 'path': 'imgs/slides/slide-47.png'},
+    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
+    {'name': 'imgs/transparent-box-1to5.png', 'path': 'imgs/transparent-box-1to5.png'},
+    {'name': 'aud/mp3/34_PAMS-16-sweets.mp3', 'path': 'aud/mp3/34_PAMS-16-sweets.mp3'},
+    {'name': 'aud/mp3/37_CLASS-2,3-belong.mp3', 'path': 'aud/mp3/37_CLASS-2,3-belong.mp3'},
+    {'name': 'aud/mp3/16_BEPS-14-symmetry.mp3', 'path': 'aud/mp3/16_BEPS-14-symmetry.mp3'},
+    {'name': 'aud/mp3/62_CLASS-23-untie.mp3', 'path': 'aud/mp3/62_CLASS-23-untie.mp3'},
+    {'name': 'imgs/slides/slide-30.png', 'path': 'imgs/slides/slide-30.png'},
+    {'name': 'aud/mp3/09_BEPS-8-triangle.mp3', 'path': 'aud/mp3/09_BEPS-8-triangle.mp3'},
+    {'name': 'imgs/slides/slide-28.png', 'path': 'imgs/slides/slide-28.png'},
+    {'name': 'imgs/slides/slide-29.png', 'path': 'imgs/slides/slide-29.png'},
+    {'name': 'aud/mp3/19_PAMS-1-flower.mp3', 'path': 'aud/mp3/19_PAMS-1-flower.mp3'},
+    {'name': 'aud/mp3/22_PAMS-4-apple2.mp3', 'path': 'aud/mp3/22_PAMS-4-apple2.mp3'},
+    {'name': 'aud/mp3/18_BEPS-16-cookie.mp3', 'path': 'aud/mp3/18_BEPS-16-cookie.mp3'},
+    {'name': 'aud/mp3/23_PAMS-5-9or6.mp3', 'path': 'aud/mp3/23_PAMS-5-9or6.mp3'},
+    {'name': 'imgs/slides/slide-65.png', 'path': 'imgs/slides/slide-65.png'},
+    {'name': 'aud/mp3/04_BEPS-3-red.mp3', 'path': 'aud/mp3/04_BEPS-3-red.mp3'},
+    {'name': 'aud/mp3/27_PAMS-9-popcorn.mp3', 'path': 'aud/mp3/27_PAMS-9-popcorn.mp3'},
+    {'name': 'imgs/slides/slide-39.png', 'path': 'imgs/slides/slide-39.png'},
+    {'name': 'imgs/slides/slide-64.png', 'path': 'imgs/slides/slide-64.png'},
+    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
+    {'name': 'imgs/slides/slide-48.png', 'path': 'imgs/slides/slide-48.png'},
+    {'name': 'imgs/slides/slide-18.png', 'path': 'imgs/slides/slide-18.png'},
+    {'name': 'imgs/slides/slide-26.png', 'path': 'imgs/slides/slide-26.png'},
+    {'name': 'imgs/slides/slide-52.png', 'path': 'imgs/slides/slide-52.png'},
+    {'name': 'aud/mp3/17_BEPS-15-rectangle.mp3', 'path': 'aud/mp3/17_BEPS-15-rectangle.mp3'},
+    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
+    {'name': 'aud/mp3/63_CLASS-24-moon.mp3', 'path': 'aud/mp3/63_CLASS-24-moon.mp3'},
+    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
+    {'name': 'aud/mp3/14_BEPS-13a-pattern1-rep.mp3', 'path': 'aud/mp3/14_BEPS-13a-pattern1-rep.mp3'},
+    {'name': 'aud/mp3/15_BEPS-13b-pattern2.mp3', 'path': 'aud/mp3/15_BEPS-13b-pattern2.mp3'},
+    {'name': 'imgs/slides/slide-17.png', 'path': 'imgs/slides/slide-17.png'},
+    {'name': 'imgs/slides/slide-24.png', 'path': 'imgs/slides/slide-24.png'},
+    {'name': 'aud/mp3/08_BEPS-7-square.mp3', 'path': 'aud/mp3/08_BEPS-7-square.mp3'},
+    {'name': 'aud/mp3/02_BEPS-1-white.mp3', 'path': 'aud/mp3/02_BEPS-1-white.mp3'},
+    {'name': 'aud/mp3/40_CLASS-5-rock.mp3', 'path': 'aud/mp3/40_CLASS-5-rock.mp3'},
+    {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
+    {'name': 'imgs/slides/slide-13.png', 'path': 'imgs/slides/slide-13.png'},
+    {'name': 'aud/mp3/60_CLASS-21-findS-rep.mp3', 'path': 'aud/mp3/60_CLASS-21-findS-rep.mp3'},
+    {'name': 'imgs/slides/slide-34.png', 'path': 'imgs/slides/slide-34.png'},
+    {'name': 'imgs/slides/slide-15.png', 'path': 'imgs/slides/slide-15.png'},
+    {'name': 'aud/mp3/64_CLASS-25-redo.mp3', 'path': 'aud/mp3/64_CLASS-25-redo.mp3'},
+    {'name': 'imgs/slides/slide-44.png', 'path': 'imgs/slides/slide-44.png'},
+    {'name': 'aud/mp3/48_CLASS-11c-cup.mp3', 'path': 'aud/mp3/48_CLASS-11c-cup.mp3'},
+    {'name': 'imgs/slides/slide-19.png', 'path': 'imgs/slides/slide-19.png'},
+    {'name': 'imgs/slides/slide-66.png', 'path': 'imgs/slides/slide-66.png'},
+    {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
+    {'name': 'aud/mp3/54_CLASS-15-mice.mp3', 'path': 'aud/mp3/54_CLASS-15-mice.mp3'},
+    {'name': 'imgs/slides/slide-37.png', 'path': 'imgs/slides/slide-37.png'},
+    {'name': 'aud/mp3/39_CLASS-4-tortoise.mp3', 'path': 'aud/mp3/39_CLASS-4-tortoise.mp3'},
+    {'name': 'aud/silence.mp3', 'path': 'aud/silence.mp3'},
+    {'name': 'aud/mp3/14_BEPS-13a-pattern1.mp3', 'path': 'aud/mp3/14_BEPS-13a-pattern1.mp3'},
+    {'name': 'aud/mp3/30_PAMS-12-pencil.mp3', 'path': 'aud/mp3/30_PAMS-12-pencil.mp3'},
+    {'name': 'aud/mp3/61_CLASS-22-monkey.mp3', 'path': 'aud/mp3/61_CLASS-22-monkey.mp3'},
+    {'name': 'aud/mp3/58_CLASS-19-pen1.mp3', 'path': 'aud/mp3/58_CLASS-19-pen1.mp3'},
+    {'name': 'aud/mp3/55_CLASS-16-cat.mp3', 'path': 'aud/mp3/55_CLASS-16-cat.mp3'},
+    {'name': 'imgs/transparent-box.png', 'path': 'imgs/transparent-box.png'},
+    {'name': 'aud/mp3/53_CLASS-14-look.mp3', 'path': 'aud/mp3/53_CLASS-14-look.mp3'}
   ]
 });
 
@@ -290,6 +303,7 @@ async function updateInfo() {
 var beginClock;
 var SHOW_DEBUG;
 var USE_AUDIO;
+var is_drawing;
 var CLICK_BOX_OPACITY;
 var SLIDE_SIZE;
 var CONT_SIZE;
@@ -316,8 +330,6 @@ var trialChoiceMouse;
 var trialChoiceDebug;
 var trialDrawingClock;
 var MIN_DIST_SQ;
-var dist_sq;
-var round_dp;
 var x;
 var y;
 var xx;
@@ -715,6 +727,7 @@ async function experimentInit() {
   // expInfo["use_audio [y/n]"] = "y";
   SHOW_DEBUG = ((expInfo["debug [y/n]"][0] === "y") || (expInfo["debug [y/n]"][0] === "Y"));
   USE_AUDIO = ((expInfo["use_audio [y/n]"][0] === "y") || (expInfo["use_audio [y/n]"][0] === "Y"));
+  is_drawing = false;
   CLICK_BOX_OPACITY = (SHOW_DEBUG ? 0.25 : 0);
   SLIDE_SIZE = [1.2, 0.675];
   CONT_SIZE = [0.228, 0.1];
@@ -783,24 +796,13 @@ async function experimentInit() {
   
   // Initialize components for Routine "trialDrawing"
   trialDrawingClock = new util.Clock();
-  MIN_DIST_SQ = (0.005 * 0.005);
-  function _dist_sq(x1, y1, x2, y2) {
-      var dx, dy;
-      dx = (x2 - x1);
-      dy = (y2 - y1);
-      return ((dx * dx) + (dy * dy));
+  if (is_drawing) {
+      MIN_DIST_SQ = (0.005 * 0.005);
+      x = 0;
+      y = 0;
+      xx = [];
+      yy = [];
   }
-  dist_sq = _dist_sq;
-  function _round_dp(x, dp = 5) {
-      var num;
-      num = Math.pow(10, dp);
-      return (Math.round((x * num)) / num);
-  }
-  round_dp = _round_dp;
-  x = 0;
-  y = 0;
-  xx = [];
-  yy = [];
   
   trialDrawingBrush = {};
   gettrialDrawingBrush = function() {
@@ -1125,7 +1127,6 @@ async function trialsLoopEnd() {
 
 
 var is_choice;
-var is_drawing;
 var is_text;
 var slide_num;
 var slide;
@@ -1921,6 +1922,8 @@ function wipeRoutineEnd() {
     }
     hide(slide);
     hide(GLOBAL_CONT);
+    psychoJS.experiment.addData("end_timestamp", util.MonotonicClock.getDateStr());
+    psychoJS.experiment.addData("total_seconds", globalClock.getTime());
     
     // the Routine "wipe" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
