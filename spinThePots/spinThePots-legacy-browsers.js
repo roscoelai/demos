@@ -93,25 +93,25 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/pot2.png', 'path': 'imgs/pot2.png'},
-    {'name': 'imgs/pot8.png', 'path': 'imgs/pot8.png'},
-    {'name': 'imgs/sticker2.png', 'path': 'imgs/sticker2.png'},
-    {'name': 'imgs/sort-btn.png', 'path': 'imgs/sort-btn.png'},
-    {'name': 'imgs/sticker3.png', 'path': 'imgs/sticker3.png'},
-    {'name': 'imgs/pot1.png', 'path': 'imgs/pot1.png'},
-    {'name': 'imgs/pot5.png', 'path': 'imgs/pot5.png'},
-    {'name': 'imgs/sticker5.png', 'path': 'imgs/sticker5.png'},
-    {'name': 'imgs/turntable.png', 'path': 'imgs/turntable.png'},
-    {'name': 'imgs/spin-btn.png', 'path': 'imgs/spin-btn.png'},
-    {'name': 'imgs/pot3.png', 'path': 'imgs/pot3.png'},
-    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
     {'name': 'imgs/sticker1.png', 'path': 'imgs/sticker1.png'},
-    {'name': 'imgs/end-btn.png', 'path': 'imgs/end-btn.png'},
-    {'name': 'imgs/pot6.png', 'path': 'imgs/pot6.png'},
+    {'name': 'imgs/sticker2.png', 'path': 'imgs/sticker2.png'},
+    {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
     {'name': 'imgs/pot7.png', 'path': 'imgs/pot7.png'},
-    {'name': 'imgs/sticker6.png', 'path': 'imgs/sticker6.png'},
+    {'name': 'imgs/pot8.png', 'path': 'imgs/pot8.png'},
+    {'name': 'imgs/sort-btn.png', 'path': 'imgs/sort-btn.png'},
     {'name': 'imgs/sticker4.png', 'path': 'imgs/sticker4.png'},
-    {'name': 'imgs/pot4.png', 'path': 'imgs/pot4.png'}
+    {'name': 'imgs/sticker5.png', 'path': 'imgs/sticker5.png'},
+    {'name': 'imgs/pot1.png', 'path': 'imgs/pot1.png'},
+    {'name': 'imgs/spin-btn.png', 'path': 'imgs/spin-btn.png'},
+    {'name': 'imgs/end-btn.png', 'path': 'imgs/end-btn.png'},
+    {'name': 'imgs/pot2.png', 'path': 'imgs/pot2.png'},
+    {'name': 'imgs/pot6.png', 'path': 'imgs/pot6.png'},
+    {'name': 'imgs/sticker3.png', 'path': 'imgs/sticker3.png'},
+    {'name': 'imgs/pot3.png', 'path': 'imgs/pot3.png'},
+    {'name': 'imgs/turntable.png', 'path': 'imgs/turntable.png'},
+    {'name': 'imgs/pot5.png', 'path': 'imgs/pot5.png'},
+    {'name': 'imgs/pot4.png', 'path': 'imgs/pot4.png'},
+    {'name': 'imgs/sticker6.png', 'path': 'imgs/sticker6.png'}
   ]
 });
 
@@ -400,8 +400,8 @@ function placeRoutineEachFrame() {
             stickers[move_idx].pos = [xxx[move_idx][idx], yyy[move_idx][idx]];
             if (((idx + 1) >= xxx[move_idx].length)) {
                 if (snapped(stickers[move_idx], pots[pot_idxs[move_idx]])) {
-                    objs[i] = stickers[move_idx];
-                    contents[i] = stickers[move_idx].name;
+                    objs[pot_idxs[move_idx]] = stickers[move_idx];
+                    contents[pot_idxs[move_idx]] = stickers[move_idx].name;
                     stickers_left -= 1;
                 }
                 move_idx += 1;
