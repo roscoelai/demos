@@ -8,6 +8,48 @@ let expName = 'spinThePots';  // from the Builder filename that created this scr
 let expInfo = {'participant': ''};
 
 // Start code blocks for 'Before Experiment'
+
+function deg2xy(deg, radius) {
+    var rad, x, y;
+    [rad] = [((deg * pi) / 180)];
+    [x, y] = [(radius * Math.sin(rad)), (radius * Math.cos(rad))];
+    return [x, y];
+}
+
+function dxdy(p, q) {
+    var dx, dy;
+    [dx, dy] = [(p[0] - q[0]), (p[1] - q[1])];
+    return [dx, dy];
+}
+
+function dist2(p, q) {
+    var dx, dy;
+    [dx, dy] = dxdy(p, q);
+    return ((dx * dx) + (dy * dy));
+}
+
+function snapped(a, b, thresh2 = THRESH2) {
+    if ((dist2(a.pos, b.pos) <= thresh2)) {
+        a.pos = b.pos;
+        return true;
+    }
+    return false;
+}
+
+function repelled(x, y, r = 0.1, thresh2 = THRESH2) {
+    var d2, di, dj, dx, dy, i, j, ratio;
+    [d2] = [dist2(x.pos, y.pos)];
+    if (((d2 > 0) && (d2 <= thresh2))) {
+        [ratio] = [(r / Math.sqrt(d2))];
+        [dx, dy] = dxdy(x.pos, y.pos);
+        [di, dj] = [(ratio * dx), (ratio * dy)];
+        [i, j] = y.pos;
+        x.pos = [(i + di), (j + dj)];
+        return true;
+    }
+    return false;
+}
+
 // init psychoJS:
 const psychoJS = new PsychoJS({
   debug: true
@@ -51,24 +93,25 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/sticker3.png', 'path': 'imgs/sticker3.png'},
-    {'name': 'imgs/sticker6.png', 'path': 'imgs/sticker6.png'},
-    {'name': 'imgs/pot7.png', 'path': 'imgs/pot7.png'},
-    {'name': 'imgs/pot3.png', 'path': 'imgs/pot3.png'},
-    {'name': 'imgs/pot8.png', 'path': 'imgs/pot8.png'},
-    {'name': 'imgs/end-btn.png', 'path': 'imgs/end-btn.png'},
-    {'name': 'imgs/sticker4.png', 'path': 'imgs/sticker4.png'},
-    {'name': 'imgs/spin-btn.png', 'path': 'imgs/spin-btn.png'},
     {'name': 'imgs/pot2.png', 'path': 'imgs/pot2.png'},
-    {'name': 'imgs/pot1.png', 'path': 'imgs/pot1.png'},
+    {'name': 'imgs/pot8.png', 'path': 'imgs/pot8.png'},
     {'name': 'imgs/sticker2.png', 'path': 'imgs/sticker2.png'},
-    {'name': 'imgs/turntable.png', 'path': 'imgs/turntable.png'},
-    {'name': 'imgs/pot6.png', 'path': 'imgs/pot6.png'},
+    {'name': 'imgs/sort-btn.png', 'path': 'imgs/sort-btn.png'},
+    {'name': 'imgs/sticker3.png', 'path': 'imgs/sticker3.png'},
+    {'name': 'imgs/pot1.png', 'path': 'imgs/pot1.png'},
     {'name': 'imgs/pot5.png', 'path': 'imgs/pot5.png'},
-    {'name': 'imgs/pot4.png', 'path': 'imgs/pot4.png'},
     {'name': 'imgs/sticker5.png', 'path': 'imgs/sticker5.png'},
+    {'name': 'imgs/turntable.png', 'path': 'imgs/turntable.png'},
+    {'name': 'imgs/spin-btn.png', 'path': 'imgs/spin-btn.png'},
+    {'name': 'imgs/pot3.png', 'path': 'imgs/pot3.png'},
     {'name': 'imgs/empty-box.png', 'path': 'imgs/empty-box.png'},
-    {'name': 'imgs/sticker1.png', 'path': 'imgs/sticker1.png'}
+    {'name': 'imgs/sticker1.png', 'path': 'imgs/sticker1.png'},
+    {'name': 'imgs/end-btn.png', 'path': 'imgs/end-btn.png'},
+    {'name': 'imgs/pot6.png', 'path': 'imgs/pot6.png'},
+    {'name': 'imgs/pot7.png', 'path': 'imgs/pot7.png'},
+    {'name': 'imgs/sticker6.png', 'path': 'imgs/sticker6.png'},
+    {'name': 'imgs/sticker4.png', 'path': 'imgs/sticker4.png'},
+    {'name': 'imgs/pot4.png', 'path': 'imgs/pot4.png'}
   ]
 });
 
@@ -100,16 +143,15 @@ var placeClock;
 var N_POTS;
 var N_STICKERS;
 var RADIUS;
-var SPIN_BUTTON_SIZE;
 var DEG_PER_POT;
+var N_FRAMES_ALL;
+var N_FRAMES;
 var THRESH2;
-var deg2xy;
-var dxdy;
-var dist2;
-var snapped;
-var repelled;
+var SORT_BUTTON_SIZE;
+var SPIN_BUTTON_SIZE;
 var place_mouse;
 var place_disp;
+var sort_button;
 var spin_button;
 var spinClock;
 var spin_timer;
@@ -126,53 +168,12 @@ async function experimentInit() {
   N_POTS = 8;
   N_STICKERS = 6;
   RADIUS = 0.25;
-  SPIN_BUTTON_SIZE = [0.156, 0.1];
   DEG_PER_POT = (360 / N_POTS);
+  N_FRAMES_ALL = Number.parseInt((3 / frameDur));
+  N_FRAMES = Number.parseInt((N_FRAMES_ALL / N_STICKERS));
   THRESH2 = (0.05 * 0.05);
-  function _deg2xy(deg, radius) {
-      var rad, x, y;
-      rad = ((deg * pi) / 180);
-      x = (radius * Math.sin(rad));
-      y = (radius * Math.cos(rad));
-      return [x, y];
-  }
-  deg2xy = _deg2xy;
-  function _dxdy(p, q) {
-      var dx, dy;
-      dx = (p[0] - q[0]);
-      dy = (p[1] - q[1]);
-      return [dx, dy];
-  }
-  dxdy = _dxdy;
-  function _dist2(p, q) {
-      var dx, dy;
-      [dx, dy] = dxdy(p, q);
-      return ((dx * dx) + (dy * dy));
-  }
-  dist2 = _dist2;
-  function _snapped(a, b, thresh2 = THRESH2) {
-      if ((dist2(a.pos, b.pos) <= thresh2)) {
-          a.pos = b.pos;
-          return true;
-      }
-      return false;
-  }
-  snapped = _snapped;
-  function _repelled(x, y, r = 0.1, thresh2 = THRESH2) {
-      var d2, di, dj, dx, dy, i, j, ratio;
-      d2 = dist2(x.pos, y.pos);
-      if (((d2 > 0) && (d2 <= thresh2))) {
-          ratio = (r / Math.sqrt(d2));
-          [dx, dy] = dxdy(x.pos, y.pos);
-          di = (ratio * dx);
-          dj = (ratio * dy);
-          [i, j] = y.pos;
-          x.pos = [(i + di), (j + dj)];
-          return true;
-      }
-      return false;
-  }
-  repelled = _repelled;
+  SORT_BUTTON_SIZE = [0.136, 0.1];
+  SPIN_BUTTON_SIZE = [0.156, 0.1];
   
   place_mouse = new core.Mouse({
     win: psychoJS.window,
@@ -189,6 +190,15 @@ async function experimentInit() {
     depth: -2.0 
   });
   
+  sort_button = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'sort_button', units : undefined, 
+    image : 'imgs/sort-btn.png', mask : undefined,
+    ori : 0.0, pos : [0.5, (- 0.4)], size : SORT_BUTTON_SIZE,
+    color : new util.Color([1, 1, 1]), opacity : undefined,
+    flipHoriz : false, flipVert : false,
+    texRes : 128.0, interpolate : true, depth : -3.0 
+  });
   spin_button = new visual.ImageStim({
     win : psychoJS.window,
     name : 'spin_button', units : undefined, 
@@ -196,7 +206,7 @@ async function experimentInit() {
     ori : 0.0, pos : [0, (- 0.4)], size : [0, 0],
     color : new util.Color([1, 1, 1]), opacity : undefined,
     flipHoriz : false, flipVert : false,
-    texRes : 128.0, interpolate : true, depth : -3.0 
+    texRes : 128.0, interpolate : true, depth : -4.0 
   });
   // Initialize components for Routine "spin"
   spinClock = new util.Clock();
@@ -254,6 +264,7 @@ var frameN;
 var continueRoutine;
 var DRAGGING;
 var clicked_obj;
+var clicked_sort;
 var stickers_left;
 var turntable;
 var pots;
@@ -264,6 +275,15 @@ var STICKER_X0;
 var STICKER_Y0;
 var stickers;
 var sticker_coords;
+var pot_idxs;
+var xxx;
+var yyy;
+var xx;
+var yy;
+var idx;
+var start_frame;
+var auto_sorting;
+var move_idx;
 var gotValidClick;
 var placeComponents;
 function placeRoutineBegin(snapshot) {
@@ -278,8 +298,10 @@ function placeRoutineBegin(snapshot) {
     // update component parameters for each repeat
     DRAGGING = false;
     clicked_obj = null;
+    clicked_sort = false;
     stickers_left = N_STICKERS;
     turntable = new visual.ImageStim({"win": psychoJS.window, "name": "turntable", "image": "imgs/turntable.png", "pos": [0, 0], "size": 0.65, "opacity": 0.7});
+    turntable.autoDraw = true;
     pots = [];
     objs = [];
     contents = [];
@@ -291,6 +313,10 @@ function placeRoutineBegin(snapshot) {
         objs.push(null);
         contents.push(null);
     }
+    for (var pot, _pj_c = 0, _pj_a = pots, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        pot = _pj_a[_pj_c];
+        pot.autoDraw = true;
+    }
     STICKER_X0 = 0.5;
     STICKER_Y0 = 0.25;
     stickers = [];
@@ -300,15 +326,33 @@ function placeRoutineBegin(snapshot) {
         sticker_coords.push([STICKER_X0, (STICKER_Y0 - (0.1 * i))]);
         stickers.push(new visual.ImageStim({"win": psychoJS.window, "name": `sticker${(i + 1)}`, "image": `imgs/sticker${(i + 1)}.png`, "pos": sticker_coords[i], "size": 0.05}));
     }
-    turntable.autoDraw = true;
-    for (var pot, _pj_c = 0, _pj_a = pots, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
-        pot = _pj_a[_pj_c];
-        pot.autoDraw = true;
-    }
     for (var sticker, _pj_c = 0, _pj_a = stickers, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
         sticker = _pj_a[_pj_c];
         sticker.autoDraw = true;
     }
+    pot_idxs = [0, 1, 3, 4, 5, 6];
+    xxx = [];
+    yyy = [];
+    xx = [];
+    yy = [];
+    idx = 0;
+    for (var i, _pj_c = 0, _pj_a = util.range(N_STICKERS), _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+        i = _pj_a[_pj_c];
+        sticker = stickers[i];
+        pot = pots[pot_idxs[i]];
+        xx = [];
+        yy = [];
+        for (var j, _pj_f = 0, _pj_d = util.range(N_FRAMES), _pj_e = _pj_d.length; (_pj_f < _pj_e); _pj_f += 1) {
+            j = _pj_d[_pj_f];
+            xx.push((sticker.pos[0] + (((pot.pos[0] - sticker.pos[0]) / N_FRAMES) * j)));
+            yy.push((sticker.pos[1] + (((pot.pos[1] - sticker.pos[1]) / N_FRAMES) * j)));
+        }
+        xxx.push(xx);
+        yyy.push(yy);
+    }
+    start_frame = null;
+    auto_sorting = false;
+    move_idx = 0;
     
     // setup some python lists for storing info about the place_mouse
     place_mouse.clicked_name = [];
@@ -317,6 +361,7 @@ function placeRoutineBegin(snapshot) {
     placeComponents = [];
     placeComponents.push(place_mouse);
     placeComponents.push(place_disp);
+    placeComponents.push(sort_button);
     placeComponents.push(spin_button);
     
     placeComponents.forEach( function(thisComponent) {
@@ -328,6 +373,7 @@ function placeRoutineBegin(snapshot) {
 }
 
 
+var buttonState;
 var prevButtonState;
 var _mouseButtons;
 function placeRoutineEachFrame() {
@@ -337,8 +383,43 @@ function placeRoutineEachFrame() {
     t = placeClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    place_disp.text = `Sticker left: ${stickers_left}
-    contents = ${contents}`
+    if ((! auto_sorting)) {
+        buttonState = place_mouse.getPressed()[0];
+        if ((prevButtonState !== buttonState)) {
+            prevButtonState = buttonState;
+            if ((buttonState === 1)) {
+                if (sort_button.contains(place_mouse)) {
+                    auto_sorting = true;
+                    start_frame = frameN;
+                }
+            }
+        }
+    } else {
+        idx = ((frameN - start_frame) - 1);
+        if ((move_idx < N_STICKERS)) {
+            stickers[move_idx].pos = [xxx[move_idx][idx], yyy[move_idx][idx]];
+            if (((idx + 1) >= xxx[move_idx].length)) {
+                if (snapped(stickers[move_idx], pots[pot_idxs[move_idx]])) {
+                    objs[i] = stickers[move_idx];
+                    contents[i] = stickers[move_idx].name;
+                    stickers_left -= 1;
+                }
+                move_idx += 1;
+                start_frame = frameN;
+            }
+        }
+    }
+    if ((move_idx >= N_STICKERS)) {
+        sort_button.size = [0, 0];
+    }
+    place_disp.text = `
+    Sticker left: ${stickers_left}
+    contents = ${contents}
+    auto_sorting = ${auto_sorting}
+    frameN = ${frameN}
+    start_frame = ${start_frame}
+    idx = ${idx}
+    N_FRAMES_ALL = ${N_FRAMES_ALL}`
     ;
     if ((! DRAGGING)) {
         for (var sticker, _pj_c = 0, _pj_a = stickers, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
@@ -358,7 +439,7 @@ function placeRoutineEachFrame() {
             }
         }
     }
-    if ((util.sum(place_mouse.getPressed()) > 0)) {
+    if ((place_mouse.getPressed()[0] === 1)) {
         if (DRAGGING) {
             clicked_obj.pos = place_mouse.getPos();
         }
@@ -427,6 +508,16 @@ function placeRoutineEachFrame() {
       place_disp.frameNStart = frameN;  // exact frame index
       
       place_disp.setAutoDraw(true);
+    }
+
+    
+    // *sort_button* updates
+    if (t >= 0.0 && sort_button.status === PsychoJS.Status.NOT_STARTED) {
+      // keep track of start time/frame for later
+      sort_button.tStart = t;  // (not accounting for frame time here)
+      sort_button.frameNStart = frameN;  // exact frame index
+      
+      sort_button.setAutoDraw(true);
     }
 
     
