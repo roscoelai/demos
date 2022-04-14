@@ -5,7 +5,7 @@
 
 // store info about the experiment session:
 let expName = 'theoryOfMind';  // from the Builder filename that created this script
-let expInfo = {'participant': '', 'debug [y/n]': 'y'};
+let expInfo = {'participant': '', 'debug [y/n]': 'n'};
 
 // Start code blocks for 'Before Experiment'
 var _pj;
@@ -84,6 +84,14 @@ function make_poly(name, size, pos, opacity = POLYGON_OPACITY) {
     return img;
 }
 
+function make_rect(name, size, pos, opacity = POLYGON_OPACITY) {
+    var height, img, width;
+    [width, height] = size;
+    [img] = [new visual.Rect({"win": psychoJS.window, "name": name, "width": width, "height": height, "pos": pos, "lineWidth": 0, "fillColor": new util.Color("white"), "opacity": opacity})];
+    img.autoDraw = true;
+    return img;
+}
+
 // init psychoJS:
 const psychoJS = new PsychoJS({
   debug: true
@@ -122,29 +130,29 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/slide-01.png', 'path': 'imgs/slide-01.png'},
-    {'name': 'imgs/transparent-box.png', 'path': 'imgs/transparent-box.png'},
-    {'name': 'imgs/slide-09.png', 'path': 'imgs/slide-09.png'},
-    {'name': 'imgs/slide-14.png', 'path': 'imgs/slide-14.png'},
-    {'name': 'imgs/slide-07.png', 'path': 'imgs/slide-07.png'},
-    {'name': 'imgs/slide-15.png', 'path': 'imgs/slide-15.png'},
-    {'name': 'imgs/slide-10.png', 'path': 'imgs/slide-10.png'},
-    {'name': 'imgs/slide-02.png', 'path': 'imgs/slide-02.png'},
-    {'name': 'imgs/slide-05.png', 'path': 'imgs/slide-05.png'},
-    {'name': 'imgs/slide-12.png', 'path': 'imgs/slide-12.png'},
-    {'name': 'imgs/slide-19.png', 'path': 'imgs/slide-19.png'},
-    {'name': 'imgs/slide-17.png', 'path': 'imgs/slide-17.png'},
-    {'name': 'imgs/slide-11.png', 'path': 'imgs/slide-11.png'},
-    {'name': 'imgs/slide-04.png', 'path': 'imgs/slide-04.png'},
-    {'name': 'imgs/slide-16.png', 'path': 'imgs/slide-16.png'},
     {'name': 'imgs/slide-13.png', 'path': 'imgs/slide-13.png'},
     {'name': 'imgs/slide-20.png', 'path': 'imgs/slide-20.png'},
+    {'name': 'imgs/slide-10.png', 'path': 'imgs/slide-10.png'},
+    {'name': 'imgs/slide-17.png', 'path': 'imgs/slide-17.png'},
+    {'name': 'imgs/slide-19.png', 'path': 'imgs/slide-19.png'},
+    {'name': 'imgs/slide-02.png', 'path': 'imgs/slide-02.png'},
+    {'name': 'imgs/slide-04.png', 'path': 'imgs/slide-04.png'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'imgs/slide-16.png', 'path': 'imgs/slide-16.png'},
+    {'name': 'imgs/slide-11.png', 'path': 'imgs/slide-11.png'},
     {'name': 'imgs/slide-18.png', 'path': 'imgs/slide-18.png'},
+    {'name': 'imgs/slide-15.png', 'path': 'imgs/slide-15.png'},
+    {'name': 'imgs/slide-01.png', 'path': 'imgs/slide-01.png'},
+    {'name': 'imgs/slide-07.png', 'path': 'imgs/slide-07.png'},
     {'name': 'imgs/slide-03.png', 'path': 'imgs/slide-03.png'},
-    {'name': 'imgs/slide-06.png', 'path': 'imgs/slide-06.png'},
-    {'name': 'imgs/slide-08.png', 'path': 'imgs/slide-08.png'},
     {'name': 'sequences/conditions.csv', 'path': 'sequences/conditions.csv'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'}
+    {'name': 'imgs/slide-12.png', 'path': 'imgs/slide-12.png'},
+    {'name': 'imgs/slide-08.png', 'path': 'imgs/slide-08.png'},
+    {'name': 'imgs/slide-14.png', 'path': 'imgs/slide-14.png'},
+    {'name': 'imgs/transparent-box.png', 'path': 'imgs/transparent-box.png'},
+    {'name': 'imgs/slide-09.png', 'path': 'imgs/slide-09.png'},
+    {'name': 'imgs/slide-05.png', 'path': 'imgs/slide-05.png'},
+    {'name': 'imgs/slide-06.png', 'path': 'imgs/slide-06.png'}
   ]
 });
 
@@ -180,26 +188,20 @@ var CONTINUE_SIZE;
 var SLIDE_SIZE_1;
 var SLIDE_SIZE_2;
 var SLIDES;
+var SLIDE_NAMES;
 var GLOBAL_CONT;
 var GLOBAL_BLANK;
-var begin1Mouse;
+var GLOBAL_MOUSE;
+var GLOBAL_MOUSE_state;
+var prev_GLOBAL_MOUSE_state;
+var inst_slide_names;
+var slide_idx;
+var prev_slide_idx;
 var begin1Text;
-var begin2Clock;
-var begin2Mouse;
-var begin2Text;
-var begin3Clock;
-var begin3Mouse;
-var begin3Text;
-var begin4Clock;
-var begin4Mouse;
-var begin4Text;
-var begin5Clock;
-var begin5Mouse;
-var begin5Text;
 var trialClock;
 var SLIDE_ATTRS;
 var control_scores;
-var score_so_far;
+var current_total_score;
 var trialMouse;
 var trialText;
 var globalClock;
@@ -221,13 +223,16 @@ async function experimentInit() {
       }
       SLIDES[`slide-${i}`] = make_img(`slide-${i}`, `imgs/slide-${i}.png`, [0, 0], [0, 0]);
   }
+  SLIDE_NAMES = {"1": ["slide-01", "slide-02"], "2": ["slide-03"], "3": ["slide-04", "slide-05"], "4": ["slide-06", "slide-07", "slide-08", "slide-09", "slide-10", "slide-11"], "5": ["slide-11"], "6": ["slide-11"], "7": ["slide-12", "slide-13", "slide-14", "slide-15", "slide-16"], "8": ["slide-16"], "9": ["slide-17"], "10": ["slide-18", "slide-19"], "11": ["slide-20"], "12": ["slide-20"]};
   GLOBAL_CONT = make_img("GLOBAL_CONT", "imgs/continue.png", [0, (- 0.4)], CONTINUE_SIZE);
   GLOBAL_BLANK = make_img("GLOBAL_BLANK", "imgs/continue.png", [0, 0], [0, 0]);
+  GLOBAL_MOUSE = new core.Mouse({"win": psychoJS.window});
+  GLOBAL_MOUSE_state = 0;
+  prev_GLOBAL_MOUSE_state = 0;
+  inst_slide_names = [];
+  slide_idx = 0;
+  prev_slide_idx = 0;
   
-  begin1Mouse = new core.Mouse({
-    win: psychoJS.window,
-  });
-  begin1Mouse.mouseClock = new util.Clock();
   begin1Text = new visual.TextStim({
     win: psychoJS.window,
     name: 'begin1Text',
@@ -236,75 +241,7 @@ async function experimentInit() {
     units: undefined, 
     pos: [0.5, 0], height: 0.02,  wrapWidth: undefined, ori: 0.0,
     color: new util.Color('black'),  opacity: undefined,
-    depth: -2.0 
-  });
-  
-  // Initialize components for Routine "begin2"
-  begin2Clock = new util.Clock();
-  begin2Mouse = new core.Mouse({
-    win: psychoJS.window,
-  });
-  begin2Mouse.mouseClock = new util.Clock();
-  begin2Text = new visual.TextStim({
-    win: psychoJS.window,
-    name: 'begin2Text',
-    text: '',
-    font: 'Open Sans',
-    units: undefined, 
-    pos: [0.5, 0], height: 0.02,  wrapWidth: undefined, ori: 0.0,
-    color: new util.Color('black'),  opacity: undefined,
-    depth: -2.0 
-  });
-  
-  // Initialize components for Routine "begin3"
-  begin3Clock = new util.Clock();
-  begin3Mouse = new core.Mouse({
-    win: psychoJS.window,
-  });
-  begin3Mouse.mouseClock = new util.Clock();
-  begin3Text = new visual.TextStim({
-    win: psychoJS.window,
-    name: 'begin3Text',
-    text: '',
-    font: 'Open Sans',
-    units: undefined, 
-    pos: [0.5, 0], height: 0.02,  wrapWidth: undefined, ori: 0.0,
-    color: new util.Color('black'),  opacity: undefined,
-    depth: -2.0 
-  });
-  
-  // Initialize components for Routine "begin4"
-  begin4Clock = new util.Clock();
-  begin4Mouse = new core.Mouse({
-    win: psychoJS.window,
-  });
-  begin4Mouse.mouseClock = new util.Clock();
-  begin4Text = new visual.TextStim({
-    win: psychoJS.window,
-    name: 'begin4Text',
-    text: '',
-    font: 'Open Sans',
-    units: undefined, 
-    pos: [0.5, 0], height: 0.02,  wrapWidth: undefined, ori: 0.0,
-    color: new util.Color('black'),  opacity: undefined,
-    depth: -2.0 
-  });
-  
-  // Initialize components for Routine "begin5"
-  begin5Clock = new util.Clock();
-  begin5Mouse = new core.Mouse({
-    win: psychoJS.window,
-  });
-  begin5Mouse.mouseClock = new util.Clock();
-  begin5Text = new visual.TextStim({
-    win: psychoJS.window,
-    name: 'begin5Text',
-    text: '',
-    font: 'Open Sans',
-    units: undefined, 
-    pos: [0.5, 0], height: 0.02,  wrapWidth: undefined, ori: 0.0,
-    color: new util.Color('black'),  opacity: undefined,
-    depth: -2.0 
+    depth: -1.0 
   });
   
   // Initialize components for Routine "trial"
@@ -315,12 +252,12 @@ async function experimentInit() {
   SLIDE_ATTRS["slide-05"] = {"names": ["table", "chair", "desk", "drawer"], "xys": [[(- 0.1275), 0.19], [0.155, 0.19], [(- 0.125), (- 0.03)], [0.1725, (- 0.03)]], "sizes": [[0.24, 0.15], [0.15, 0.21], [0.26, 0.15], [0.2, 0.15]]};
   SLIDE_ATTRS["slide-11"] = {"names": ["table", "chair", "desk", "drawer"], "xys": [[(- 0.1175), 0.19], [0.11, 0.19], [(- 0.115), (- 0.025)], [0.115, (- 0.0175)]], "sizes": [[0.22, 0.14], [0.15, 0.21], [0.22, 0.14], [0.16, 0.15]]};
   SLIDE_ATTRS["slide-16"] = {"names": ["train", "wagon", "truck", "airplane"], "xys": [[(- 0.145), 0.19], [0.175, 0.1875], [(- 0.15), (- 0.07)], [0.175, (- 0.07)]], "sizes": [[0.34, 0.16], [0.24, 0.19], [0.22, 0.16], [0.26, 0.16]]};
-  SLIDE_ATTRS["slide-17"] = {"names": ["happy", "sad", "scared", "angry"], "xys": [[(- 0.14), 0.19], [0.13, 0.19], [(- 0.14), (- 0.06)], [0.13, (- 0.06)]], "sizes": [[0.2, 0.23], [0.2, 0.23], [0.2, 0.23], [0.2, 0.23]]};
+  SLIDE_ATTRS["slide-17"] = {"names": ["happy", "sad", "scared", "mad"], "xys": [[(- 0.14), 0.19], [0.13, 0.19], [(- 0.14), (- 0.06)], [0.13, (- 0.06)]], "sizes": [[0.2, 0.23], [0.2, 0.23], [0.2, 0.23], [0.2, 0.23]]};
   SLIDE_ATTRS["slide-19"] = {"names": ["train", "wagon", "truck", "airplane"], "xys": [[(- 0.16), 0.19], [0.155, 0.1675], [(- 0.17), (- 0.09)], [0.155, (- 0.09)]], "sizes": [[0.34, 0.16], [0.24, 0.19], [0.22, 0.16], [0.26, 0.16]]};
-  SLIDE_ATTRS["slide-20"] = {"names": ["happy", "sad", "scared", "angry"], "xys": [[(- 0.15), 0.185], [0.13, 0.185], [(- 0.15), (- 0.065)], [0.13, (- 0.065)]], "sizes": [[0.2, 0.23], [0.2, 0.23], [0.2, 0.23], [0.2, 0.23]]};
+  SLIDE_ATTRS["slide-20"] = {"names": ["happy", "sad", "scared", "mad"], "xys": [[(- 0.15), 0.185], [0.13, 0.185], [(- 0.15), (- 0.065)], [0.13, (- 0.065)]], "sizes": [[0.2, 0.23], [0.2, 0.23], [0.2, 0.23], [0.2, 0.23]]};
   cimgs = [null, null, null, null];
   control_scores = [];
-  score_so_far = 0;
+  current_total_score = 0;
   
   trialMouse = new core.Mouse({
     win: psychoJS.window,
@@ -356,7 +293,7 @@ function trialsLoopBegin(trialsLoopScheduler, snapshot) {
       psychoJS: psychoJS,
       nReps: 1, method: TrialHandler.Method.SEQUENTIAL,
       extraInfo: expInfo, originPath: undefined,
-      trialList: 'sequences/conditions.csv',
+      trialList: TrialHandler.importConditions(psychoJS.serverManager, 'sequences/conditions.csv', '0:'),
       seed: undefined, name: 'trials'
     });
     psychoJS.experiment.addLoop(trials); // add the loop to the experiment
@@ -370,18 +307,6 @@ function trialsLoopBegin(trialsLoopScheduler, snapshot) {
       trialsLoopScheduler.add(begin1RoutineBegin(snapshot));
       trialsLoopScheduler.add(begin1RoutineEachFrame());
       trialsLoopScheduler.add(begin1RoutineEnd());
-      trialsLoopScheduler.add(begin2RoutineBegin(snapshot));
-      trialsLoopScheduler.add(begin2RoutineEachFrame());
-      trialsLoopScheduler.add(begin2RoutineEnd());
-      trialsLoopScheduler.add(begin3RoutineBegin(snapshot));
-      trialsLoopScheduler.add(begin3RoutineEachFrame());
-      trialsLoopScheduler.add(begin3RoutineEnd());
-      trialsLoopScheduler.add(begin4RoutineBegin(snapshot));
-      trialsLoopScheduler.add(begin4RoutineEachFrame());
-      trialsLoopScheduler.add(begin4RoutineEnd());
-      trialsLoopScheduler.add(begin5RoutineBegin(snapshot));
-      trialsLoopScheduler.add(begin5RoutineEachFrame());
-      trialsLoopScheduler.add(begin5RoutineEnd());
       trialsLoopScheduler.add(trialRoutineBegin(snapshot));
       trialsLoopScheduler.add(trialRoutineEachFrame());
       trialsLoopScheduler.add(trialRoutineEnd());
@@ -404,7 +329,7 @@ var t;
 var frameN;
 var continueRoutine;
 var slide_size;
-var gotValidClick;
+var slide_names;
 var begin1Components;
 function begin1RoutineBegin(snapshot) {
   return async function () {
@@ -416,20 +341,20 @@ function begin1RoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     // update component parameters for each repeat
-    slide_size = ((taskNum.toString() === "5") ? SLIDE_SIZE_2 : SLIDE_SIZE_1);
-    if ((instSlide1 === "NA")) {
+    slide_size = ((Number.parseInt(taskNum) === 5) ? SLIDE_SIZE_2 : SLIDE_SIZE_1);
+    slide_names = SLIDE_NAMES[trialNum.toString()];
+    if ((slide_names.length < 2)) {
         continueRoutine = false;
     } else {
-        unhide(SLIDES[instSlide1], slide_size);
+        slide_idx = 0;
+        prev_slide_idx = 0;
+        inst_slide_names = slide_names.slice(0, (- 1));
+        unhide(SLIDES[inst_slide_names[slide_idx]], slide_size);
         unhide(GLOBAL_CONT, CONTINUE_SIZE);
     }
     
-    // setup some python lists for storing info about the begin1Mouse
-    begin1Mouse.clicked_name = [];
-    gotValidClick = false; // until a click is received
     // keep track of which components have finished
     begin1Components = [];
-    begin1Components.push(begin1Mouse);
     begin1Components.push(begin1Text);
     
     begin1Components.forEach( function(thisComponent) {
@@ -441,8 +366,6 @@ function begin1RoutineBegin(snapshot) {
 }
 
 
-var prevButtonState;
-var _mouseButtons;
 function begin1RoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'begin1'-------
@@ -450,41 +373,37 @@ function begin1RoutineEachFrame() {
     t = begin1Clock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
+    if ((slide_idx >= inst_slide_names.length)) {
+        continueRoutine = false;
+    } else {
+        if ((prev_slide_idx !== slide_idx)) {
+            prev_slide_idx = slide_idx;
+            hide(SLIDES[inst_slide_names[prev_slide_idx]]);
+            unhide(SLIDES[inst_slide_names[slide_idx]], slide_size);
+            hide(GLOBAL_CONT);
+            unhide(GLOBAL_CONT, CONTINUE_SIZE);
+            begin1Text.autoDraw = false;
+            begin1Text.autoDraw = true;
+        }
+    }
+    GLOBAL_MOUSE_state = GLOBAL_MOUSE.getPressed()[0];
+    if ((prev_GLOBAL_MOUSE_state !== GLOBAL_MOUSE_state)) {
+        prev_GLOBAL_MOUSE_state = GLOBAL_MOUSE_state;
+        if ((GLOBAL_MOUSE_state === 1)) {
+            if (GLOBAL_CONT.contains(GLOBAL_MOUSE)) {
+                slide_idx += 1;
+            }
+        }
+    }
     if (SHOW_DEBUG) {
         begin1Text.text = `begin1
-    instSlide1 = ${instSlide1}`
+    taskNum = ${taskNum}
+    slide_idx = ${slide_idx}
+    prev_slide_idx = ${prev_slide_idx}
+    inst_slide_names[${slide_idx}] = ${inst_slide_names[slide_idx]}`
     ;
     }
     
-    // *begin1Mouse* updates
-    if (t >= 0.0 && begin1Mouse.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      begin1Mouse.tStart = t;  // (not accounting for frame time here)
-      begin1Mouse.frameNStart = frameN;  // exact frame index
-      
-      begin1Mouse.status = PsychoJS.Status.STARTED;
-      begin1Mouse.mouseClock.reset();
-      prevButtonState = begin1Mouse.getPressed();  // if button is down already this ISN'T a new click
-      }
-    if (begin1Mouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
-      _mouseButtons = begin1Mouse.getPressed();
-      if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
-        prevButtonState = _mouseButtons;
-        if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
-          // check if the mouse was inside our 'clickable' objects
-          gotValidClick = false;
-          for (const obj of [GLOBAL_CONT]) {
-            if (obj.contains(begin1Mouse)) {
-              gotValidClick = true;
-              begin1Mouse.clicked_name.push(obj.name)
-            }
-          }
-          if (gotValidClick === true) { // abort routine on response
-            continueRoutine = false;
-          }
-        }
-      }
-    }
     
     // *begin1Text* updates
     if (t >= 0.0 && begin1Text.status === PsychoJS.Status.NOT_STARTED) {
@@ -530,12 +449,9 @@ function begin1RoutineEnd() {
         thisComponent.setAutoDraw(false);
       }
     });
-    if ((instSlide1 !== "NA")) {
-        hide(SLIDES[instSlide1]);
-        hide(GLOBAL_CONT);
-    }
+    hide(SLIDES[inst_slide_names[prev_slide_idx]]);
+    hide(GLOBAL_CONT);
     
-    // store data for psychoJS.experiment (ExperimentHandler)
     // the Routine "begin1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset();
     
@@ -544,554 +460,12 @@ function begin1RoutineEnd() {
 }
 
 
-var begin2Components;
-function begin2RoutineBegin(snapshot) {
-  return async function () {
-    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
-    
-    //------Prepare to start Routine 'begin2'-------
-    t = 0;
-    begin2Clock.reset(); // clock
-    frameN = -1;
-    continueRoutine = true; // until we're told otherwise
-    // update component parameters for each repeat
-    if ((instSlide2 === "NA")) {
-        continueRoutine = false;
-    } else {
-        unhide(SLIDES[instSlide2], slide_size);
-        unhide(GLOBAL_CONT, CONTINUE_SIZE);
-    }
-    
-    // setup some python lists for storing info about the begin2Mouse
-    begin2Mouse.clicked_name = [];
-    gotValidClick = false; // until a click is received
-    // keep track of which components have finished
-    begin2Components = [];
-    begin2Components.push(begin2Mouse);
-    begin2Components.push(begin2Text);
-    
-    begin2Components.forEach( function(thisComponent) {
-      if ('status' in thisComponent)
-        thisComponent.status = PsychoJS.Status.NOT_STARTED;
-       });
-    return Scheduler.Event.NEXT;
-  }
-}
-
-
-function begin2RoutineEachFrame() {
-  return async function () {
-    //------Loop for each frame of Routine 'begin2'-------
-    // get current time
-    t = begin2Clock.getTime();
-    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
-    // update/draw components on each frame
-    if (SHOW_DEBUG) {
-        begin2Text.text = `begin2
-    instSlide2 = ${instSlide2}`
-    ;
-    }
-    
-    // *begin2Mouse* updates
-    if (t >= 0.0 && begin2Mouse.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      begin2Mouse.tStart = t;  // (not accounting for frame time here)
-      begin2Mouse.frameNStart = frameN;  // exact frame index
-      
-      begin2Mouse.status = PsychoJS.Status.STARTED;
-      begin2Mouse.mouseClock.reset();
-      prevButtonState = begin2Mouse.getPressed();  // if button is down already this ISN'T a new click
-      }
-    if (begin2Mouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
-      _mouseButtons = begin2Mouse.getPressed();
-      if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
-        prevButtonState = _mouseButtons;
-        if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
-          // check if the mouse was inside our 'clickable' objects
-          gotValidClick = false;
-          for (const obj of [GLOBAL_CONT]) {
-            if (obj.contains(begin2Mouse)) {
-              gotValidClick = true;
-              begin2Mouse.clicked_name.push(obj.name)
-            }
-          }
-          if (gotValidClick === true) { // abort routine on response
-            continueRoutine = false;
-          }
-        }
-      }
-    }
-    
-    // *begin2Text* updates
-    if (t >= 0.0 && begin2Text.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      begin2Text.tStart = t;  // (not accounting for frame time here)
-      begin2Text.frameNStart = frameN;  // exact frame index
-      
-      begin2Text.setAutoDraw(true);
-    }
-
-    // check for quit (typically the Esc key)
-    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
-      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
-    }
-    
-    // check if the Routine should terminate
-    if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      return Scheduler.Event.NEXT;
-    }
-    
-    continueRoutine = false;  // reverts to True if at least one component still running
-    begin2Components.forEach( function(thisComponent) {
-      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
-        continueRoutine = true;
-      }
-    });
-    
-    // refresh the screen if continuing
-    if (continueRoutine) {
-      return Scheduler.Event.FLIP_REPEAT;
-    } else {
-      return Scheduler.Event.NEXT;
-    }
-  };
-}
-
-
-function begin2RoutineEnd() {
-  return async function () {
-    //------Ending Routine 'begin2'-------
-    begin2Components.forEach( function(thisComponent) {
-      if (typeof thisComponent.setAutoDraw === 'function') {
-        thisComponent.setAutoDraw(false);
-      }
-    });
-    if ((instSlide2 !== "NA")) {
-        hide(SLIDES[instSlide2]);
-        hide(GLOBAL_CONT);
-    }
-    
-    // store data for psychoJS.experiment (ExperimentHandler)
-    // the Routine "begin2" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
-    
-    return Scheduler.Event.NEXT;
-  };
-}
-
-
-var begin3Components;
-function begin3RoutineBegin(snapshot) {
-  return async function () {
-    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
-    
-    //------Prepare to start Routine 'begin3'-------
-    t = 0;
-    begin3Clock.reset(); // clock
-    frameN = -1;
-    continueRoutine = true; // until we're told otherwise
-    // update component parameters for each repeat
-    if ((instSlide3 === "NA")) {
-        continueRoutine = false;
-    } else {
-        unhide(SLIDES[instSlide3], slide_size);
-        unhide(GLOBAL_CONT, CONTINUE_SIZE);
-    }
-    
-    // setup some python lists for storing info about the begin3Mouse
-    begin3Mouse.clicked_name = [];
-    gotValidClick = false; // until a click is received
-    // keep track of which components have finished
-    begin3Components = [];
-    begin3Components.push(begin3Mouse);
-    begin3Components.push(begin3Text);
-    
-    begin3Components.forEach( function(thisComponent) {
-      if ('status' in thisComponent)
-        thisComponent.status = PsychoJS.Status.NOT_STARTED;
-       });
-    return Scheduler.Event.NEXT;
-  }
-}
-
-
-function begin3RoutineEachFrame() {
-  return async function () {
-    //------Loop for each frame of Routine 'begin3'-------
-    // get current time
-    t = begin3Clock.getTime();
-    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
-    // update/draw components on each frame
-    if (SHOW_DEBUG) {
-        begin3Text.text = `begin3
-    instSlide3 = ${instSlide3}`
-    ;
-    }
-    
-    // *begin3Mouse* updates
-    if (t >= 0.0 && begin3Mouse.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      begin3Mouse.tStart = t;  // (not accounting for frame time here)
-      begin3Mouse.frameNStart = frameN;  // exact frame index
-      
-      begin3Mouse.status = PsychoJS.Status.STARTED;
-      begin3Mouse.mouseClock.reset();
-      prevButtonState = begin3Mouse.getPressed();  // if button is down already this ISN'T a new click
-      }
-    if (begin3Mouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
-      _mouseButtons = begin3Mouse.getPressed();
-      if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
-        prevButtonState = _mouseButtons;
-        if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
-          // check if the mouse was inside our 'clickable' objects
-          gotValidClick = false;
-          for (const obj of [GLOBAL_CONT]) {
-            if (obj.contains(begin3Mouse)) {
-              gotValidClick = true;
-              begin3Mouse.clicked_name.push(obj.name)
-            }
-          }
-          if (gotValidClick === true) { // abort routine on response
-            continueRoutine = false;
-          }
-        }
-      }
-    }
-    
-    // *begin3Text* updates
-    if (t >= 0.0 && begin3Text.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      begin3Text.tStart = t;  // (not accounting for frame time here)
-      begin3Text.frameNStart = frameN;  // exact frame index
-      
-      begin3Text.setAutoDraw(true);
-    }
-
-    // check for quit (typically the Esc key)
-    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
-      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
-    }
-    
-    // check if the Routine should terminate
-    if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      return Scheduler.Event.NEXT;
-    }
-    
-    continueRoutine = false;  // reverts to True if at least one component still running
-    begin3Components.forEach( function(thisComponent) {
-      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
-        continueRoutine = true;
-      }
-    });
-    
-    // refresh the screen if continuing
-    if (continueRoutine) {
-      return Scheduler.Event.FLIP_REPEAT;
-    } else {
-      return Scheduler.Event.NEXT;
-    }
-  };
-}
-
-
-function begin3RoutineEnd() {
-  return async function () {
-    //------Ending Routine 'begin3'-------
-    begin3Components.forEach( function(thisComponent) {
-      if (typeof thisComponent.setAutoDraw === 'function') {
-        thisComponent.setAutoDraw(false);
-      }
-    });
-    if ((instSlide3 !== "NA")) {
-        hide(SLIDES[instSlide3]);
-        hide(GLOBAL_CONT);
-    }
-    
-    // store data for psychoJS.experiment (ExperimentHandler)
-    // the Routine "begin3" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
-    
-    return Scheduler.Event.NEXT;
-  };
-}
-
-
-var begin4Components;
-function begin4RoutineBegin(snapshot) {
-  return async function () {
-    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
-    
-    //------Prepare to start Routine 'begin4'-------
-    t = 0;
-    begin4Clock.reset(); // clock
-    frameN = -1;
-    continueRoutine = true; // until we're told otherwise
-    // update component parameters for each repeat
-    if ((instSlide4 === "NA")) {
-        continueRoutine = false;
-    } else {
-        unhide(SLIDES[instSlide4], slide_size);
-        unhide(GLOBAL_CONT, CONTINUE_SIZE);
-    }
-    
-    // setup some python lists for storing info about the begin4Mouse
-    begin4Mouse.clicked_name = [];
-    gotValidClick = false; // until a click is received
-    // keep track of which components have finished
-    begin4Components = [];
-    begin4Components.push(begin4Mouse);
-    begin4Components.push(begin4Text);
-    
-    begin4Components.forEach( function(thisComponent) {
-      if ('status' in thisComponent)
-        thisComponent.status = PsychoJS.Status.NOT_STARTED;
-       });
-    return Scheduler.Event.NEXT;
-  }
-}
-
-
-function begin4RoutineEachFrame() {
-  return async function () {
-    //------Loop for each frame of Routine 'begin4'-------
-    // get current time
-    t = begin4Clock.getTime();
-    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
-    // update/draw components on each frame
-    if (SHOW_DEBUG) {
-        begin4Text.text = `begin4
-    instSlide4 = ${instSlide4}`
-    ;
-    }
-    
-    // *begin4Mouse* updates
-    if (t >= 0.0 && begin4Mouse.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      begin4Mouse.tStart = t;  // (not accounting for frame time here)
-      begin4Mouse.frameNStart = frameN;  // exact frame index
-      
-      begin4Mouse.status = PsychoJS.Status.STARTED;
-      begin4Mouse.mouseClock.reset();
-      prevButtonState = begin4Mouse.getPressed();  // if button is down already this ISN'T a new click
-      }
-    if (begin4Mouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
-      _mouseButtons = begin4Mouse.getPressed();
-      if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
-        prevButtonState = _mouseButtons;
-        if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
-          // check if the mouse was inside our 'clickable' objects
-          gotValidClick = false;
-          for (const obj of [GLOBAL_CONT]) {
-            if (obj.contains(begin4Mouse)) {
-              gotValidClick = true;
-              begin4Mouse.clicked_name.push(obj.name)
-            }
-          }
-          if (gotValidClick === true) { // abort routine on response
-            continueRoutine = false;
-          }
-        }
-      }
-    }
-    
-    // *begin4Text* updates
-    if (t >= 0.0 && begin4Text.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      begin4Text.tStart = t;  // (not accounting for frame time here)
-      begin4Text.frameNStart = frameN;  // exact frame index
-      
-      begin4Text.setAutoDraw(true);
-    }
-
-    // check for quit (typically the Esc key)
-    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
-      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
-    }
-    
-    // check if the Routine should terminate
-    if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      return Scheduler.Event.NEXT;
-    }
-    
-    continueRoutine = false;  // reverts to True if at least one component still running
-    begin4Components.forEach( function(thisComponent) {
-      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
-        continueRoutine = true;
-      }
-    });
-    
-    // refresh the screen if continuing
-    if (continueRoutine) {
-      return Scheduler.Event.FLIP_REPEAT;
-    } else {
-      return Scheduler.Event.NEXT;
-    }
-  };
-}
-
-
-function begin4RoutineEnd() {
-  return async function () {
-    //------Ending Routine 'begin4'-------
-    begin4Components.forEach( function(thisComponent) {
-      if (typeof thisComponent.setAutoDraw === 'function') {
-        thisComponent.setAutoDraw(false);
-      }
-    });
-    if ((instSlide4 !== "NA")) {
-        hide(SLIDES[instSlide4]);
-        hide(GLOBAL_CONT);
-    }
-    
-    // store data for psychoJS.experiment (ExperimentHandler)
-    // the Routine "begin4" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
-    
-    return Scheduler.Event.NEXT;
-  };
-}
-
-
-var begin5Components;
-function begin5RoutineBegin(snapshot) {
-  return async function () {
-    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
-    
-    //------Prepare to start Routine 'begin5'-------
-    t = 0;
-    begin5Clock.reset(); // clock
-    frameN = -1;
-    continueRoutine = true; // until we're told otherwise
-    // update component parameters for each repeat
-    if ((instSlide5 === "NA")) {
-        continueRoutine = false;
-    } else {
-        unhide(SLIDES[instSlide5], slide_size);
-        unhide(GLOBAL_CONT, CONTINUE_SIZE);
-    }
-    
-    // setup some python lists for storing info about the begin5Mouse
-    begin5Mouse.clicked_name = [];
-    gotValidClick = false; // until a click is received
-    // keep track of which components have finished
-    begin5Components = [];
-    begin5Components.push(begin5Mouse);
-    begin5Components.push(begin5Text);
-    
-    begin5Components.forEach( function(thisComponent) {
-      if ('status' in thisComponent)
-        thisComponent.status = PsychoJS.Status.NOT_STARTED;
-       });
-    return Scheduler.Event.NEXT;
-  }
-}
-
-
-function begin5RoutineEachFrame() {
-  return async function () {
-    //------Loop for each frame of Routine 'begin5'-------
-    // get current time
-    t = begin5Clock.getTime();
-    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
-    // update/draw components on each frame
-    if (SHOW_DEBUG) {
-        begin5Text.text = `begin5
-    instSlide5 = ${instSlide5}`
-    ;
-    }
-    
-    // *begin5Mouse* updates
-    if (t >= 0.0 && begin5Mouse.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      begin5Mouse.tStart = t;  // (not accounting for frame time here)
-      begin5Mouse.frameNStart = frameN;  // exact frame index
-      
-      begin5Mouse.status = PsychoJS.Status.STARTED;
-      begin5Mouse.mouseClock.reset();
-      prevButtonState = begin5Mouse.getPressed();  // if button is down already this ISN'T a new click
-      }
-    if (begin5Mouse.status === PsychoJS.Status.STARTED) {  // only update if started and not finished!
-      _mouseButtons = begin5Mouse.getPressed();
-      if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
-        prevButtonState = _mouseButtons;
-        if (_mouseButtons.reduce( (e, acc) => (e+acc) ) > 0) { // state changed to a new click
-          // check if the mouse was inside our 'clickable' objects
-          gotValidClick = false;
-          for (const obj of [GLOBAL_CONT]) {
-            if (obj.contains(begin5Mouse)) {
-              gotValidClick = true;
-              begin5Mouse.clicked_name.push(obj.name)
-            }
-          }
-          if (gotValidClick === true) { // abort routine on response
-            continueRoutine = false;
-          }
-        }
-      }
-    }
-    
-    // *begin5Text* updates
-    if (t >= 0.0 && begin5Text.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      begin5Text.tStart = t;  // (not accounting for frame time here)
-      begin5Text.frameNStart = frameN;  // exact frame index
-      
-      begin5Text.setAutoDraw(true);
-    }
-
-    // check for quit (typically the Esc key)
-    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
-      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
-    }
-    
-    // check if the Routine should terminate
-    if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      return Scheduler.Event.NEXT;
-    }
-    
-    continueRoutine = false;  // reverts to True if at least one component still running
-    begin5Components.forEach( function(thisComponent) {
-      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
-        continueRoutine = true;
-      }
-    });
-    
-    // refresh the screen if continuing
-    if (continueRoutine) {
-      return Scheduler.Event.FLIP_REPEAT;
-    } else {
-      return Scheduler.Event.NEXT;
-    }
-  };
-}
-
-
-function begin5RoutineEnd() {
-  return async function () {
-    //------Ending Routine 'begin5'-------
-    begin5Components.forEach( function(thisComponent) {
-      if (typeof thisComponent.setAutoDraw === 'function') {
-        thisComponent.setAutoDraw(false);
-      }
-    });
-    if ((instSlide5 !== "NA")) {
-        hide(SLIDES[instSlide5]);
-        hide(GLOBAL_CONT);
-    }
-    
-    // store data for psychoJS.experiment (ExperimentHandler)
-    // the Routine "begin5" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
-    
-    return Scheduler.Event.NEXT;
-  };
-}
-
-
+var qnSlide;
 var cimg_names;
 var block1;
 var block2;
 var mouse_over;
+var gotValidClick;
 var trialComponents;
 function trialRoutineBegin(snapshot) {
   return async function () {
@@ -1110,6 +484,7 @@ function trialRoutineBegin(snapshot) {
             continueRoutine = false;
         }
     }
+    qnSlide = slide_names.slice((- 1))[0];
     unhide(SLIDES[qnSlide], slide_size);
     cimgs = make_boxes(SLIDE_ATTRS[qnSlide], CLICK_BOX_OPACITY);
     cimg_names = [];
@@ -1177,6 +552,8 @@ function trialRoutineBegin(snapshot) {
 }
 
 
+var prevButtonState;
+var _mouseButtons;
 function trialRoutineEachFrame() {
   return async function () {
     //------Loop for each frame of Routine 'trial'-------
@@ -1282,19 +659,24 @@ function trialRoutineEnd() {
       }
     });
     response = trialMouse.clicked_name[0];
-    outcome = ((response === corrAns) ? 1 : 0);
+    if ((corrAns2 === "NA")) {
+        outcome = ((response === corrAns1) ? 1 : 0);
+    } else {
+        outcome = (((response === corrAns1) || (response === corrAns2)) ? 1 : 0);
+    }
     trials.addData("response", response);
-    if (controlQn) {
+    if ((controlQn !== "NA")) {
         control_scores.push(outcome);
         trials.addData("control_score", outcome);
-        trials.addData("test_score", "");
-        trials.addData("score_so_far", "");
+        trials.addData("test_score", null);
+        trials.addData("current_total_score", null);
     }
-    if (testQn) {
-        score_so_far += outcome;
+    if ((testQn !== "NA")) {
+        current_total_score += outcome;
         trials.addData("test_score", outcome);
-        trials.addData("score_so_far", score_so_far);
+        trials.addData("current_total_score", current_total_score);
     }
+    trials.addData("response_time", t);
     hide(SLIDES[qnSlide]);
     for (var cimg, _pj_c = 0, _pj_a = cimgs, _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
         cimg = _pj_a[_pj_c];
@@ -1363,14 +745,6 @@ async function quitPsychoJS(message, isCompleted) {
   if (psychoJS.experiment.isEntryEmpty()) {
     psychoJS.experiment.nextEntry();
   }
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
