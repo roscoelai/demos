@@ -13,7 +13,7 @@ const { round } = util;
 
 // store info about the experiment session:
 let expName = 'dayAndNightCards';  // from the Builder filename that created this script
-let expInfo = {'participant': '', 'use_audio [y/n]': 'y', 'demo [y/n]': 'y', 'debug [y/n]': 'y'};
+let expInfo = {'participant': '', 'use_audio [y/n]': 'y', 'demo [y/n]': 'y', 'debug [y/n]': 'n'};
 
 // Start code blocks for 'Before Experiment'
 
@@ -129,30 +129,30 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
-    {'name': 'imgs/slides/slide-10.png', 'path': 'imgs/slides/slide-10.png'},
-    {'name': 'aud/mp3/DN_aftprac.mp3', 'path': 'aud/mp3/DN_aftprac.mp3'},
-    {'name': 'imgs/slides/slide-02.png', 'path': 'imgs/slides/slide-02.png'},
-    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
-    {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
-    {'name': 'imgs/slides/slide-08.png', 'path': 'imgs/slides/slide-08.png'},
-    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
-    {'name': 'imgs/slides/slide-01.png', 'path': 'imgs/slides/slide-01.png'},
-    {'name': 'aud/mp3/DN_intro.mp3', 'path': 'aud/mp3/DN_intro.mp3'},
-    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
-    {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
-    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
-    {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
     {'name': 'aud/mp3/DN_rule3.mp3', 'path': 'aud/mp3/DN_rule3.mp3'},
-    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
-    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
-    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
+    {'name': 'imgs/slides/new-slide-2.png', 'path': 'imgs/slides/new-slide-2.png'},
+    {'name': 'imgs/slides/new-slide-3.png', 'path': 'imgs/slides/new-slide-3.png'},
     {'name': 'aud/mp3/DN_rule2.mp3', 'path': 'aud/mp3/DN_rule2.mp3'},
+    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
+    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
+    {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
+    {'name': 'sequences/all-conditions.csv', 'path': 'sequences/all-conditions.csv'},
     {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
-    {'name': 'imgs/slides/slide-05.png', 'path': 'imgs/slides/slide-05.png'},
-    {'name': 'aud/mp3/DN_rule1.mp3', 'path': 'aud/mp3/DN_rule1.mp3'},
+    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
+    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
+    {'name': 'imgs/slides/new-slide-4.png', 'path': 'imgs/slides/new-slide-4.png'},
+    {'name': 'imgs/slides/slide-10.png', 'path': 'imgs/slides/slide-10.png'},
+    {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
+    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
     {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
-    {'name': 'sequences/all-conditions.csv', 'path': 'sequences/all-conditions.csv'}
+    {'name': 'aud/mp3/DN_rule1.mp3', 'path': 'aud/mp3/DN_rule1.mp3'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'imgs/slides/new-slide-1.png', 'path': 'imgs/slides/new-slide-1.png'},
+    {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
+    {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
+    {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
+    {'name': 'aud/mp3/DN_intro.mp3', 'path': 'aud/mp3/DN_intro.mp3'},
+    {'name': 'aud/mp3/DN_aftprac.mp3', 'path': 'aud/mp3/DN_aftprac.mp3'}
   ]
 });
 
@@ -333,7 +333,7 @@ function trialsLoopBegin(trialsLoopScheduler, snapshot) {
       psychoJS: psychoJS,
       nReps: 1, method: TrialHandler.Method.SEQUENTIAL,
       extraInfo: expInfo, originPath: undefined,
-      trialList: 'sequences/all-conditions.csv',
+      trialList: TrialHandler.importConditions(psychoJS.serverManager, 'sequences/all-conditions.csv', '0:'),
       seed: undefined, name: 'trials'
     });
     psychoJS.experiment.addLoop(trials); // add the loop to the experiment
@@ -793,6 +793,8 @@ var y;
 var coords_x;
 var coords_y;
 var coords_t;
+var DRAG_MOUSE_state;
+var prev_DRAG_MOUSE_state;
 var trialComponents;
 function trialRoutineBegin(snapshot) {
   return async function () {
@@ -817,6 +819,9 @@ function trialRoutineBegin(snapshot) {
     active_card = null;
     moving_card = null;
     drag_in_process = false;
+    if ((trialNum === maxScore)) {
+        hide(CARD_STACK);
+    }
     feedback_delay_start = null;
     picture_delay_start = 0.0;
     choice = null;
@@ -827,6 +832,8 @@ function trialRoutineBegin(snapshot) {
     coords_x = [];
     coords_y = [];
     coords_t = [];
+    DRAG_MOUSE_state = 1;
+    prev_DRAG_MOUSE_state = 0;
     
     trialHeader.setText(blockName);
     // keep track of which components have finished
@@ -866,27 +873,31 @@ function trialRoutineEachFrame() {
         }
     }
     if ((feedback_delay_start !== null)) {
-        feedback_delay = 0.5;
-        if ((is_practice && (correct === 0))) {
-            feedback_delay = 1.0;
-        }
-        if (((t - feedback_delay_start) > feedback_delay)) {
+        if (is_practice) {
+            feedback_delay = 0.5;
+            if ((is_practice && (correct === 0))) {
+                feedback_delay = 1.0;
+            }
+            if (((t - feedback_delay_start) > feedback_delay)) {
+                continueRoutine = false;
+            }
+        } else {
             continueRoutine = false;
         }
     } else {
-        if (((t - picture_delay_start) < PICTURE_DELAY)) {
+        if (((active_card === null) && (t > 0.05))) {
+            active_card = dormant_card;
+            unhide(active_card, CARD_SIZE);
         } else {
-            if ((active_card === null)) {
-                if (DRAG_MOUSE.isPressedIn(CARD_STACK)) {
-                    active_card = dormant_card;
-                    unhide(active_card, CARD_SIZE);
-                    picture_delay_start = t;
-                }
-            } else {
-                if ((! drag_in_process)) {
-                    if (DRAG_MOUSE.isPressedIn(active_card)) {
-                        moving_card = active_card;
-                        drag_in_process = true;
+            if (((! drag_in_process) && (t > 0.1))) {
+                DRAG_MOUSE_state = DRAG_MOUSE.getPressed()[0];
+                if ((prev_DRAG_MOUSE_state !== DRAG_MOUSE_state)) {
+                    prev_DRAG_MOUSE_state = DRAG_MOUSE_state;
+                    if ((DRAG_MOUSE_state === 1)) {
+                        if (DRAG_MOUSE.isPressedIn(active_card)) {
+                            moving_card = active_card;
+                            drag_in_process = true;
+                        }
                     }
                 }
             }
