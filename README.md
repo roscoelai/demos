@@ -6,6 +6,6 @@
 - [nBackNogo](https://roscoelai.github.io/demos/nBackNogo/)
 - [nBackNogoPractice](https://roscoelai.github.io/demos/nBackNogoPractice/)
 - [Deprecated] [sixBoxes](https://roscoelai.github.io/demos/sixBoxes/)
-- [spinThePots](https://roscoelai.github.io/demos/spinThePots/)
+- [Deprecated (moved)] [spinThePots](https://roscoelai.github.io/demos/spinThePots/)
 - [theoryOfMind](https://roscoelai.github.io/demos/theoryOfMind/)
 
