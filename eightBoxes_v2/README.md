@@ -10,7 +10,7 @@ choices                   | participant's final answer for trial (order of fruit
 correct\_choices          | correct order of fruits
 errors                    | number of errors
 end\_timestamp            | timestamp at the end of trial
-total\_seconds            | global time taken at the end of trial (seconds)
+total\_seconds            | global time taken at the end of trial (seconds); the time taken from when all fruits have been placed in boxes to when the 'continue' button is clicked is not recorded in any other variable, this should account for any discrepancy in time elapsed between trials and the sum of `time_since_start` and `reveal_seconds`
 trial\_name               | trial name
 reveal\_seconds           | number of seconds where fruits' positions are revealed initially
 n\_fruits                 | number of fruits in trial
