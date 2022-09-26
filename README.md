@@ -1,11 +1,15 @@
-# Links to Demos
+## Updates
 
-- [Deprecated (moved)] [BEPS-PAMS-CLASS](https://roscoelai.github.io/demos/BEPS-PAMS-CLASS/)
-- [dayAndNightCards](https://roscoelai.github.io/demos/dayAndNightCards/)
-- [eightBoxes_v2](https://roscoelai.github.io/demos/eightBoxes_v2/)
-- [nBackNogo](https://roscoelai.github.io/demos/nBackNogo/)
-- [nBackNogoPractice](https://roscoelai.github.io/demos/nBackNogoPractice/)
-- [Deprecated] [sixBoxes](https://roscoelai.github.io/demos/sixBoxes/)
-- [Deprecated (moved)] [spinThePots](https://roscoelai.github.io/demos/spinThePots/)
-- [Deprecated (moved)] [theoryOfMind](https://roscoelai.github.io/demos/theoryOfMind/)
+Most of the experiments here are outdated. Please find the updated experiment demos at https://github.com/INTr-EEG.
+
+## Links to Demos
+
+- [Deprecated (moved)] [BEPS-PAMS-CLASS](BEPS-PAMS-CLASS/)
+- [Deprecated] [dayAndNightCards](dayAndNightCards/)
+- [Deprecated] [eightBoxes_v2](eightBoxes\_v2/)
+- [nBackNogo](nBackNogo/)
+- [nBackNogoPractice](nBackNogoPractice/)
+- [Deprecated] [sixBoxes](sixBoxes/)
+- [Deprecated (moved)] [spinThePots](spinThePots/)
+- [Deprecated (moved)] [theoryOfMind](theoryOfMind/)
 
