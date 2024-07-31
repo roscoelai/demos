@@ -13,7 +13,7 @@ const { round } = util;
 
 // store info about the experiment session:
 let expName = 'dayAndNightCards';  // from the Builder filename that created this script
-let expInfo = {'participant': '', 'use_audio [y/n]': 'y', 'demo [y/n]': 'y', 'debug [y/n]': 'n'};
+let expInfo = {'participant': '', 'number_of_trials': [16, 32], 'use_audio': ['Yes', 'No'], 'show_demo': ['Yes', 'No'], 'show_debug': ['No', 'Yes']};
 
 // Start code blocks for 'Before Experiment'
 
@@ -129,30 +129,31 @@ psychoJS.start({
   expName: expName,
   expInfo: expInfo,
   resources: [
+    {'name': 'aud/mp3/DN_aftprac.mp3', 'path': 'aud/mp3/DN_aftprac.mp3'},
+    {'name': 'aud/mp3/DN_intro.mp3', 'path': 'aud/mp3/DN_intro.mp3'},
+    {'name': 'aud/mp3/DN_rule1.mp3', 'path': 'aud/mp3/DN_rule1.mp3'},
+    {'name': 'aud/mp3/DN_rule2.mp3', 'path': 'aud/mp3/DN_rule2.mp3'},
     {'name': 'aud/mp3/DN_rule3.mp3', 'path': 'aud/mp3/DN_rule3.mp3'},
+    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
+    {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
+    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
+    {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
+    {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
+    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
+    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
+    {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
+    {'name': 'imgs/slides/new-slide-1.png', 'path': 'imgs/slides/new-slide-1.png'},
     {'name': 'imgs/slides/new-slide-2.png', 'path': 'imgs/slides/new-slide-2.png'},
     {'name': 'imgs/slides/new-slide-3.png', 'path': 'imgs/slides/new-slide-3.png'},
-    {'name': 'aud/mp3/DN_rule2.mp3', 'path': 'aud/mp3/DN_rule2.mp3'},
-    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
-    {'name': 'imgs/night-box.png', 'path': 'imgs/night-box.png'},
-    {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
-    {'name': 'sequences/all-conditions.csv', 'path': 'sequences/all-conditions.csv'},
-    {'name': 'imgs/deck.png', 'path': 'imgs/deck.png'},
-    {'name': 'imgs/day-redline.png', 'path': 'imgs/day-redline.png'},
-    {'name': 'imgs/night-redline.png', 'path': 'imgs/night-redline.png'},
     {'name': 'imgs/slides/new-slide-4.png', 'path': 'imgs/slides/new-slide-4.png'},
-    {'name': 'imgs/slides/slide-10.png', 'path': 'imgs/slides/slide-10.png'},
-    {'name': 'imgs/day-box.png', 'path': 'imgs/day-box.png'},
-    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
-    {'name': 'imgs/night.png', 'path': 'imgs/night.png'},
-    {'name': 'aud/mp3/DN_rule1.mp3', 'path': 'aud/mp3/DN_rule1.mp3'},
-    {'name': 'imgs/continue.png', 'path': 'imgs/continue.png'},
-    {'name': 'imgs/slides/new-slide-1.png', 'path': 'imgs/slides/new-slide-1.png'},
-    {'name': 'imgs/day.png', 'path': 'imgs/day.png'},
     {'name': 'imgs/slides/slide-03.png', 'path': 'imgs/slides/slide-03.png'},
+    {'name': 'imgs/slides/slide-04.png', 'path': 'imgs/slides/slide-04.png'},
+    {'name': 'imgs/slides/slide-06.png', 'path': 'imgs/slides/slide-06.png'},
+    {'name': 'imgs/slides/slide-07.png', 'path': 'imgs/slides/slide-07.png'},
     {'name': 'imgs/slides/slide-09.png', 'path': 'imgs/slides/slide-09.png'},
-    {'name': 'aud/mp3/DN_intro.mp3', 'path': 'aud/mp3/DN_intro.mp3'},
-    {'name': 'aud/mp3/DN_aftprac.mp3', 'path': 'aud/mp3/DN_aftprac.mp3'}
+    {'name': 'imgs/slides/slide-10.png', 'path': 'imgs/slides/slide-10.png'},
+    {'name': 'sequences/all-conditions.csv', 'path': 'sequences/all-conditions.csv'},
+    {'name': 'sequences/all-conditions-32.csv', 'path': 'sequences/all-conditions-32.csv'},
   ]
 });
 
@@ -181,52 +182,51 @@ async function updateInfo() {
 
 
 var begin1Clock;
-var USE_AUDIO;
-var SHOW_DEMO;
-var SHOW_DEBUG;
-var EXIT_3_PRAC;
-var PICTURE_DELAY;
-var SLIDE_SIZE;
-var CONTINUE_SIZE;
-var CONTINUE_POS;
-var DECK_SIZE;
-var CARD_SIZE;
-var NEW_CARD_POS;
-var BOX_SIZE;
-var GLOBAL_CONT;
-var terminate_experiment;
-var practice_passed;
-var inst_slide;
-var inst_sound;
 var begin1Mouse;
 var begin2Clock;
 var begin2Mouse;
 var begin3Clock;
 var begin3Mouse;
-var demoText;
-var trialClock;
-var MIN_DIST_SQ;
-var DRAG_MOUSE;
-var DAY_BOX;
-var NIGHT_BOX;
+var BOX_SIZE;
+var CARD_SIZE;
 var CARD_STACK;
+var COND_FILE;
+var CONTINUE_POS;
+var CONTINUE_SIZE;
 var cumulative_time;
-var score;
-var trialHeader;
-var trialFeedback;
-var trialDebug;
-var wiperClock;
+var DAY_BOX;
+var DECK_SIZE;
+var demoText;
+var DRAG_MOUSE;
+var EXIT_3_PRAC;
+var GLOBAL_CONT;
 var globalClock;
+var inst_slide;
+var inst_sound;
+var MIN_DIST_SQ;
+var NEW_CARD_POS;
+var NIGHT_BOX;
+var PICTURE_DELAY;
+var practice_passed;
 var routineTimer;
+var score;
+var SHOW_DEBUG;
+var SHOW_DEMO;
+var SLIDE_SIZE;
+var terminate_experiment;
+var trialClock;
+var trialDebug;
+var trialFeedback;
+var trialHeader;
+var USE_AUDIO;
+var wiperClock;
 async function experimentInit() {
   // Initialize components for Routine "begin1"
   begin1Clock = new util.Clock();
-  // expInfo["use_audio [y/n]"] = "y";
-  // expInfo["demo [y/n]"] = "n";
-  // expInfo["debug [y/n]"] = "n";
-  USE_AUDIO = ((expInfo["use_audio [y/n]"][0] === "y") || (expInfo["use_audio [y/n]"][0] === "Y"));
-  SHOW_DEMO = ((expInfo["demo [y/n]"][0] === "y") || (expInfo["demo [y/n]"][0] === "Y"));
-  SHOW_DEBUG = ((expInfo["debug [y/n]"][0] === "y") || (expInfo["debug [y/n]"][0] === "Y"));
+  USE_AUDIO = expInfo["use_audio"] === "Yes";
+  SHOW_DEMO = expInfo["show_demo"] === "Yes";
+  SHOW_DEBUG = expInfo["show_debug"] === "Yes";
+  COND_FILE = {16: 'sequences/all-conditions.csv', 32: 'sequences/all-conditions-32.csv'}[expInfo["number_of_trials"]];
   EXIT_3_PRAC = false;
   PICTURE_DELAY = 0.1;
   SLIDE_SIZE = [1.0, 0.562438];
@@ -333,7 +333,7 @@ function trialsLoopBegin(trialsLoopScheduler, snapshot) {
       psychoJS: psychoJS,
       nReps: 1, method: TrialHandler.Method.SEQUENTIAL,
       extraInfo: expInfo, originPath: undefined,
-      trialList: TrialHandler.importConditions(psychoJS.serverManager, 'sequences/all-conditions.csv', '0:'),
+      trialList: TrialHandler.importConditions(psychoJS.serverManager, COND_FILE, '0:'),
       seed: undefined, name: 'trials'
     });
     psychoJS.experiment.addLoop(trials); // add the loop to the experiment
